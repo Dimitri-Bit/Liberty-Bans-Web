@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: me.dimitri.liberty
+testFramework: junit
+sourceLanguage: java
+buildTool: maven
+features: [annotation-api, app-name, data, data-jdbc, http-client, jackson-databind, java, java-application, jdbc-hikari, junit, logback, maven, mysql, netty-server, readme, shade, test-resources, yaml]

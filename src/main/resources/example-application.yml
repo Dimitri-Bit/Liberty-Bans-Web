@@ -1,0 +1,25 @@
+micronaut:
+  application:
+    name: liberty_Web
+  cache:
+    caffeine:
+      enabled: true
+      specs:
+        history-cache:
+          maximum-size: 50
+          expires-after-write: 10m
+datasources:
+  default:
+    url: ""
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ""
+    password: ""
+    db-type: mysql
+    schema-generate: CREATE_DROP
+    dialect: MYSQL
+    hikari:
+      maximumPoolSize: 6
+netty:
+  default:
+    allocator:
+      max-order: 3
