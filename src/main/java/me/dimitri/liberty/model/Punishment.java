@@ -3,6 +3,7 @@ package me.dimitri.liberty.model;
 public class Punishment {
 
     private String victimUuid, victimUsername, operatorUuid, operatorUsername, reason;
+    private boolean active;
 
     public Punishment() {
         super();
@@ -46,5 +47,13 @@ public class Punishment {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

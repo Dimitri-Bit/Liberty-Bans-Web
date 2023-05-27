@@ -1,1 +1,0 @@
-SELECT uuid, name FROM libertybans_latest_names WHERE uuid IN (?);

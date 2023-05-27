@@ -1,0 +1,1 @@
+SELECT COUNT(*) AS row_count FROM libertybans_simple_history WHERE type = ?;

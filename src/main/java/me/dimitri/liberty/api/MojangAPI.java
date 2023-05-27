@@ -21,13 +21,14 @@ public class MojangAPI {
         client = new OkHttpClient();
     }
 
+    @Cacheable("mojang-cache")
     public String usernameLookup(String uuid) {
         String json = getPlayerData(uuid);
         if (json != null) {
             JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
             return getUsername(jsonObject);
         }
-        return null;
+        return "Unknown";
     }
 
     private String getPlayerData(String uuid) {
@@ -52,6 +53,6 @@ public class MojangAPI {
         if (jsonObject.has("name")) {
             return jsonObject.get("name").getAsString();
         }
-        return null;
+        return "Unknown";
     }
 }

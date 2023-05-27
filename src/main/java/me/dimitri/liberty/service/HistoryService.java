@@ -5,6 +5,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import me.dimitri.liberty.api.MojangAPI;
 import me.dimitri.liberty.model.Punishment;
+import me.dimitri.liberty.model.PunishmentsResponse;
 import me.dimitri.liberty.repository.HistoryRepository;
 import me.dimitri.liberty.utils.PType;
 
@@ -22,35 +23,25 @@ public class HistoryService {
         this.mojangApi = mojangApi;
     }
 
-    @Cacheable("history-cache")
-    public List<Punishment> getHistory(String punishmentType, int pageNum) {
-        long start = System.currentTimeMillis();
+    public PunishmentsResponse getHistory(String punishmentType, int pageNum) {
+        int maxRowsPerPage = 6;
+        int offset = (pageNum - 1) * maxRowsPerPage;
+        char type = getPunishmentType(punishmentType);
 
-        int offset = (pageNum - 1) * 6;
-
-        char type = getType(punishmentType);
         if (type == PType.UNKNOWN.getType()) {
             return null;
         }
 
-        List<Punishment> punishments = historyRepository.queryHistory(type, offset);
-        checkUsernames(punishments);
+        PunishmentsResponse response = historyRepository.queryHistory(type, offset);
+        int pageCount = (int) Math.ceil((double) response.getPageCount() / maxRowsPerPage);
+        response.setPageCount(pageCount);
 
-        long end = System.currentTimeMillis();
-        long time = end - start;
+        fetchUsernames(response.getPunishments());
 
-        System.out.println("Time: " + time);
-
-        return punishments;
+        return response;
     }
 
-    /*
-    Basically libertybans sometimes doesn't store the username tied to a UUID in the libertybans_latest_names so
-    we have to query the name using Mojang's API.
-
-    TODO: Add newly retrieved username to database
-     */
-    private void checkUsernames(List<Punishment> punishments) {
+    private void fetchUsernames(List<Punishment> punishments) {
         for (Punishment punishment : punishments) {
             if (punishment.getVictimUsername().equals("Unknown")) {
                 String username = mojangApi.usernameLookup(punishment.getVictimUuid());
@@ -59,7 +50,7 @@ public class HistoryService {
         }
     }
 
-    private char getType(String type) {
+    private char getPunishmentType(String type) {
         switch (type) {
             case "ban":
                 return PType.BAN.getType();
