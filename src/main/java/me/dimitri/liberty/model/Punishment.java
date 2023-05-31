@@ -4,6 +4,7 @@ public class Punishment {
 
     private String victimUuid, victimUsername, operatorUuid, operatorUsername, reason;
     private boolean active;
+    private long start,end;
 
     public Punishment() {
         super();
@@ -55,5 +56,21 @@ public class Punishment {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public long getStart() {
+        return start;
+    }
+
+    public void setStart(long start) {
+        this.start = start;
+    }
+
+    public long getEnd() {
+        return end;
+    }
+
+    public void setEnd(long end) {
+        this.end = end;
     }
 }

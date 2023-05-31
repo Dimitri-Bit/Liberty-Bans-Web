@@ -20,15 +20,15 @@ public class HistoryController {
         this.historyService = historyService;
     }
 
-    @Get("/{type}")
+    @Get("/{type}/{page}")
     @Produces(MediaType.APPLICATION_JSON)
-    public HttpResponse<?> getHistory(@PathVariable String type) {
-        PunishmentsResponse response = historyService.getHistory(type, 1);
+    public HttpResponse<?> getHistory(@PathVariable String type, @PathVariable int page) {
+        PunishmentsResponse response = historyService.getHistory(type, page);
 
         if (response != null) {
             return HttpResponse.ok().body(response);
         }
-        return HttpResponse.badRequest();
+        return HttpResponse.notFound();
     }
 
 }

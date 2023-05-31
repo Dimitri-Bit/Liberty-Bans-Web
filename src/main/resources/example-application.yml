@@ -1,12 +1,18 @@
 micronaut:
+  router:
+    static-resources:
+      default:
+        enabled: true
+        mapping: "/**"
+        paths: "file:path/Liberty_Web/FrontEnd/webroot"
   application:
     name: liberty_Web
   cache:
     caffeine:
       enabled: true
       specs:
-        history-cache:
-          maximum-size: 50
+        mojang-cache:
+          maximum-size: 150
           expires-after-write: 10m
 datasources:
   default:
