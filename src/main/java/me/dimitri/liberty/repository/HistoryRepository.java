@@ -36,7 +36,21 @@ public class HistoryRepository {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                punishments.add(mapPunishment(resultSet));
+                Punishment punishment = mapPunishment(resultSet);
+                if (punishment.getEnd() == 0 && punishment.isActive()) {
+                    punishment.setLabel("Permanent");
+                } else if (!punishment.isActive()) {
+                    punishment.setLabel("Expired");
+                } else {
+                    punishment.setLabel("Active");
+                }
+
+                // Temporary fix for Console image
+                if (punishment.getOperatorUuid().equals("00000000000000000000000000000000")) {
+                    punishment.setOperatorUuid("f78a4d8dd51b4b3998a3230f2de0c670");
+                }
+
+                punishments.add(punishment);
             }
 
             pageCount = queryPageAmount(connection, type);

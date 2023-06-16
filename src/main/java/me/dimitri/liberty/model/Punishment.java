@@ -2,7 +2,7 @@ package me.dimitri.liberty.model;
 
 public class Punishment {
 
-    private String victimUuid, victimUsername, operatorUuid, operatorUsername, reason;
+    private String victimUuid, victimUsername, operatorUuid, operatorUsername, reason, label;
     private boolean active;
     private long start,end;
 
@@ -72,5 +72,13 @@ public class Punishment {
 
     public void setEnd(long end) {
         this.end = end;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 }

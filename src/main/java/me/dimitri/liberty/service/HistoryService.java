@@ -1,6 +1,5 @@
 package me.dimitri.liberty.service;
 
-import io.micronaut.cache.annotation.Cacheable;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import me.dimitri.liberty.api.MojangAPI;
