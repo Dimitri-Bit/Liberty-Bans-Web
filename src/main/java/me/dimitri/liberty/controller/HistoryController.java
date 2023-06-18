@@ -24,7 +24,6 @@ public class HistoryController {
     @Produces(MediaType.APPLICATION_JSON)
     public HttpResponse<?> getHistory(@PathVariable String type, @PathVariable int page) {
         PunishmentsResponse response = historyService.getHistory(type, page);
-
         if (response != null) {
             return HttpResponse.ok().body(response);
         }

@@ -16,31 +16,38 @@ public class HistoryService {
     private final HistoryRepository historyRepository;
     private final MojangAPI mojangApi;
 
+    private final int MAX_ROWS = 6;
+
     @Inject
     public HistoryService(HistoryRepository historyRepository, MojangAPI mojangApi) {
         this.historyRepository = historyRepository;
         this.mojangApi = mojangApi;
     }
 
-    public PunishmentsResponse getHistory(String punishmentType, int pageNum) {
-        int maxRowsPerPage = 6;
-        int offset = (pageNum - 1) * maxRowsPerPage;
-        char type = getPunishmentType(punishmentType);
-
-        if (type == PType.UNKNOWN.getType()) {
+    public PunishmentsResponse getHistory(String type, int page) {
+        char pType = getType(type);
+        if (pType == PType.UNKNOWN.getType()) {
             return null;
         }
 
-        PunishmentsResponse response = historyRepository.queryHistory(type, offset);
-        int pageCount = (int) Math.ceil((double) response.getPageCount() / maxRowsPerPage);
-        response.setPageCount(pageCount);
-
-        fetchUsernames(response.getPunishments());
+        PunishmentsResponse response = historyRepository.query(pType, calculateOffset(page));
+        adjustPageCount(response);
+        fixUsernames(response.getPunishments());
 
         return response;
     }
 
-    private void fetchUsernames(List<Punishment> punishments) {
+    private int calculateOffset(int page) {
+        return (page - 1) * MAX_ROWS;
+    }
+
+    private void adjustPageCount(PunishmentsResponse response) {
+        int pageCount = response.getPageCount();
+        int adjustedPageCount = (int) Math.ceil((double) pageCount / MAX_ROWS);
+        response.setPageCount(adjustedPageCount);
+    }
+
+    private void fixUsernames(List<Punishment> punishments) {
         for (Punishment punishment : punishments) {
             if (punishment.getVictimUsername().equals("Unknown")) {
                 String username = mojangApi.usernameLookup(punishment.getVictimUuid());
@@ -49,7 +56,7 @@ public class HistoryService {
         }
     }
 
-    private char getPunishmentType(String type) {
+    private char getType(String type) {
         switch (type) {
             case "ban":
                 return PType.BAN.getType();

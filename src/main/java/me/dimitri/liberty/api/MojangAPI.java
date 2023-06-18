@@ -13,7 +13,6 @@ import java.io.IOException;
 
 @Singleton
 public class MojangAPI {
-    private static final String API_URL = "https://api.mojang.com/user/profile/";
 
     private final OkHttpClient client;
 
@@ -33,6 +32,7 @@ public class MojangAPI {
 
     private String getPlayerData(String uuid) {
         try {
+            String API_URL = "https://api.mojang.com/user/profile/";
             Request request = new Request.Builder()
                     .url(API_URL + uuid)
                     .build();
