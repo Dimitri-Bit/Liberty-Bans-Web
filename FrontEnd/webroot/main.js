@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    var currentPage = 1;
-    var currentType = 'ban';
+    let currentPage = 1;
+    let currentType = 'ban';
 
     function fetchPunishments(type, page) {
         const spinner = $("#spinner");
@@ -16,11 +16,17 @@ $(document).ready(function() {
             success: function(response) {
                 punishments.empty();
 
-                if (punishments.length > 0) {
+                if (response.punishments != null) {
                     response.punishments.forEach(function(punishment) {
-                        const statusBadge = punishment.active ?
-                            '<span class="badge bg-primary">Active</span>' :
-                            '<span class="badge bg-success">Expired</span>';
+                        let statusBadge;
+                        if (punishment.label == "Permanent") {
+                            statusBadge = '<span class="badge bg-danger">Permanent</span>';
+                        } else if (punishment.label == "Expired") {
+                            statusBadge = '<span class="badge bg-success">Expired</span>';
+                        } else {
+                            statusBadge = '<span class="badge bg-primary">Active</span>';
+                        }
+
                         const html = `
                           <div class="row align-items-center p-4 flex-nowrap">
                             <div class="col-auto">
@@ -87,6 +93,26 @@ $(document).ready(function() {
 
     $('#prevBtn').click(function() {
         currentPage--;
+        fetchPunishments(currentType, currentPage);
+    });
+
+    $('#banType').click(function() {
+        currentType = 'ban';
+        fetchPunishments(currentType, currentPage);
+    });
+
+    $('#kickType').click(function() {
+        currentType = 'kick';
+        fetchPunishments(currentType, currentPage);
+    });
+
+    $('#muteType').click(function() {
+        currentType = 'mute';
+        fetchPunishments(currentType, currentPage);
+    });
+
+    $('#warnType').click(function() {
+        currentType = 'warn';
         fetchPunishments(currentType, currentPage);
     });
 });

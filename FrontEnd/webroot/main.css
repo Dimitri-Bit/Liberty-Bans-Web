@@ -36,9 +36,6 @@ body {
 }
 
 .darker-navbar a {
-  color: #D2D4D5;
-}
-
-.darker-navbar a:hover {
-  color: #D2D4D5;
+  color: #D2D4D5 !important;
+  text-decoration: none !important;
 }
