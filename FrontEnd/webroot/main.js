@@ -97,21 +97,25 @@ $(document).ready(function() {
     });
 
     $('#banType').click(function() {
+        currentPage = 1;
         currentType = 'ban';
         fetchPunishments(currentType, currentPage);
     });
 
     $('#kickType').click(function() {
+        currentPage = 1;
         currentType = 'kick';
         fetchPunishments(currentType, currentPage);
     });
 
     $('#muteType').click(function() {
+        currentPage = 1;
         currentType = 'mute';
         fetchPunishments(currentType, currentPage);
     });
 
     $('#warnType').click(function() {
+        currentPage = 1;
         currentType = 'warn';
         fetchPunishments(currentType, currentPage);
     });

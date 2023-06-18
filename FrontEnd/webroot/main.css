@@ -39,3 +39,7 @@ body {
   color: #D2D4D5 !important;
   text-decoration: none !important;
 }
+
+.darker-navbar a:hover {
+  cursor: pointer;
+}
