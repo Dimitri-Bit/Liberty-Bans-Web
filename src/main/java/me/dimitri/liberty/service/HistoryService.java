@@ -24,17 +24,21 @@ public class HistoryService {
         this.mojangApi = mojangApi;
     }
 
-    public PunishmentsResponse getHistory(String type, int page) {
-        char pType = getType(type);
-        if (pType == PType.UNKNOWN.getType()) {
+    public PunishmentsResponse getHistory(String type, String pageS) {
+        try {
+            int page = Integer.parseInt(pageS);
+            char pType = getType(type);
+            if (pType == PType.UNKNOWN.getType()) {
+                return null;
+            }
+
+            PunishmentsResponse response = historyRepository.query(pType, calculateOffset(page));
+            adjustPageCount(response);
+            fixUsernames(response.getPunishments());
+            return response;
+        } catch (Exception e) {
             return null;
         }
-
-        PunishmentsResponse response = historyRepository.query(pType, calculateOffset(page));
-        adjustPageCount(response);
-        fixUsernames(response.getPunishments());
-
-        return response;
     }
 
     private int calculateOffset(int page) {

@@ -10,6 +10,8 @@ import jakarta.inject.Inject;
 import me.dimitri.liberty.model.PunishmentsResponse;
 import me.dimitri.liberty.service.HistoryService;
 
+import java.net.URI;
+
 @Controller("/history")
 public class HistoryController {
 
@@ -22,12 +24,12 @@ public class HistoryController {
 
     @Get("/{type}/{page}")
     @Produces(MediaType.APPLICATION_JSON)
-    public HttpResponse<?> getHistory(@PathVariable String type, @PathVariable int page) {
+    public HttpResponse<?> getHistory(@PathVariable String type, @PathVariable String page) {
         PunishmentsResponse response = historyService.getHistory(type, page);
         if (response != null) {
             return HttpResponse.ok().body(response);
         }
-        return HttpResponse.notFound();
+        return HttpResponse.badRequest();
     }
 
 }

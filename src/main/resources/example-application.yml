@@ -1,10 +1,12 @@
 micronaut:
+  server:
+    port: ${server.port}
   router:
     static-resources:
       default:
         enabled: true
         mapping: "/**"
-        paths: "file:path/Liberty_Web/FrontEnd/webroot"
+        paths: "file:/home/great-array/IdeaProjects/Liberty_Web/FrontEnd/webroot"
   application:
     name: liberty_Web
   cache:
@@ -12,19 +14,22 @@ micronaut:
       enabled: true
       specs:
         mojang-cache:
-          maximum-size: 150
-          expires-after-write: 10m
+          maximum-size: ${caffeine.mojang.maxSize}
+          expires-after-write: ${caffeine.mojang.expiration}
 datasources:
   default:
-    url: ""
+    url: ${database.url}
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ""
-    password: ""
+    username: ${database.username}
+    password: ${database.password}
     db-type: mysql
     schema-generate: CREATE_DROP
     dialect: MYSQL
     hikari:
-      maximumPoolSize: 6
+      maximumPoolSize: ${database.hikaricp.maxPoolSize}
+      maxLifetime: ${database.hikaricp.maxLifetime}
+      idleTimeout: ${database.hikaricp.idleTimeout}
+      connectionTimeout: ${database.hikaricp.connectionTimeout}
 netty:
   default:
     allocator:
