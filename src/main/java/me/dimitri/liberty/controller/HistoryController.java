@@ -10,8 +10,6 @@ import jakarta.inject.Inject;
 import me.dimitri.liberty.model.PunishmentsResponse;
 import me.dimitri.liberty.service.HistoryService;
 
-import java.net.URI;
-
 @Controller("/history")
 public class HistoryController {
 
