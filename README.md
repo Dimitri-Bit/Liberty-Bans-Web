@@ -113,7 +113,7 @@ A typical response from the endpoint can look like this:
 ```
 ## Live Preview
 
-You can find a live preview of the website [here](https://github.com/Dimitri-Fustic/Liberty-Bans-Web/).
+Live Demo is coming soon.
 
 ## Support
 
