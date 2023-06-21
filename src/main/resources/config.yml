@@ -1,0 +1,27 @@
+server:
+  # On what port the server will run
+  port: 8080
+
+# Database configuration
+database:
+  url: "jdbc:mysql://host:port/db_name"
+  username: "username"
+  password: "password"
+
+  # Here you can configure some HikariCP values but the provided configuration should be suitable for most users
+  # Don't touch unless you know what you are doing
+  hikaricp:
+    maxPoolSize: 6
+    maxLifetime: 1800000
+    idleTimeout: 600000
+    connectionTimeout: 30000
+
+# Cache configuration
+caffeine:
+  # Some usernames aren't saved in the database, so we must retrieve them using Mojang's API
+  # The provided configuration should be suitable for most users
+  mojang:
+    # Maximum amount of usernames to cache
+    maxSize: 150
+    # After what time cache record will expire
+    expiration: "10m"

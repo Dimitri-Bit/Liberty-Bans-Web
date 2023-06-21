@@ -28,7 +28,7 @@ public class Application {
     }
 
     private static void printSpace() {
-        for (int i = 0; i < 35; i++) {
+        for (int i = 0; i < 55; i++) {
             System.out.println();
         }
     }

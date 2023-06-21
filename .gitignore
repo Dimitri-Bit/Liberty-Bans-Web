@@ -17,6 +17,3 @@ out/
 .mvn/wrapper/maven-wrapper.properties
 mvnw
 mvnw.bat
-src/main/resources/application.yml
-src/main/resources/config.properties
-src/main/resources/config.yml

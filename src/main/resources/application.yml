@@ -6,7 +6,7 @@ micronaut:
       default:
         enabled: true
         mapping: "/**"
-        paths: "file:/home/great-array/IdeaProjects/Liberty_Web/FrontEnd/webroot"
+        paths: "file:frontend"
   application:
     name: liberty_Web
   cache:
