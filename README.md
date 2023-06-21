@@ -1,17 +1,22 @@
 # Liberty Bans Web Interface
-A simple web interface for the LibertyBans Minecraft Java Edition punishments plugin built in Java & Micronaut. <br>
 
-**Please Note: this application relies on your LibertyBans plugin using a MySQL database for storage, more database variety support will be added in the future.**<br>
+A simple web interface for the LibertyBans Minecraft Java Edition punishments plugin built in Java & Micronaut.
+
+**Please Note:** This application relies on your LibertyBans plugin using a MySQL database for storage. More database variety support will be added in the future.
 
 ## Requirements
- - Java 11
- - LibertyBans plugin instance using a MySQL database
+
+- Java 11
+- LibertyBans plugin instance using a MySQL database
 
 ## Setup
-Download the latest jar file from [here](https://github.com/Dimitri-Fustic/Liberty-Bans-Web/releases), create a new folder for your application
-and run the jar. When you run the application for the first time a config.yml file will be created so you can configure your database credentials.
 
-The config.yml file will look something like this:
+1. Download the latest JAR file from [here](https://github.com/Dimitri-Fustic/Liberty-Bans-Web/releases).
+2. Create a new folder for your application.
+3. Run the JAR file.
+4. Upon the first run, a `config.yml` file will be created to configure your database credentials.
+
+The `config.yml` file will look something like this:
 
 ```yml
 server:
@@ -34,47 +39,49 @@ caffeine:
     expiration: "10m"
 ```
 
-Simply change the database.url host:port to the host and port your database is running on and db_name to the database name. Also change the username & password with your valid credentials. There is additional configuration for hikaricp and caffeine which is explained below.
+Configure the `config.yml` file as follows:
+
+- Change the `database.url` to your database's host and port, and `db_name` to your database name.
+- Replace `username` and `password` with your valid credentials.
 
 ### HikariCP
-You can change the size of your database connection pool as well as their lifetime, the current configuration should be good enough for most people.
 
-### Caffeine:
-Since LibertyBans doesn't always store a punished player's username we have to look it up manually using Mojang's API & the player's UUID. This does take some time so when we do look it up
-we also cahce it using caffeine. You can configure how many username entiries you would like to save as well as after how long each entry will expire
+You can adjust the size of your database connection pool as well as their lifetime. The default configuration should be good for most people;
+
+### Caffeine
+
+Since LibertyBans doesn't always store a punished player's username, we manually look it up using Mojang's API and the player's UUID. This process takes some time, so we cache it using Caffeine for future responses. You can configure the number of username entries to save and the expiration time for each entry.
 
 ### Startup
-After running your application for the first time you will be prompted to start it with the following command in the future:
+
+After running your application for the first time, you will be prompted to start it with the following command in the future:
 ```
 java -jar -Dmicronaut.config.files="config.yml" -jar application.jar
 ```
 If you do not an error will occur so please make sure to remember this.
 
 ### Frontend
-After running the application for second time the a folder for the frontend files will appear. Here you can configure the look of your website or change it outright.
-The frontend is built using the following technologies:
+
+After running the application for the second time, a folder for the frontend files will appear. Here you can customize the look of your application or make a complete redesign. The frontend is built using the following technologies:
+
 - Bootstrap
-- JQuery
-- HTML, CSS & JS
+- jQuery
+- HTML, CSS, & JS
 
 After this short setup you're good to go!
 
 ## Endpoints
-If you want to access the backend endpoints directly for whatever reason the current endpoints are:
 
-### The punishments endpoint:<br>
-**/history/$type/$page**
+If you want to access the backend endpoints directly for any reason, the current endpoints are:
 
-$type can be one of the following:
- - ban
- - kick
- - mute
- - warn
+### The Punishments Endpoint
 
-And $page is just the page number you want. A maximum of 6 punishment items will appear per page as well as a number indicating the maximum amount of pages
-avaliable with each query.
+Endpoint: `/history/$type/$page`
 
-A typical response can look like this:
+- `$type` can be one of the following: ban, kick, mute, or warn.
+- `$page` represents the desired page number. A maximum of 6 punishment items will appear per page, along with the total number of available pages.
+
+A typical response from the endpoint can look like this:
 ```json
 {
    "pageCount":3,
@@ -104,10 +111,12 @@ A typical response can look like this:
    ]
 }
 ```
-## Live Preview:
+## Live Preview
+
 You can find a live preview of the website [here](https://github.com/Dimitri-Fustic/Liberty-Bans-Web/).
 
 ## Support
-If you need any support regarding this application please open a issues request, a Discord support server is coming soon.
 
-*Please Note: The official LibertyBans Discord server probably won't provide you any support with this application since it is not a official web interface*
+If you need any support regarding this application, please open an issues request. A Discord support server is coming soon.
+
+*Please Note: The official LibertyBans Discord server probably won't provide you support for this application since it is not an official web interface.*
