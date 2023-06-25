@@ -111,6 +111,12 @@ A typical response from the endpoint can look like this:
    ]
 }
 ```
+
+## Images
+![alt text](https://i.imgur.com/tQawmrN.png)
+![alt text](https://i.imgur.com/Isk7xHt.png)
+![alt text](https://i.imgur.com/v0vLGfo.png)
+
 ## Live Preview
 
 Live Demo is coming soon.
