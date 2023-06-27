@@ -5,7 +5,6 @@ import me.dimitri.liberty.model.Punishment;
 import me.dimitri.liberty.model.PunishmentsResponse;
 
 import javax.sql.DataSource;
-import javax.transaction.Transactional;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,7 +26,6 @@ public class HistoryRepository {
         this.HISTORY_SQL = getHistorySql();
     }
 
-    @Transactional
     public PunishmentsResponse query(char type, int offset) {
         try (Connection connection = dataSource.getConnection()) {
             List<Punishment> punishments = new ArrayList<>();

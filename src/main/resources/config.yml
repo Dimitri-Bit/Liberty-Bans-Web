@@ -3,6 +3,7 @@ server:
   port: 8080
 
 # Database configuration
+# Currently only MySQL and MariaDB are supported
 database:
   url: "jdbc:mysql://host:port/db_name"
   username: "username"
