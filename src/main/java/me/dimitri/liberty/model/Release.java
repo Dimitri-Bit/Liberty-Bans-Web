@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Release {
     private String tag_name;
     private String name;
-    private String body;
 
     public String getTag_name() {
         return tag_name;
@@ -22,13 +21,5 @@ public class Release {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
     }
 }

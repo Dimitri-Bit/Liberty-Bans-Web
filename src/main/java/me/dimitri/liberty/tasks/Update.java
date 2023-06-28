@@ -48,21 +48,9 @@ public class Update implements Runnable {
     }
 
     private void printMessage(Release release) {
-        spaceFormat();
-        System.out.println("New Version Detected:");
-        System.out.println();
-        System.out.println("Name: " + release.getName());
-        System.out.println("Tag: " + release.getTag_name());
-        System.out.println("Description: " + release.getBody());
-        System.out.println();
-        System.out.println("Make sure to get the latest version here: https://github.com/Dimitri-Bit/Liberty-Bans-Web/releases");
-        spaceFormat();
-    }
-
-    private void spaceFormat() {
-        for (int i = 0; i < 2; i++) {
-            System.out.println();
-        }
+        log.warn("New Version Detected: " + release.getName() + "(" + release.getTag_name() + ")");
+        log.warn("Download the latest version to be up-to date with the latest features & bug fixes.");
+        log.warn("https://github.com/Dimitri-Bit/Liberty-Bans-Web");
     }
 
     private Release getLatestRelease() {
