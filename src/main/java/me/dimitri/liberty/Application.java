@@ -1,9 +1,19 @@
 package me.dimitri.liberty;
 
 import io.micronaut.runtime.Micronaut;
+import jakarta.annotation.PostConstruct;
+import jakarta.inject.Inject;
+import me.dimitri.liberty.tasks.Update;
 import me.dimitri.liberty.utils.StartupFiles;
 
 public class Application {
+
+    private final Update updateTask;
+
+    @Inject
+    public Application(Update updateTask) {
+        this.updateTask = updateTask;
+    }
 
     public static void main(String[] args) {
         StartupFiles startupFiles = new StartupFiles();
@@ -24,12 +34,18 @@ public class Application {
             System.out.println(" in the same directory as your application jar file.");
         }
 
-        Micronaut.run(Application.class, args);
+        Micronaut.build(args).banner(false).start();
     }
 
     private static void printSpace() {
         for (int i = 0; i < 55; i++) {
             System.out.println();
         }
+    }
+
+    @PostConstruct
+    public void startTasks() {
+        Thread thread = new Thread(updateTask);
+        thread.start();
     }
 }
