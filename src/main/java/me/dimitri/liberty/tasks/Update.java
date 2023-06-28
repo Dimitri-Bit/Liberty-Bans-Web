@@ -40,7 +40,7 @@ public class Update implements Runnable {
 
         Release release = getLatestRelease();
         if (release != null) {
-            if (!release.getName().equals(version)) {
+            if (!release.getTag_name().equals(version)) {
                 printMessage(release);
                 running = false;
             }
