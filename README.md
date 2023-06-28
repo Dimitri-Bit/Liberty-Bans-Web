@@ -21,6 +21,7 @@ The `config.yml` file will look something like this:
 ```yml
 server:
   port: 8080
+  host: "localhost"
 
 database:
   url: "jdbc:mysql://host:port/db_name"
@@ -37,6 +38,8 @@ caffeine:
   mojang:
     maxSize: 150
     expiration: "10m"
+
+version: "1.1.0"
 ```
 
 Configure the `config.yml` file as follows:
