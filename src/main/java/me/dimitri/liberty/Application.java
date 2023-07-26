@@ -22,19 +22,15 @@ public class Application {
         StartupFiles startupFiles = new StartupFiles();
         if (startupFiles.createConfig()) {
             log.info(" config.yml created, please configure your Liberty Web application there");
-            System.out.println();
-            log.info(" Please make sure to run your application with the following command:");
-            log.info(" -> java -jar -Dmicronaut.config.files=\"config.yml\" -jar application.jar");
             System.exit(0);
             return;
         }
-
         if (startupFiles.createFrontend()) {
             log.info(" Frontend files for the website have been created, if you wish to edit");
             log.info(" the look of your website you can do so in the \"frontend\" folder located");
             log.info(" in the same directory as your application jar file.");
         }
-
+        System.setProperty("micronaut.config.files", "config.yml");
         Micronaut.build(args).banner(false).start();
     }
 

@@ -1,0 +1,98 @@
+:root {
+    --darkest: #121212;
+    --dark: #1A1A1A;
+    --dark-gray: #181717;
+    --red: rgb(163, 39, 39);
+    --dark-red: #740d00;
+    --yellow: rgb(182, 139, 21);
+    --green: rgb(24, 66, 4);
+}
+
+body::before {
+    display:block;
+    content: '';
+}
+  
+body {
+    background-color: var(--dark);
+}
+
+.flex-nowrap {
+    overflow-x: auto;
+}
+
+.punishments-container {
+    border-radius: 5px;
+    color: whitesmoke;
+    background-color: var(--darkest);
+}
+
+.light-row {
+    background-color: var(--dark-gray);
+}
+
+.permanent-line {
+    border-left: 7px solid var(--red);
+    height: 12vh;
+    padding: 1vh;
+}
+
+.active-line {
+    border-left: 7px solid var(--yellow);
+    height: 12vh;
+    padding: 1vh;
+}
+
+.expired-line {
+    border-left: 7px solid var(--green);
+    height: 12vh;
+    padding: 1vh;
+}
+
+.permanent {
+    background-color:var(--red);
+    padding: 0.8vh;
+    border-radius: 5px;
+}
+
+.active {
+    background-color: var(--yellow);
+    padding: 0.8vh;
+    border-radius: 5px;
+}
+
+.expired {
+    background-color: var(--green);
+    padding: 0.8vh;
+    border-radius: 5px;
+}
+
+.nav-btn {
+    background-color: var(--dark);
+    padding: 1.5vh;
+    outline: none;
+    border: none;
+    color: whitesmoke;
+    border-radius: 5px;
+}
+
+.darkest-navbar {
+    background-color: var(--darkest);
+}
+
+.search-btn {
+    border-radius: 5px !important;
+    background-color: var(--dark);
+}
+
+.navbar-nav li:hover{
+    cursor: pointer;
+}
+
+.navbar-active {
+    border-bottom: solid 2px var(--red);
+}
+
+.disabled-btn {
+    color: darkgray;
+}
