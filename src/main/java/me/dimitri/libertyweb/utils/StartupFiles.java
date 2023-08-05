@@ -1,4 +1,4 @@
-package me.dimitri.liberty.utils;
+package me.dimitri.libertyweb.utils;
 
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;

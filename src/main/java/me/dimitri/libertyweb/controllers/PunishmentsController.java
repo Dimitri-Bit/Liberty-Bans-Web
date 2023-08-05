@@ -1,4 +1,4 @@
-package me.dimitri.liberty.controller;
+package me.dimitri.libertyweb.controllers;
 
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
@@ -6,28 +6,25 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Produces;
-import jakarta.inject.Inject;
-import me.dimitri.liberty.model.PunishmentsResponse;
-import me.dimitri.liberty.service.HistoryService;
+import me.dimitri.libertyweb.model.WebPunishmentResponse;
+import me.dimitri.libertyweb.service.PunishmentService;
 
-@Controller("/history")
-public class HistoryController {
+@Controller("/punishments")
+public class PunishmentsController {
 
-    private final HistoryService historyService;
+    private final PunishmentService punishmentService;
 
-    @Inject
-    public HistoryController(HistoryService historyService) {
-        this.historyService = historyService;
+    public PunishmentsController(PunishmentService punishmentService) {
+        this.punishmentService = punishmentService;
     }
 
     @Get("/{type}/{page}")
     @Produces(MediaType.APPLICATION_JSON)
     public HttpResponse<?> getHistory(@PathVariable String type, @PathVariable String page) {
-        PunishmentsResponse response = historyService.getHistory(type, page);
+        WebPunishmentResponse response = punishmentService.getPunishments(type, page);
         if (response != null) {
             return HttpResponse.ok().body(response);
         }
         return HttpResponse.badRequest();
     }
-
 }

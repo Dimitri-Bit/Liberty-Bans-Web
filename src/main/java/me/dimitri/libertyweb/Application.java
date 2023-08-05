@@ -1,22 +1,13 @@
-package me.dimitri.liberty;
+package me.dimitri.libertyweb;
 
 import io.micronaut.runtime.Micronaut;
-import jakarta.annotation.PostConstruct;
-import jakarta.inject.Inject;
-import me.dimitri.liberty.tasks.Update;
-import me.dimitri.liberty.utils.StartupFiles;
+import me.dimitri.libertyweb.utils.StartupFiles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Application {
 
-    private final Update updateTask;
-    private static final Logger log = LoggerFactory.getLogger(Update.class);
-
-    @Inject
-    public Application(Update updateTask) {
-        this.updateTask = updateTask;
-    }
+    private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) {
         StartupFiles startupFiles = new StartupFiles();
@@ -32,11 +23,5 @@ public class Application {
         }
         System.setProperty("micronaut.config.files", "config.yml");
         Micronaut.build(args).banner(false).start();
-    }
-
-    @PostConstruct
-    public void startTasks() {
-        Thread thread = new Thread(updateTask);
-        thread.start();
     }
 }
