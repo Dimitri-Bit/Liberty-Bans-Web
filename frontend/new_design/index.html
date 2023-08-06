@@ -1,84 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <!-- Font Awesome -->
     <script src="../js/vendor/fontawesome.min.js"></script>
-    
     <!-- Bootstrap -->
     <link rel="stylesheet" href="../css/vendor/bootstrap.min.css" />
     <script src="../js/vendor/bootstrap.bundle.min.js"></script>
-
     <!-- JQuery -->
     <script src="../js/vendor/jquery.js"></script>
-
     <!-- Local -->
     <link rel="stylesheet" href="main.css">
     <script src="style.js"></script>
-
     <title>Document</title>
-</head>
-<body>
-    
+  </head>
+  <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-darker py-2">
-        <div class="container-fluid mx-4">
-            <span class="navbar-brand"><small>LibertyBans</small></span>
-            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fas fa-sliders-h"></i>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <form class="d-flex mx-3">
-                    <div class="input-group input-group-md" id="green-hover">
-                        <span class="input-group-text pe-0" id="inputGroup-sizing-md"><small><i class="fas fa-search"></i></small></span>
-                        <input class="form-control pe-0" type="search" placeholder="Search">
-                        <span class="input-group-text" id="inputGroup-sizing-md"><small>Ctrl+K</small></span>
-                    </div>
-                </form>
-
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                   <li class="nav-item navbar-active pe-1">
-                      <a class="nav-link" id="banType">Ban</a>
-                   </li>
-                   <li class="nav-item pe-1">
-                      <a class="nav-link" id="kickType">Kick</a>
-                   </li>
-                   <li class="nav-item pe-1">
-                      <a class="nav-link" id="muteType">Mute</a>
-                   </li>
-                   <li class="nav-item pe-3">
-                      <a class="nav-link" id="warnType">Warn</a>
-                   </li>
-                </ul>
-
-                <!-- <button class="version-btn ps-4"><i class="fab fa-github fs-4"></i></button> -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-darker py-2 sticky-top">
+      <div class="container-fluid mx-4">
+        <span class="navbar-brand">
+          <small>LibertyBans</small>
+        </span>
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-sliders-h"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <form class="d-flex mx-3">
+            <div class="input-group input-group-md" id="green-hover">
+              <span class="input-group-text pe-0" id="inputGroup-sizing-md">
+                <small>
+                  <i class="fas fa-search"></i>
+                </small>
+              </span>
+              <input class="form-control pe-0" type="search" placeholder="Search">
+              <span class="input-group-text" id="inputGroup-sizing-md">
+                <small>Ctrl+K</small>
+              </span>
             </div>
+          </form>
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item navbar-active pe-1">
+              <a class="nav-link" id="banType">Ban</a>
+            </li>
+            <li class="nav-item pe-1">
+              <a class="nav-link" id="kickType">Kick</a>
+            </li>
+            <li class="nav-item pe-1">
+              <a class="nav-link" id="muteType">Mute</a>
+            </li>
+            <li class="nav-item pe-3">
+              <a class="nav-link" id="warnType">Warn</a>
+            </li>
+          </ul>
+          <!-- <button class="version-btn ps-4"><i class="fab fa-github fs-4"></i></button> -->
         </div>
+      </div>
     </nav>
-
     <!-- Hero -->
     <section class="bg-dark text-light p-5 p-lg-0 pt-lg-5 text-center text-sm-start section-darker">
-        <div class="container my-5">
-            <div class="row">
-              <div class="col-lg-8">
-                <div class="p-5">
-                    <h1 class="display-4 hero-header">Punishments</h1>
-                    <h1 class="display-4 hero-sub-header">Web UI</h1>
-                    <p class="lead hero-paragraph fs-4">View the latest server punishments from the web</p>
-                    <button class="btn btn-light"><i class="fas fa-arrow-alt-circle-down"></i> View</button>
-                  </div>
-              </div>
-              <div class="col-lg-4">
-                <!-- <img class="w-100 shadow" src="https://via.placeholder.com/824x552" /> -->
-                <!-- <img style="max-width: 70%;" src="../images/VisageRender-Dobe.png" /> -->
-                <img style="max-width: 70%;" src="../images/VisageRender-SalvaX1.png" />
-              </div>
+      <div class="container my-5">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="p-5">
+              <h1 class="display-4 hero-header">Punishments</h1>
+              <h1 class="display-4 hero-sub-header">Web UI</h1>
+              <p class="lead hero-paragraph fs-4">View the latest server punishments from the web</p>
+              <button class="btn btn-light">
+                <i class="fas fa-arrow-alt-circle-down"></i> View
+              </button>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <!-- <img class="w-100 shadow" src="https://via.placeholder.com/824x552" /> -->
+            <!-- <img style="max-width: 70%;" src="../images/VisageRender-Dobe.png" /> -->
+            <img style="max-width: 70%;" src="../images/VisageRender-SalvaX1.png" />
+          </div>
         </div>
     </section>
 
-</body>
+    <section class="bg-dark text-light p-5 p-lg-0 pt-lg-5 text-center text-sm-start section-darker">
+      <div class="container p-4 col-lg-6">
+        <!-- <div class="d-flex justify-content-center spinner">
+          <div id="spinner" class="spinner-border m-5" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div> -->
+        <!-- <div class="d-flex justify-content-start pb-3">
+          <h1 class="display-6 category-text pb-1">Bans</h1>
+        </div> -->
+
+        <div class="row align-items-center p-2 flex-nowrap punishment-row">
+          <div class="col-auto permanent-line"></div>
+          <div class="col-auto">
+              <img src="https://visage.surgeplay.com/face/55/98015c8810d941d3b87bef1efe964c1c">
+          </div>
+          <div class="col">
+              <p class="fs-5 mb-0">Offender</p>
+              <p>TeddyBear</p>
+          </div>
+          <div class="col-auto">
+              <img src="https://visage.surgeplay.com/face/55/d3072ace-a62d-44b5-b16d-a4e9014ae760">
+          </div>
+          <div class="col">
+              <p class="fs-5 mb-0">Staff</p>
+              <p>DiscordMod</p>
+          </div>
+          <div class="col">
+            <button class="btn btn-light"><i class="fas fa-plus"></i> Expand</button>
+          </div>
+        </div>
+        <!-- <div class="m-2"></div> -->
+        <div class="row align-items-center p-2 flex-nowrap punishment-row">
+          <div class="col-auto permanent-line"></div>
+          <div class="col-auto">
+              <img src="https://visage.surgeplay.com/face/55/98015c8810d941d3b87bef1efe964c1c">
+          </div>
+          <div class="col">
+              <p class="fs-5 mb-0">Offender</p>
+              <p>TeddyBear</p>
+          </div>
+          <div class="col-auto">
+              <img src="https://visage.surgeplay.com/face/55/d3072ace-a62d-44b5-b16d-a4e9014ae760">
+          </div>
+          <div class="col">
+              <p class="fs-5 mb-0">Staff</p>
+              <p>DiscordMod</p>
+          </div>
+          <div class="col">
+            <button class="btn btn-light"><i class="fas fa-plus"></i> Expand</button>
+          </div>
+        </div>
+        <!-- <div class="m-2"></div> -->
+        <div class="row align-items-center p-2 flex-nowrap punishment-row">
+          <div class="col-auto expired-line"></div>
+          <div class="col-auto">
+              <img src="https://visage.surgeplay.com/face/55/3b6fd6d36eac4794b824258cc8c5fa5c">
+          </div>
+          <div class="col">
+              <p class="fs-5 mb-0">Offender</p>
+              <p>Runner</p>
+          </div>
+          <div class="col-auto">
+              <img src="https://visage.surgeplay.com/face/55/b5bc3391-6f6d-4385-b6b4-a8ac4f096244">
+          </div>
+          <div class="col">
+              <p class="fs-5 mb-0">Staff</p>
+              <p>RedditMod</p>
+          </div>
+          <div class="col">
+            <button class="btn btn-light"><i class="fas fa-plus"></i> Expand</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>
