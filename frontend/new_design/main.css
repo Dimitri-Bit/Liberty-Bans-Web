@@ -20,6 +20,7 @@ body {
     --gray-secondary: #6d6d6e;
     --gray-tertiary: #a7a7a8;
     --primary-green: #11b881;
+    --secondary-green: #0f9568;
     --other: rgb(57, 53, 53);
     --red: rgb(187, 43, 43);
     --dark-red: #740d00;
@@ -151,14 +152,39 @@ body {
     background-color: var(--black-primary) !important;
 }
 
-.statistics-header {
-    font-family: 'Inter-SemiBold', sans-serif;
-    color: var(--gray-primary)
+.hero-btn {
+    color: var(--black-primary);
+    background-color: var(--gray-primary);
 }
 
-.statistics-paragraph {
-    font-family: 'Inter', sans-serif;
-    color: var(--gray-primary)
+.stats-header {
+    font-family: 'Inter-SemiBold', sans-serif;
+    color: var(--black-primary)
+}
+
+.stats-paragraph {
+    font-family: 'Inter-SemiBold', sans-serif;
+    color: var(--black-primary)
+}
+
+.bans {
+    background-color: var(--gray-primary);
+    border-radius: 5px;
+}
+
+.mutes {
+    background-color: var(--secondary-green);
+    border-radius: 5px;
+}
+
+.warns {
+    background-color: var(--secondary-green);
+    border-radius: 5px;
+}
+
+.kicks {
+    background-color: var(--gray-primary);
+    border-radius: 5px;
 }
 
 /* Punishments Row */
