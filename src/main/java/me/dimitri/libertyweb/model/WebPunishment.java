@@ -1,12 +1,15 @@
-package me.dimitri.liberty.model;
+package me.dimitri.libertyweb.model;
 
-public class Punishment {
+import io.micronaut.serde.annotation.Serdeable;
+
+@Serdeable.Serializable
+public class WebPunishment {
 
     private String victimUuid, victimUsername, operatorUuid, operatorUsername, reason, label;
     private boolean active;
     private long start,end;
 
-    public Punishment() {
+    public WebPunishment() {
         super();
     }
 

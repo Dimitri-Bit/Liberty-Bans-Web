@@ -1,4 +1,4 @@
-package me.dimitri.liberty.utils;
+package me.dimitri.libertyweb.utils;
 
 import jakarta.inject.Singleton;
 

@@ -7,7 +7,7 @@ A simple web interface for the LibertyBans Minecraft Java Edition punishments pl
 ## Requirements
 
 - Java 11
-- LibertyBans plugin instance using a MySQL database
+- LibertyBans plugin instance using a MySQL or MariaDB database
 
 ## Setup
 
@@ -120,12 +120,6 @@ A typical response from the endpoint can look like this:
 ![alt text](https://i.imgur.com/Isk7xHt.png)
 ![alt text](https://i.imgur.com/v0vLGfo.png)
 
-## Live Preview
-
-Live Demo is coming soon.
-
 ## Support
 
-If you need any support regarding this application, please open an issues request. A Discord support server is coming soon.
-
-*Please Note: The official LibertyBans Discord server probably won't provide you support for this application since it is not an official web interface.*
+If you need any support regarding this application, please open an issues request or join this Discord server and view the #libertybans-web channel. (This is the official LibertyBans Discord server) https://discord.gg/qgQbJMkcQw

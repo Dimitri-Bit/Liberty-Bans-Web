@@ -1,11 +1,11 @@
-package me.dimitri.liberty.api;
+package me.dimitri.libertyweb.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.micronaut.cache.annotation.Cacheable;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import me.dimitri.liberty.utils.HttpRequestUtil;
+import me.dimitri.libertyweb.utils.HttpRequestUtil;
 
 import java.io.IOException;
 
