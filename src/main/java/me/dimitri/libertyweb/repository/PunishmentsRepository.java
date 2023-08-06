@@ -3,7 +3,7 @@ package me.dimitri.libertyweb.repository;
 import jakarta.inject.Singleton;
 import me.dimitri.libertyweb.api.LibertyWeb;
 import me.dimitri.libertyweb.model.WebPunishment;
-import me.dimitri.libertyweb.model.WebPunishmentResponse;
+import me.dimitri.libertyweb.model.response.WebPunishmentResponse;
 import space.arim.libertybans.api.*;
 import space.arim.libertybans.api.punish.Punishment;
 
@@ -63,12 +63,6 @@ public class PunishmentsRepository {
             webPunishment.setReason(punishment.getReason());
             webPunishments.add(webPunishment);
         }
-    }
-
-    private String extractUUID(String string) {
-        string = string.split("=")[1];
-        string = string.replaceFirst(".$","");
-        return string;
     }
 
     private String lookupUsername(String UUID) {

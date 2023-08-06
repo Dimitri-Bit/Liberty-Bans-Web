@@ -1,6 +1,7 @@
-package me.dimitri.libertyweb.model;
+package me.dimitri.libertyweb.model.response;
 
 import io.micronaut.serde.annotation.Serdeable;
+import me.dimitri.libertyweb.model.WebPunishment;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -3,11 +3,13 @@ package me.dimitri.libertyweb.service;
 import jakarta.inject.Singleton;
 import me.dimitri.libertyweb.api.MojangAPI;
 import me.dimitri.libertyweb.model.WebPunishment;
-import me.dimitri.libertyweb.model.WebPunishmentResponse;
+import me.dimitri.libertyweb.model.response.WebPunishmentResponse;
 import me.dimitri.libertyweb.repository.PunishmentsRepository;
 import space.arim.libertybans.api.PunishmentType;
 
 import java.util.List;
+
+import static me.dimitri.libertyweb.utils.TypeConverter.getType;
 
 @Singleton
 public class PunishmentService {
@@ -42,23 +44,4 @@ public class PunishmentService {
             }
         }
     }
-
-    private PunishmentType getType(String type) {
-        switch (type) {
-            case "ban" -> {
-                return PunishmentType.BAN;
-            }
-            case "mute" -> {
-                return PunishmentType.MUTE;
-            }
-            case "warn" -> {
-                return PunishmentType.WARN;
-            }
-            case "kick" -> {
-                return PunishmentType.KICK;
-            }
-        }
-        return PunishmentType.BAN;
-    }
-
 }

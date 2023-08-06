@@ -6,7 +6,7 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Produces;
-import me.dimitri.libertyweb.model.WebPunishmentResponse;
+import me.dimitri.libertyweb.model.response.WebPunishmentResponse;
 import me.dimitri.libertyweb.service.PunishmentService;
 
 @Controller("/punishments")
