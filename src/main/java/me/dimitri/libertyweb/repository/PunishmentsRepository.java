@@ -4,17 +4,19 @@ import jakarta.inject.Singleton;
 import me.dimitri.libertyweb.api.LibertyWeb;
 import me.dimitri.libertyweb.model.WebPunishment;
 import me.dimitri.libertyweb.model.WebPunishmentResponse;
-import space.arim.libertybans.api.Operator;
-import space.arim.libertybans.api.PunishmentType;
-import space.arim.libertybans.api.Victim;
+import space.arim.libertybans.api.*;
 import space.arim.libertybans.api.punish.Punishment;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Singleton
 public class PunishmentsRepository {
+
+
+    private static final UUID CONSOLE_UUID = new UUID(0, 0);
 
     private final LibertyWeb libertyWeb;
 
@@ -45,14 +47,14 @@ public class PunishmentsRepository {
         for (Punishment punishment : punishments) {
             WebPunishment webPunishment = new WebPunishment();
 
-            webPunishment.setVictimUuid(extractUUID(punishment.getVictim().toString()));
+            webPunishment.setVictimUuid(((PlayerVictim) punishment.getVictim()).getUUID().toString());
             webPunishment.setVictimUsername(lookupUsername(webPunishment.getVictimUuid()));
-            if (punishment.getOperator().getType().equals(Operator.OperatorType.CONSOLE)) {
-                webPunishment.setOperatorUuid("f78a4d8dd51b4b3998a3230f2de0c670");
-                webPunishment.setOperatorUsername("Console");
+            if (punishment.getOperator() instanceof PlayerOperator operator) {
+                webPunishment.setOperatorUuid(operator.getUUID().toString());
+                webPunishment.setOperatorUsername(lookupUsername(webPunishment.getOperatorUuid()));
             } else {
-                webPunishment.setOperatorUuid(extractUUID(punishment.getOperator().toString()));
-                webPunishment.setOperatorUuid(lookupUsername(webPunishment.getOperatorUuid()));
+                webPunishment.setOperatorUuid(CONSOLE_UUID.toString());
+                webPunishment.setOperatorUsername("Console");
             }
 
             webPunishment.setLabel(getLabel(punishment));
