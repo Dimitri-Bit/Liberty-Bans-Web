@@ -80,10 +80,10 @@ public class PunishmentsRepository {
         if (punishment.isExpired()) {
             return "Expired";
         }
-        if (punishment.isTemporary() && !punishment.isExpired()) {
+        if (punishment.isTemporary()) {
             return "Active";
         }
-        if (punishment.isPermanent() && !punishment.isExpired()) {
+        if (punishment.isPermanent()) {
             return "Permanent";
         }
         return "Unknown";
