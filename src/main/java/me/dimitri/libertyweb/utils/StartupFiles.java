@@ -7,10 +7,20 @@ import java.io.*;
 import java.net.URISyntaxException;
 
 public class StartupFiles {
+    private final File rootPath;
+
+    public StartupFiles(File rootPath) {
+
+        this.rootPath = rootPath;
+    }
+
+    public StartupFiles() {
+        this(null);
+    }
 
     public boolean createConfig() {
         try {
-            File config = new File("config.yml");
+            File config = new File(rootPath, "config.yml");
             if (config.createNewFile()) {
                 OutputStream outputStream = new FileOutputStream(config);
                 outputStream.write(getResource("config.yml").readAllBytes());
@@ -24,7 +34,7 @@ public class StartupFiles {
 
     public boolean createFrontend() {
         try {
-            File frontend = new File("frontend");
+            File frontend = new File(rootPath, "frontend");
             if (!frontend.isDirectory()) {
                 File frontendZip = new File("frontend.zip");
                 if (frontendZip.createNewFile()) {
