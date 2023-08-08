@@ -12,9 +12,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static me.dimitri.libertyweb.utils.ObjectMapper.mapPunishments;
+
 @Singleton
 public class PunishmentsRepository {
-
 
     private static final UUID CONSOLE_UUID = new UUID(0, 0);
 
@@ -39,47 +40,7 @@ public class PunishmentsRepository {
                 .toCompletableFuture()
                 .join();
 
-        mapPunishments(webPunishments, punishments);
+        mapPunishments(webPunishments, punishments, libertyWeb);
         return new WebPunishmentResponse(webPunishments.size() == 6, webPunishments);
-    }
-
-    private void mapPunishments(List<WebPunishment> webPunishments, List<Punishment> punishments) {
-        for (Punishment punishment : punishments) {
-            WebPunishment webPunishment = new WebPunishment();
-
-            webPunishment.setVictimUuid(((PlayerVictim) punishment.getVictim()).getUUID().toString());
-            webPunishment.setVictimUsername(lookupUsername(webPunishment.getVictimUuid()));
-            if (punishment.getOperator() instanceof PlayerOperator operator) {
-                webPunishment.setOperatorUuid(operator.getUUID().toString());
-                webPunishment.setOperatorUsername(lookupUsername(webPunishment.getOperatorUuid()));
-            } else {
-                webPunishment.setOperatorUuid(CONSOLE_UUID.toString());
-                webPunishment.setOperatorUsername("Console");
-            }
-
-            webPunishment.setLabel(getLabel(punishment));
-            webPunishment.setStart(punishment.getStartDateSeconds());
-            webPunishment.setEnd(punishment.getEndDateSeconds());
-            webPunishment.setReason(punishment.getReason());
-            webPunishments.add(webPunishment);
-        }
-    }
-
-    private String lookupUsername(String UUID) {
-        Optional<String> username = libertyWeb.getApi().getUserResolver().lookupName(java.util.UUID.fromString(UUID)).join();
-        return username.orElse("Unknown");
-    }
-
-    private String getLabel(Punishment punishment) {
-        if (punishment.isExpired()) {
-            return "Expired";
-        }
-        if (punishment.isTemporary()) {
-            return "Active";
-        }
-        if (punishment.isPermanent()) {
-            return "Permanent";
-        }
-        return "Unknown";
     }
 }

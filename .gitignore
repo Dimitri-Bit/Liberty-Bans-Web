@@ -17,3 +17,5 @@ out/
 .mvn/wrapper/maven-wrapper.properties
 mvnw
 mvnw.bat
+config.yml
+LibertyBans
