@@ -23,11 +23,16 @@
         <span class="navbar-brand">
           <small>LibertyBans</small>
         </span>
-        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="ms-auto search-btn-mobile me-4 d-lg-none" id="search-btn-mobile" type="button">
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="navbar-toggle-btn-mobile d-lg-none" id="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <i class="fas fa-sliders-h"></i>
         </button>
+        
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <form class="d-flex mx-3">
+          <form class="d-flex mx-3 d-none d-md-block">
             <div class="input-group input-group-md" id="green-hover">
               <span class="input-group-text pe-0" id="inputGroup-sizing-md">
                 <small>
@@ -63,7 +68,7 @@
       <div class="container pb-5 my-5">
         <div class="row">
           <div class="col-lg-8">
-            <div class="p-5">
+            <div class="p-4">
               <h1 class="display-4 hero-header">Punishments</h1>
               <h1 class="display-4 hero-sub-header">Web UI</h1>
               <p class="lead hero-paragraph fs-4">View the latest server punishments from the web</p>
@@ -72,43 +77,56 @@
               </button>
             </div>
           </div>
-          <div class="col-lg-4">
+          <div class="col-lg-3">
             <!-- <img class="w-100 shadow" src="https://via.placeholder.com/824x552" /> -->
             <!-- <img style="max-width: 70%;" src="../images/VisageRender-Dobe.png" /> -->
-            <!-- <img style="max-width: 70%;" src="../images/VisageRender-SalvaX1.png" /> -->
-            <div class="stats py-5">
-              <div class="row row-cols-lg-2">
-                <div class="bans-container">
-                  <div class="bans px-3">
-                    <h1 class="display-6 m-0 pt-3 stats-header">35222</h1>
-                    <p class="lead fs-4 stats-paragraph"><i class="fas fa-ban"></i> Bans</p>
-                  </div>
-                </div>
-
-                <div class="mutes-container">
-                  <div class="mutes px-3">
-                    <h1 class="display-6 m-0 pt-3 stats-header">32</h1>
-                    <p class="lead fs-4 stats-paragraph"><i class="fas fa-volume-mute"></i> Mutes</p>
-                  </div>
-                </div>
-
-                <div class="warns-container">
-                  <div class="warns px-3">
-                    <h1 class="display-6 m-0 pt-3 stats-header">59</h1>
-                    <p class="lead fs-4 stats-paragraph"><i class="fas fa-exclamation-triangle"></i> Warns</p>
-                  </div>
-                </div>
-
-                <div class="kicks-container">
-                  <div class="kicks px-3">
-                    <h1 class="display-6 m-0 pt-3 stats-header">16</h1>
-                    <p class="lead fs-4 stats-paragraph"><i class="fas fa-exclamation-triangle"></i> Kicks</p>
-                  </div>
-                </div>
-              </div>
+            <!-- <img style="width: 60%;" src="../images/VisageRender-SalvaX1.png" /> -->
+            <div class="stats p-4 py-5">
+              <h1 class="display-3 m-0 pt-3 stats-header">5213<span class="green-text">+</span></h1>
+              <p class="lead fs-4 stats-paragraph"><span class="green-text"><i class="fas fa-ban"></i></span> Punishments</p>
             </div>
           </div>
         </div>
+    </section>
+
+    <section class="bg-dark text-light p-5 p-lg-0 pt-lg-5 text-center text-sm-start section-darker">
+      <div class="container p-4">
+        <div class="row align-items-center p-2 flex-nowrap">
+        </div>
+        <!-- <div class="d-flex justify-content-center spinner">
+          <div id="spinner" class="spinner-border m-5" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div> -->
+        <div class="d-flex justify-content-start">
+          <h1 class="display-6 category-text pb-1">Bans <span class="fs-2">(152)</span></h1>
+        </div>
+        <div class="row align-items-center p-3 flex-nowrap">
+          <div class="col-auto permanent-line"></div>
+          <div class="col-auto">
+            <img src="https://visage.surgeplay.com/face/55/98015c8810d941d3b87bef1efe964c1c">
+          </div>
+          <div class="col">
+            <p class="fs-5 mb-0">Offender</p>
+            <p>Broar</p>
+          </div>
+          <div class="col-auto">
+            <img src="https://visage.surgeplay.com/face/55/98015c8810d941d3b87bef1efe964c1c">
+          </div>
+          <div class="col">
+            <p class="fs-5 mb-0">Staff</p>
+            <p>RedditMod</p>
+          </div>
+          <div class="col">
+            <div class="fs-5 mb-0">Reason</div>
+            <p>Hacking & Spamming</p>
+          </div>
+          <div class="col">
+            <span class="permanent fw-medium">Permanent</span>
+          </div>
+          <div class="col-auto permanent-line"></div>
+        </div>
+      </div>
     </section>
 
     <section class="bg-dark text-light p-5 p-lg-0 pt-lg-5 text-center text-sm-start section-darker">
@@ -121,69 +139,6 @@
         <!-- <div class="d-flex justify-content-start pb-3">
           <h1 class="display-6 category-text pb-1">Bans</h1>
         </div> -->
-
-        <div class="row align-items-center p-2 flex-nowrap punishment-row">
-          <div class="col-auto permanent-line"></div>
-          <div class="col-auto">
-              <img src="https://visage.surgeplay.com/face/55/98015c8810d941d3b87bef1efe964c1c">
-          </div>
-          <div class="col">
-              <p class="fs-5 mb-0">Offender</p>
-              <p>TeddyBear</p>
-          </div>
-          <div class="col-auto">
-              <img src="https://visage.surgeplay.com/face/55/d3072ace-a62d-44b5-b16d-a4e9014ae760">
-          </div>
-          <div class="col">
-              <p class="fs-5 mb-0">Staff</p>
-              <p>DiscordMod</p>
-          </div>
-          <div class="col">
-            <button class="btn btn-light"><i class="fas fa-plus"></i> Expand</button>
-          </div>
-        </div>
-        <!-- <div class="m-2"></div> -->
-        <div class="row align-items-center p-2 flex-nowrap punishment-row">
-          <div class="col-auto permanent-line"></div>
-          <div class="col-auto">
-              <img src="https://visage.surgeplay.com/face/55/98015c8810d941d3b87bef1efe964c1c">
-          </div>
-          <div class="col">
-              <p class="fs-5 mb-0">Offender</p>
-              <p>TeddyBear</p>
-          </div>
-          <div class="col-auto">
-              <img src="https://visage.surgeplay.com/face/55/d3072ace-a62d-44b5-b16d-a4e9014ae760">
-          </div>
-          <div class="col">
-              <p class="fs-5 mb-0">Staff</p>
-              <p>DiscordMod</p>
-          </div>
-          <div class="col">
-            <button class="btn btn-light"><i class="fas fa-plus"></i> Expand</button>
-          </div>
-        </div>
-        <!-- <div class="m-2"></div> -->
-        <div class="row align-items-center p-2 flex-nowrap punishment-row">
-          <div class="col-auto expired-line"></div>
-          <div class="col-auto">
-              <img src="https://visage.surgeplay.com/face/55/3b6fd6d36eac4794b824258cc8c5fa5c">
-          </div>
-          <div class="col">
-              <p class="fs-5 mb-0">Offender</p>
-              <p>Runner</p>
-          </div>
-          <div class="col-auto">
-              <img src="https://visage.surgeplay.com/face/55/b5bc3391-6f6d-4385-b6b4-a8ac4f096244">
-          </div>
-          <div class="col">
-              <p class="fs-5 mb-0">Staff</p>
-              <p>RedditMod</p>
-          </div>
-          <div class="col">
-            <button class="btn btn-light"><i class="fas fa-plus"></i> Expand</button>
-          </div>
-        </div>
       </div>
     </section>
   </body>

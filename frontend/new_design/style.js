@@ -1,4 +1,22 @@
 $(document).ready(function() {
+    $("#search-btn-mobile").hover(
+      function() {
+        $("#search-btn-mobile").addClass("green-text");
+      },
+      function() {
+        $("#search-btn-mobile").removeClass("green-text");
+      }
+    );
+
+    $("#navbar-toggler").hover(
+      function() {
+        $("#navbar-toggler").addClass("green-text");
+      },
+      function() {
+        $("#navbar-toggler").removeClass("green-text");
+      }
+    );
+
     $("#green-hover").hover(
       function() {
         $("#green-hover").addClass("green-border");
