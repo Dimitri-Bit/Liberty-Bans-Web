@@ -181,6 +181,44 @@ body {
     color: var(--gray-primary)
 }
 
+/* Punishment Container */
+.next-btn, .previous-btn {
+    border: none;
+    outline: none;
+    background-color: var(--black-secondary);
+    color: var(--gray-primary);
+    transition: 0.2s;
+}
+
+.next-btn {
+    border-radius: 0px 5px 5px 0px;
+}
+
+.previous-btn {
+    border-radius: 5px 0px 0px 5px;
+}
+
+.next-btn:hover, .previous-btn:hover {
+    color: var(--gray-tertiary);
+}
+
+.page-count {
+    border: none;
+    outline: none;
+    background-color: var(--black-secondary);
+    color: var(--gray-primary);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 /* Punishments Row */
 .flex-nowrap {
     overflow-x: auto;
@@ -247,4 +285,14 @@ body {
 /* Navigation Modal */
 .dark-modal-header {
     background-color: var(--black-primary);
+}
+
+/* Footer */
+.footer {
+    background-color: var(--black-secondary) !important;
+    color: var(--gray-primary);
+}
+
+.heart-icon {
+    color: var(--red)
 }
