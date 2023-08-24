@@ -1,7 +1,7 @@
 package me.dimitri.libertyweb.service;
 
 import jakarta.inject.Singleton;
-import me.dimitri.libertyweb.api.MojangAPI;
+import me.dimitri.libertyweb.api.UsernameAPI;
 import me.dimitri.libertyweb.model.WebPunishment;
 import me.dimitri.libertyweb.model.response.WebPunishmentResponse;
 import me.dimitri.libertyweb.repository.PunishmentsRepository;
@@ -14,12 +14,12 @@ import static me.dimitri.libertyweb.utils.TypeConverter.getType;
 @Singleton
 public class PunishmentService {
     private final PunishmentsRepository punishmentsRepository;
-    private final MojangAPI mojangAPI;
+    private final UsernameAPI usernameAPI;
     private final int MAX_ROWS = 6;
 
-    public PunishmentService(PunishmentsRepository punishmentsRepository, MojangAPI mojangAPI) {
+    public PunishmentService(PunishmentsRepository punishmentsRepository, UsernameAPI usernameAPI) {
         this.punishmentsRepository = punishmentsRepository;
-        this.mojangAPI = mojangAPI;
+        this.usernameAPI = usernameAPI;
     }
 
     public WebPunishmentResponse getPunishments(String type, String page) {
@@ -39,7 +39,7 @@ public class PunishmentService {
     private void fixUsernames(List<WebPunishment> punishments) {
         for (WebPunishment punishment : punishments) {
             if (punishment.getVictimUsername().equals("Unknown")) {
-                String username = mojangAPI.usernameLookup(punishment.getVictimUuid());
+                String username = usernameAPI.usernameLookup(punishment.getVictimUuid());
                 punishment.setVictimUsername(username);
             }
         }
