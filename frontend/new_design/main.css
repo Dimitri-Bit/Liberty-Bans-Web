@@ -110,7 +110,7 @@ body {
     color: var(--gray-primary) !important;
     text-decoration: none !important;
     border: solid 2px transparent;
-    font-size: 2.4vh;
+
 }
   
 .navbar-darker a:hover {
