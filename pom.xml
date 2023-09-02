@@ -25,6 +25,10 @@
 
   <repositories>
     <repository>
+      <id>arim-mvn-agpl3</id>
+      <url>https://mvn-repo.arim.space/affero-gpl3/</url>
+    </repository>
+    <repository>
       <id>sonatype-snapshots</id>
       <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
       <snapshots>
