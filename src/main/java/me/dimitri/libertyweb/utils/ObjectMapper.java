@@ -17,9 +17,9 @@ public class ObjectMapper {
     public static void mapPunishments(List<WebPunishment> webPunishments, List<Punishment> punishments, LibertyWeb libertyWeb) {
         for (Punishment punishment : punishments) {
             WebPunishment webPunishment = new WebPunishment();
-
             webPunishment.setVictimUuid(((PlayerVictim) punishment.getVictim()).getUUID().toString());
             webPunishment.setVictimUsername(lookupUsername(webPunishment.getVictimUuid(), libertyWeb));
+
             if (punishment.getOperator() instanceof PlayerOperator operator) {
                 webPunishment.setOperatorUuid(operator.getUUID().toString());
                 webPunishment.setOperatorUsername(lookupUsername(webPunishment.getOperatorUuid(), libertyWeb));

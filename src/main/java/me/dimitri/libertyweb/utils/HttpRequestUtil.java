@@ -21,7 +21,6 @@ public class HttpRequestUtil {
         try {
             URI uri = URI.create(url);
             HttpRequest request = HttpRequest.newBuilder().uri(uri).GET().build();
-
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 200) {
                 return response.body();
