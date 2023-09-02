@@ -103,7 +103,7 @@ body {
 .navbar-darker {
     background-color: var(--black-primary);
     /* border-bottom: solid 1.5px rgb(17, 15, 15); */
-    box-shadow: 0 2px 2px -2px rgb(0, 0, 0);
+    box-shadow: 0 4px 4px -2px rgb(0, 0, 0);
 }
 
 .navbar-darker a {
@@ -230,19 +230,19 @@ input[type=number] {
 
 .permanent-line {
     border-left: 7px solid var(--red);
-    height: 12vh;
+    height: 8vh;
     padding: 1vh;
 }
 
 .active-line {
     border-left: 7px solid var(--yellow);
-    height: 12vh;
+    height: 8vh;
     padding: 1vh;
 }
 
 .expired-line {
     border-left: 7px solid var(--green);
-    height: 12vh;
+    height: 8vh;
     padding: 1vh;
 }
 
