@@ -147,6 +147,17 @@ body {
 
 
 /* Hero */
+.hero-section {
+    min-height: 80vh;
+    border-bottom: solid 2px black;
+
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('https://static.planetminecraft.com/files/image/minecraft/project/2021/704/14089365_xl.webp');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
 .hero-header {
     font-family: 'Inter-SemiBold', sans-serif;
     color: var(--primary-green);
