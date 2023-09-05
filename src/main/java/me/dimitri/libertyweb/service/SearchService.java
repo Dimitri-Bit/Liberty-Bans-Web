@@ -20,14 +20,9 @@ public class SearchService {
         this.searchRepository = searchRepository;
     }
 
-//    public WebSearchResponse searchUser(String username) {
-//
-//
-//
-//        Optional<UUID> userUUID = lookupRepository.lookupUUID(username);
-//        return userUUID.map(uuid -> searchRepository.query(uuid, username)).orElse(null);
-//    }
-
+    /*
+    TODO: Validate if given username/UUID are of valid characters and length
+     */
     public WebSearchResponse searchUser(String input) {
         Optional<UUID> userUUID = convertUUID(input);
         Optional<String> username;
