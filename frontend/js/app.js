@@ -2,6 +2,58 @@ $(document).ready(function() {
     let currentPage = 1;
     let currentType = 'ban';
 
+    function fetchTotalStats() {
+        const allStats = $("#all-stats");
+
+        $.ajax({
+            url: "/stats/all",
+            method: "GET",
+            success: function(response) {
+                allStats.html(`${response.stats} <i class="far fa-chart-bar"></i>`);
+                console.log("test");
+            },
+            error: function() {
+                console.log("Error retrieving total stats");
+            }
+        })
+    }
+
+    function fetchTypeStats(type) {
+        const typeStats = $("#type-stats");
+        let typeText = "Bans";
+
+        $.ajax({
+            url: `/stats/${type}`,
+            method: "GET",
+            success: function(response) {
+
+                switch(type) {
+                    case "ban":
+                        typeText = "Bans";
+                    break;
+
+                    case "mute":
+                        typeText = "Mutes";
+                    break;
+
+                    case "kick":
+                        typeText = "Kicks";
+                    break;
+
+                    case "warn":
+                        typeText = "Warns";
+                    break;
+                }
+                
+            typeStats.html(`${typeText} <span class="fs-2">(${response.stats})</span>`);
+
+            },
+            error: function() {
+                console.error("Error retrieving type stats");
+            }
+        })
+    }
+
     function fetchPunishments(type, page) {
         const spinner = $("#spinner");
         const punishments = $("#punishments");
@@ -14,6 +66,7 @@ $(document).ready(function() {
                 punishments.hide();
             },
             success: function(response) {
+                fetchTypeStats(type);
                 punishments.empty();
 
                 if (response.punishments != null) {
@@ -86,7 +139,7 @@ $(document).ready(function() {
                 }
             },
             error: function() {
-                console.log("Error retreiving punishment history");
+                console.log("Error retrieving punishment history");
             },
             complete: function() {
                 spinner.hide();
@@ -102,6 +155,7 @@ $(document).ready(function() {
         $('#warnType').parent().removeClass('navbar-active');
     }
 
+    fetchTotalStats();
     fetchPunishments(currentType, currentPage);
 
     $('#nextBtn').click(function() {
