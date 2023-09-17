@@ -1,6 +1,7 @@
 $(document).ready(function() {
     let currentPage = 1;
     let currentType = 'ban';
+    let morePages = true;
 
     function fetchTotalStats() {
         const allStats = $("#all-stats");
@@ -27,31 +28,36 @@ $(document).ready(function() {
             method: "GET",
             success: function(response) {
 
-                switch(type) {
+                switch (type) {
                     case "ban":
                         typeText = "Bans";
-                    break;
+                        break;
 
                     case "mute":
                         typeText = "Mutes";
-                    break;
+                        break;
 
                     case "kick":
                         typeText = "Kicks";
-                    break;
+                        break;
 
                     case "warn":
                         typeText = "Warns";
-                    break;
+                        break;
                 }
-                
-            typeStats.html(`${typeText} <span class="fs-2">(${response.stats})</span>`);
+
+                typeStats.html(`${typeText} <span class="fs-2">(${response.stats})</span>`);
 
             },
             error: function() {
                 console.error("Error retrieving type stats");
             }
         })
+    }
+
+    function updatePageCount() {
+        const pageCount = $("#pageCount");
+        pageCount.val(currentPage);
     }
 
     function fetchPunishments(type, page) {
@@ -67,9 +73,13 @@ $(document).ready(function() {
             },
             success: function(response) {
                 fetchTypeStats(type);
+                updatePageCount();
+
                 punishments.empty();
 
                 if (response.punishments != null) {
+                    morePages = response.morePages;
+
                     response.punishments.forEach(function(punishment) {
                         let statusBadge;
                         let line;
@@ -122,7 +132,7 @@ $(document).ready(function() {
                     const html = `<div class="text-center p-5"> <p class="fw-medium fs-5 mb-0">Nothing to show for now</p></div>`;
                     punishments.append(html);
                 }
-                if (currentPage >= response.pageCount) {
+                if (!morePages) {
                     $('#nextBtn').prop('disabled', true);
                     $('#nextBtn').addClass('disabled-btn');
                 } else {
@@ -198,5 +208,27 @@ $(document).ready(function() {
         fetchPunishments(currentType, currentPage);
         removeActiveClass();
         $('#warnType').parent().addClass('navbar-active');
+    });
+
+    $('#pageCount').keypress(function(e) {
+        if (e.which == 13) {
+            let pageCountValue = $("#pageCount").val() * 1; // Weird way of turning a string into a number, don't ask me why. I'm tired.
+
+            if (typeof pageCountValue != 'number') {
+                return false;
+            }
+
+            if (!morePages && pageCountValue > currentPage) {
+                return false;
+            }
+
+            if (pageCountValue == currentPage) {
+                return false;
+            }
+
+            currentPage = pageCountValue;
+            fetchPunishments(currentType, currentPage);
+            return false;
+        }
     });
 });

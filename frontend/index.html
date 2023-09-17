@@ -24,7 +24,9 @@
         <span class="navbar-brand">
           <small>LibertyBans</small>
         </span>
-        <button class="ms-auto search-btn-mobile me-4 d-lg-none" id="search-btn-mobile" type="button">
+
+        <!-- Mobile Search Button -->
+        <button class="ms-auto search-btn-mobile me-4 d-lg-none" id="search-btn-mobile" type="button" data-bs-toggle="modal" data-bs-target="#search-modal">
           <i class="fas fa-search"></i>
         </button>
         
@@ -48,16 +50,16 @@
           </form>
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item navbar-active pe-1">
-              <a class="nav-link" id="banType">Ban</a>
+              <a href="#view-punishments" class="nav-link" id="banType">Ban</a>
             </li>
             <li class="nav-item pe-1">
-              <a class="nav-link" id="kickType">Kick</a>
+              <a href="#view-punishments" class="nav-link" id="kickType">Kick</a>
             </li>
             <li class="nav-item pe-1">
-              <a class="nav-link" id="muteType">Mute</a>
+              <a href="#view-punishments" class="nav-link" id="muteType">Mute</a>
             </li>
             <li class="nav-item pe-3">
-              <a class="nav-link" id="warnType">Warn</a>
+              <a href="#view-punishments" class="nav-link" id="warnType">Warn</a>
             </li>
           </ul>
           <!-- <button class="version-btn ps-4"><i class="fab fa-github fs-4"></i></button> -->
@@ -131,6 +133,8 @@
       <div class="container">
         <div class="row align-items-center p-2 flex-nowrap">
         </div>
+        
+        <!-- Bootstrap Spinner -->
         <div class="d-flex justify-content-center spinner">
           <div id="spinner" class="spinner-border m-5" role="status">
             <span class="sr-only">Loading...</span>
@@ -172,6 +176,7 @@
           <button class="previous-btn p-2 mx-1" id="prevBtn">Previous</button>
           <input class="page-count text-center" type="number" id="pageCount" name="page-count" min="1" max="999" size="4">
           <button class="next-btn p-2 mx-1" id="nextBtn">Next</button>
+          <div id="view-punishments"></div>
         </div>
       </div>
     </section>
@@ -188,6 +193,25 @@
         </div> -->
       </div>
     </section>
+
+    <!-- Search Modal -->
+    <div class="modal fade" id="search-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="search-modal-title">Search Form</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Understood</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <footer class="footer py-3">
       <div class="container d-flex justify-content-center align-items-center">

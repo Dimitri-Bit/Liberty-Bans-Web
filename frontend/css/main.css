@@ -148,10 +148,10 @@ body {
 
 /* Hero */
 .hero-section {
-  min-height: 60vh;
+  min-height: 70vh;
   border-bottom: solid 2px black;
 
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('https://static.planetminecraft.com/files/image/minecraft/project/2021/704/14089365_xl.webp');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('../images/hero-image.webp');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
