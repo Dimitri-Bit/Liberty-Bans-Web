@@ -36,7 +36,7 @@
         
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <form class="d-flex mx-3 d-none d-md-block">
-            <div class="input-group input-group-md" id="green-hover">
+            <div class="input-group input-group-md" id="green-hover" data-bs-toggle="modal" data-bs-target="#search-modal">
               <span class="input-group-text pe-0" id="inputGroup-sizing-md">
                 <small>
                   <i class="fas fa-search"></i>
@@ -194,24 +194,100 @@
       </div>
     </section>
 
-    <!-- Search Modal -->
-    <div class="modal fade" id="search-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="search-modal-title">Search Form</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Understood</button>
+  <!-- Search Modal -->
+  <div class="modal fade" id="search-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-lg"> <!-- Change modal-dialog class to modal-xl for a big modal -->
+      <div class="modal-content search-modal">
+        <div class="modal-header">
+          <h5 class="modal-title" id="search-modal-title">Search Form</h5>
+          <button type="button" class="search-close-btn" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+          <!-- Search Form -->
+          <form class="d-flex d-none d-md-block" id="main-search-form">
+            <div class="input-group primary-search input-group-md" id="green-hover">
+              <input class="form-control pe-0" type="search" placeholder="Username/UUID" id="main-search-form-input">
+              <span class="input-group-text" id="inputGroup-sizing-md">
+                <!-- <small> -->
+                  <i class="fas fa-search"></i>
+                <!-- </small> -->
+              </span>
+            </div>
+          </form>
+          <div class="search-results">
+            <!-- Search Spinner-->
+            <!-- <div class="text-center p-5"> <p class="fw-medium fs-5 mb-0" id="search-results-text">Not Found</p></div> -->
+            <div class="d-flex justify-content-center spinner">
+              <div id="search-spinner" class="spinner-border m-5" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+            <div id="search-punishments-victim" class="pt-5">
+              <h1 class="fs-3 fw-bold">Player History</h1>
+              <!-- -->
+              <div class="row align-items-center p-3 flex-nowrap">
+                <div class="col-auto permanent-line"></div>
+                <div class="col-auto">
+                  <img src="https://visage.surgeplay.com/face/55/98015c8810d941d3b87bef1efe964c1c">
+                </div>
+                <div class="col">
+                  <p class="fs-5 mb-0">Offender</p>
+                  <p>Broar</p>
+                </div>
+                <div class="col-auto">
+                  <img src="https://visage.surgeplay.com/face/55/98015c8810d941d3b87bef1efe964c1c">
+                </div>
+                <div class="col">
+                  <p class="fs-5 mb-0">Staff</p>
+                  <p>RedditMod</p>
+                </div>
+                <div class="col">
+                  <div class="fs-5 mb-0">Reason</div>
+                  <p>Hacking & Spamming</p>
+                </div>
+                <div class="col">
+                  <span class="permanent fw-medium">Permanent</span>
+                </div>
+                <div class="col-auto permanent-line"></div>
+              </div>
+              <!-- -->
+            </div>
+            <div id="search-punishments-operator">
+              <!-- -->
+              <h1 class="fs-3 fw-bold">Staff History</h1>
+              <div class="row align-items-center p-3 flex-nowrap">
+                <div class="col-auto permanent-line"></div>
+                <div class="col-auto">
+                  <img src="https://visage.surgeplay.com/face/55/98015c8810d941d3b87bef1efe964c1c">
+                </div>
+                <div class="col">
+                  <p class="fs-5 mb-0">Offender</p>
+                  <p>Broar</p>
+                </div>
+                <div class="col-auto">
+                  <img src="https://visage.surgeplay.com/face/55/98015c8810d941d3b87bef1efe964c1c">
+                </div>
+                <div class="col">
+                  <p class="fs-5 mb-0">Staff</p>
+                  <p>RedditMod</p>
+                </div>
+                <div class="col">
+                  <div class="fs-5 mb-0">Reason</div>
+                  <p>Hacking & Spamming</p>
+                </div>
+                <div class="col">
+                  <span class="permanent fw-medium">Permanent</span>
+                </div>
+                <div class="col-auto permanent-line"></div>
+              </div>
+              <!-- -->
+            </div>
+            
           </div>
         </div>
       </div>
     </div>
+  </div>
 
     <footer class="footer py-3">
       <div class="container d-flex justify-content-center align-items-center">

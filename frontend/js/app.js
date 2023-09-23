@@ -2,6 +2,8 @@ $(document).ready(function() {
     let currentPage = 1;
     let currentType = 'ban';
     let morePages = true;
+    const searchSpinner = $("#search-spinner");
+    searchSpinner.hide();
 
     function fetchTotalStats() {
         const allStats = $("#all-stats");
@@ -11,7 +13,6 @@ $(document).ready(function() {
             method: "GET",
             success: function(response) {
                 allStats.html(`${response.stats} <i class="far fa-chart-bar"></i>`);
-                console.log("test");
             },
             error: function() {
                 console.log("Error retrieving total stats");
@@ -231,4 +232,17 @@ $(document).ready(function() {
             return false;
         }
     });
+
+    $('#main-search-form').submit(function() {
+        let inputValue = $('#main-search-form-input').val();
+        search(inputValue);
+        return false;
+    });
+
+    function search(input) {
+        if (input.length < 3 || input.length > 16) {
+            return;
+        }
+        console.log("nice");
+    }
 });
