@@ -243,6 +243,6 @@ $(document).ready(function() {
         if (input.length < 3 || input.length > 16) {
             return;
         }
-        console.log("nice");
+        console.log(input);
     }
 });
