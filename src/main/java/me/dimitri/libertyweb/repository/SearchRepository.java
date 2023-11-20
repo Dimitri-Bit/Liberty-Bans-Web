@@ -44,7 +44,7 @@ public class SearchRepository {
                 .build()
                 .getAllSpecificPunishments()
                 .toCompletableFuture()
-                .join();
+                .join(); // test
 
         mapPunishments(victimWebPunishments, victimPunishments, libertyWeb);
         mapPunishments(operatorWebPunishments, operatorPunishments, libertyWeb);
