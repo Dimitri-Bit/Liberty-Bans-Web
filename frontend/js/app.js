@@ -1,24 +1,7 @@
-$(document).ready(function() {
+$(document).ready(function () {
     let currentPage = 1;
     let currentType = 'ban';
     let morePages = true;
-    const searchSpinner = $("#search-spinner");
-    searchSpinner.hide();
-
-    function fetchTotalStats() {
-        const allStats = $("#all-stats");
-
-        $.ajax({
-            url: "/stats/all",
-            method: "GET",
-            success: function(response) {
-                allStats.html(`${response.stats} <i class="far fa-chart-bar"></i>`);
-            },
-            error: function() {
-                console.log("Error retrieving total stats");
-            }
-        })
-    }
 
     function fetchTypeStats(type) {
         const typeStats = $("#type-stats");
@@ -61,8 +44,81 @@ $(document).ready(function() {
         pageCount.val(currentPage);
     }
 
+    function removeActiveClass() {
+        $('#banType').parent().removeClass('navbar-active');
+        $('#kickType').parent().removeClass('navbar-active');
+        $('#muteType').parent().removeClass('navbar-active');
+        $('#warnType').parent().removeClass('navbar-active');
+    }
+
+    fetchPunishments(currentType, currentPage);
+
+    $('#nextBtn').click(function() {
+        currentPage++;
+        fetchPunishments(currentType, currentPage);
+    });
+
+    $('#prevBtn').click(function() {
+        currentPage--;
+        fetchPunishments(currentType, currentPage);
+    });
+
+    $('#banType').click(function() {
+        currentPage = 1;
+        currentType = 'ban';
+        fetchPunishments(currentType, currentPage);
+        removeActiveClass();
+        $('#banType').parent().addClass('navbar-active');
+    });
+
+    $('#kickType').click(function() {
+        currentPage = 1;
+        currentType = 'kick';
+        fetchPunishments(currentType, currentPage);
+        removeActiveClass();
+        $('#kickType').parent().addClass('navbar-active');
+    });
+
+    $('#muteType').click(function() {
+        currentPage = 1;
+        currentType = 'mute';
+        fetchPunishments(currentType, currentPage);
+        removeActiveClass();
+        $('#muteType').parent().addClass('navbar-active');
+    });
+
+    $('#warnType').click(function() {
+        currentPage = 1;
+        currentType = 'warn';
+        fetchPunishments(currentType, currentPage);
+        removeActiveClass();
+        $('#warnType').parent().addClass('navbar-active');
+    });
+
+    $('#pageCount').keypress(function(e) {
+        if (e.which == 13) {
+            let pageCountValue = $("#pageCount").val() * 1; // Weird way of turning a string into a number, don't ask me why. I'm tired.
+
+            if (typeof pageCountValue != 'number') {
+                return false;
+            }
+
+            if (!morePages && pageCountValue > currentPage) {
+                return false;
+            }
+
+            if (pageCountValue == currentPage) {
+                return false;
+            }
+
+            currentPage = pageCountValue;
+            fetchPunishments(currentType, currentPage);
+            return false;
+        }
+    });
+
     function fetchPunishments(type, page) {
-        const spinner = $("#spinner");
+        const spinner = $("#punishments-spinner");
         const punishments = $("#punishments");
 
         $.ajax({
@@ -159,90 +215,4 @@ $(document).ready(function() {
         });
     }
 
-    function removeActiveClass() {
-        $('#banType').parent().removeClass('navbar-active');
-        $('#kickType').parent().removeClass('navbar-active');
-        $('#muteType').parent().removeClass('navbar-active');
-        $('#warnType').parent().removeClass('navbar-active');
-    }
-
-    fetchTotalStats();
-    fetchPunishments(currentType, currentPage);
-
-    $('#nextBtn').click(function() {
-        currentPage++;
-        fetchPunishments(currentType, currentPage);
-    });
-
-    $('#prevBtn').click(function() {
-        currentPage--;
-        fetchPunishments(currentType, currentPage);
-    });
-
-    $('#banType').click(function() {
-        currentPage = 1;
-        currentType = 'ban';
-        fetchPunishments(currentType, currentPage);
-        removeActiveClass();
-        $('#banType').parent().addClass('navbar-active');
-    });
-
-    $('#kickType').click(function() {
-        currentPage = 1;
-        currentType = 'kick';
-        fetchPunishments(currentType, currentPage);
-        removeActiveClass();
-        $('#kickType').parent().addClass('navbar-active');
-    });
-
-    $('#muteType').click(function() {
-        currentPage = 1;
-        currentType = 'mute';
-        fetchPunishments(currentType, currentPage);
-        removeActiveClass();
-        $('#muteType').parent().addClass('navbar-active');
-    });
-
-    $('#warnType').click(function() {
-        currentPage = 1;
-        currentType = 'warn';
-        fetchPunishments(currentType, currentPage);
-        removeActiveClass();
-        $('#warnType').parent().addClass('navbar-active');
-    });
-
-    $('#pageCount').keypress(function(e) {
-        if (e.which == 13) {
-            let pageCountValue = $("#pageCount").val() * 1; // Weird way of turning a string into a number, don't ask me why. I'm tired.
-
-            if (typeof pageCountValue != 'number') {
-                return false;
-            }
-
-            if (!morePages && pageCountValue > currentPage) {
-                return false;
-            }
-
-            if (pageCountValue == currentPage) {
-                return false;
-            }
-
-            currentPage = pageCountValue;
-            fetchPunishments(currentType, currentPage);
-            return false;
-        }
-    });
-
-    $('#main-search-form').submit(function() {
-        let inputValue = $('#main-search-form-input').val();
-        search(inputValue);
-        return false;
-    });
-
-    function search(input) {
-        if (input.length < 3 || input.length > 16) {
-            return;
-        }
-        console.log(input);
-    }
 });

@@ -10,6 +10,9 @@
 body {
   font-family: 'Inter', sans-serif;
   background-color: var(--black-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 :root {
@@ -28,21 +31,7 @@ body {
   --green: rgb(37, 84, 15);
 }
 
-/*
-Clear X from search bar
-https://medium.com/@rion.mrk/how-to-remove-x-icon-from-search-input-field-or-input-type-search-db3c808405fb
-*/
-
-/* clears the ‘X’ from Internet Explorer */
-input[type=search]::-ms-clear { display: none; width : 0; height: 0; }
-input[type=search]::-ms-reveal { display: none; width : 0; height: 0; }
-/* clears the ‘X’ from Chrome */
-input[type="search"]::-webkit-search-decoration,
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-results-button,
-input[type="search"]::-webkit-search-results-decoration { display: none; }
-
-/* Bootstrap Stuff */
+/* Navbar */
 .navbar-toggler:focus,
 .navbar-toggler:active,
 .navbar-toggler-icon:focus,
@@ -54,66 +43,13 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
   transition: 0.2s;
 }
 
-.form-control,
-.form-control:active,
-.form-control:focus {
-  background-color: var(--black-secondary);
+.navbar-toggle-btn-mobile {
   border: none;
-  outline: none;
-  box-shadow: none;
-  color: var(--gray-secondary);
-  border-right: solid 2px var(--black-secondary);
+  background-color: transparent;
+  color: var(--gray-primary);
   transition: 0.2s;
 }
 
-.form-control:hover {
-  cursor: pointer !important;
-}
-
-.input-group-text {
-  background-color: var(--black-secondary);
-  border: none;
-  color: var(--gray-secondary);
-}
-
-.form-control::-webkit-input-placeholder {
-  color: var(--gray-secondary);
-}
-
-.input-group {
-  width: 50% !important;
-  border: solid 2px transparent;
-  transition: 0.2s;
-}
-
-.input-group:hover {
-  cursor: pointer !important;
-}
-
-.green-border {
-  border: solid 2px var(--primary-green);
-  border-radius: 3px;
-}
-
-.green-text {
-  color: var(--secondary-green) !important;
-}
-
-.search-input-hover,
-.search-input-hover:focus,
-.search-input-hover:active,
-.search-input-hover::-webkit-input-placeholder {
-  color: var(--gray-tertiary);
-}
-
-.search-input-hover-border-right,
-.search-input-hover-border-right:focus,
-.search-input-hover-border-right:active,
-.search-input-hover-border-right::-webkit-input-placeholder {
-  border-right: solid 2px var(--black-secondary);
-}
-
-/* Navbar */
 .navbar-darker {
   background-color: var(--black-primary);
   /* border-bottom: solid 1.5px rgb(17, 15, 15); */
@@ -142,69 +78,18 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 
 .navbar-active a {
   color: var(--primary-green) !important;
-  /* border-bottom: solid 2px var(--primary-green); */
 }
 
-.version-btn {
-  border: none;
-  color: var(--gray-primary);
-  border-left: solid 1px var(--other);
-  background-color: transparent;
-}
-
-.search-btn-mobile, .navbar-toggle-btn-mobile {
-  border: none;
-  background-color: transparent;
-  color: var(--gray-primary);
-  transition: 0.2s;
-}
-
-
-/* Hero */
-.hero-section {
-  min-height: 70vh;
-  border-bottom: solid 2px black;
-
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('../images/hero-image.webp');
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-
-.hero-header {
-  font-family: 'Inter-SemiBold', sans-serif;
-  color: var(--primary-green);
-}
-
-.hero-sub-header {
-  font-family: 'Inter-SemiBold', sans-serif;
-  color: var(--gray-primary);
-}
-
-.hero-paragraph {
-  font-family: 'Inter', sans-serif;
-  color: var(--gray-tertiary);
-}
-
-.section-darker {
-  background-color: var(--black-primary) !important;
-}
-
-.hero-btn {
-  color: var(--black-primary);
-  background-color: var(--gray-primary);
-}
-
-.stats-header {
-  font-family: 'Inter-SemiBold', sans-serif;
-  color: var(--gray-primary)
-}
-
-.stats-paragraph {
-  font-family: 'Inter-SemiBold', sans-serif;
-  color: var(--gray-primary)
-}
+/* Footer */
+.footer {
+    background-color: var(--black-secondary) !important;
+    color: var(--gray-primary);
+    margin-top: auto;
+  }
+  
+  .heart-icon {
+    color: var(--red)
+  }
 
 /* Punishment Container */
 .next-btn, .previous-btn {
@@ -310,36 +195,4 @@ input[type=number] {
 /* Navigation Modal */
 .dark-modal-header {
   background-color: var(--black-primary);
-}
-
-/* Footer */
-.footer {
-  background-color: var(--black-secondary) !important;
-  color: var(--gray-primary);
-}
-
-.heart-icon {
-  color: var(--red)
-}
-
-/* Search Modal */
-.search-modal {
-  background-color: var(--black-primary);
-  color: var(--gray-primary);
-  border-top: none !important;
-}
-
-.search-close-btn {
-  color: var(--gray-primary);
-  border: none;
-  outline: none;
-  background-color: transparent;
-}
-
-.primary-search {
-  width: 100% !important;
-}
-
-.modal-header {
-  border: none !important;
 }
