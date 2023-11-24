@@ -1,0 +1,28 @@
+@font-face {
+  font-family: Inter;
+  src: url(../fonts/static/Inter-Regular.ttf);
+}
+@font-face {
+  font-family: Inter-SemiBold;
+  src: url(../fonts/static/Inter-SemiBold.ttf);
+}
+
+:root {
+  --black-tertiary: #1e2025;
+  --gray-primary: #dedfd6;
+}
+
+body {
+    background-color: var(--black-tertiary);
+    color: var(--gray-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .error-container {
+    text-align: center;
+  }
