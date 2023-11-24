@@ -13,6 +13,7 @@ public class Application {
         StartupFiles startupFiles = new StartupFiles();
         if (startupFiles.createConfig()) {
             log.info(" config.yml created, please configure your Liberty Web application there");
+            log.info(" Make sure to copy your LibertyBans plugin folder to the same directory as Liberty Web");
             System.exit(0);
             return;
         }

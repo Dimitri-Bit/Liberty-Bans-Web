@@ -12,6 +12,3 @@ caffeine:
     maxSize: 150
     # After what time cache record will expire
     expiration: "10m"
-
-# Version control, don't touch
-version: "1.1.0"
