@@ -8,12 +8,12 @@
 }
 
 :root {
-  --black-tertiary: #1e2025;
+  --black-primary: #1f1f20;
   --gray-primary: #dedfd6;
 }
 
 body {
-    background-color: var(--black-tertiary);
+    background-color: var(--black-primary);
     color: var(--gray-primary);
     display: flex;
     align-items: center;
