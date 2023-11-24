@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>me.dimitri.libertyweb</groupId>
   <artifactId>Liberty_Web</artifactId>
-  <version>0.1</version>
+  <version>2.0.0</version>
   <packaging>${packaging}</packaging>
 
   <parent>
