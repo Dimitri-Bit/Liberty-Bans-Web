@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Endpoints - LibertyWeb Docs</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Endpoints", url: "#_top", children: [
+              {title: "Punishment Endpoint", url: "#punishment-endpoint" },
+              {title: "Statistics Endpoint", url: "#statistics-endpoint" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav">
+      <a href=".." class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href=".." class="btn btn-xs btn-link">
+        Liberty Web Docs
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="endpoints">Endpoints</h1>
+<p>Here you can better understand the Rest API for Liberty Web and utilize them to create your own frontend or other software.</p>
+<h2 id="punishment-endpoint">Punishment Endpoint</h2>
+<p>This endpoint returns punishments by type using a pagination system.
+You can access it using the <code>punishments/{punishmentType}/{pageNumber}</code> url.</p>
+<p>The <code>{punishmentType}</code> variable is what type of punishment you want to query. The types are:
+- ban
+- mute
+- warn
+- kick</p>
+<p>The <code>{pageNumber}</code> is just the number of the page you want to view.
+The endpoint responds in some JSON that looks like this:</p>
+<pre><code class="language-json">{
+   &quot;morePages&quot;:false,
+   &quot;punishments&quot;:[
+      {
+         &quot;victimUuid&quot;:&quot;960fdc33-e2d3-4b1e-9957-9519659f9784&quot;,
+         &quot;victimUsername&quot;:&quot;computer&quot;,
+         &quot;operatorUuid&quot;:&quot;00000000-0000-0000-0000-000000000000&quot;,
+         &quot;operatorUsername&quot;:&quot;Console&quot;,
+         &quot;reason&quot;:&quot;flying 5d&quot;,
+         &quot;active&quot;:false,
+         &quot;start&quot;:1693683950,
+         &quot;end&quot;:0,
+         &quot;label&quot;:&quot;Permanent&quot;
+      }
+   ]
+}
+</code></pre>
+<p>The <code>morePages</code> boolean signals if there are any more pages. For example if you query <code>punishments/ban/3</code> and the <code>pageNumber</code> is true there is at least one more page available, if false you have reached the end.</p>
+<p><code>punishments</code> is a JSON array of objects of punishments. Most of the object's values are self explanatory other then the <code>end</code>, if <code>end</code> is 0 that means that the punishment will never expire. If the <code>operatorUuid</code> is <code>00000000-0000-0000-0000-000000000000</code> that means the operator is the console.</p>
+<h2 id="statistics-endpoint">Statistics Endpoint</h2>
+<p>This endpoint tells you the amount of total punishments there are.
+You can access it with the url <code>stats/{type}</code>. The type can be one of the following:
+- all (returns the total sum of all punishments)
+- ban
+- mute
+- warn
+- kick</p>
+<p>The endpoint responds in very short JSON</p>
+<pre><code class="language-json">{&quot;stats&quot;:1}
+</code></pre>
+<p><code>stats</code> of course being the number of punishments queried.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav">
+      <a href=".." class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href=".." class="btn btn-xs btn-link">
+        Liberty Web Docs
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
