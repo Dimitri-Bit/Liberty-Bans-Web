@@ -26,5 +26,5 @@ caffeine:
     expiration: "10m"
 ```
 
-- After you're done editing your config.yml start Liberty Web once again, on the second startup a new folder called frontend will be created. In this folder you can edit or completely change the style of your website to suit your needs. If you wish to create a completely new frontend you should learn some more about the backend on [this guide]().
+- After you're done editing your config.yml start Liberty Web once again, on the second startup a new folder called frontend will be created. In this folder you can edit or completely change the style of your website to suit your needs. If you wish to create a completely new frontend you should learn some more about the backend on [this guide](endpoints.md).
 - You are done, you can now view your punishments online. Please note that this is meant to be a public facing website to allow all your players to publicly view your server's punishments. Some features meant for administration use of the server should be added in future updates so stay tuned.
