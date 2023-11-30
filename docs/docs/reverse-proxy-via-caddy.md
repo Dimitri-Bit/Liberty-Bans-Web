@@ -114,7 +114,7 @@ Select the approporite options:
 
 ![DNS Example Image](img/image_9.png)
 
-Where it is really important to select both "Edit", and "Read" perms for the previously installed module to work. It is explained here.
+Where it is really important to select both "Edit", and "Read" perms for the previously installed module to work. It is explained [here](https://github.com/libdns/cloudflare#authenticating).
 Also, `10.10.10.10` should be the public IP of your server, and the `example.server` is your domain.
 
 Continue to summary:
@@ -150,7 +150,7 @@ Where `bans.example.server` is your domain, `your-long-token` is the token you j
 
 Now, close the file with `Crl` + `x`, and select `y` as an option.
 
-The other options are for another feature, which is explained in the previously mentioned guide. I've documented the steps in case the guide fails to resolve. Credit can be found here.
+The other options are for another feature, which is explained in the previously mentioned guide. I've documented the steps in case the guide fails to resolve. Credit can be found [here](https://samjmck.com/en/blog/using-caddy-with-cloudflare/#authenticated-origin-pull).
 
 
 Pull the CF cert:
