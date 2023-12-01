@@ -36,6 +36,7 @@
         var pageToc = [
           {title: "Liberty Web Docs", url: "#_top", children: [
               {title: "Installation Guide", url: "#installation-guide" },
+              {title: "Reverse Proxy", url: "#reverse-proxy" },
           ]},
         ];
 
@@ -96,6 +97,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
         <li class="wm-toc-li wm-toc-lev1 "><a href="" class="wm-article-link wm-toc-text">Liberty Web Docs</a>
 </li>
         <li class="wm-toc-li wm-toc-lev1 "><a href="endpoints/" class="wm-article-link wm-toc-text">Endpoints</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="reverse-proxy-via-caddy/" class="wm-article-link wm-toc-text">Reverse Proxy setup with Caddy</a>
 </li>
   </ul>
 </nav>
@@ -159,6 +162,77 @@ caffeine:
 <li>After you're done editing your config.yml start Liberty Web once again, on the second startup a new folder called frontend will be created. In this folder you can edit or completely change the style of your website to suit your needs. If you wish to create a completely new frontend you should learn some more about the backend on <a href="endpoints/">this guide</a>.</li>
 <li>You are done, you can now view your punishments online. Please note that this is meant to be a public facing website to allow all your players to publicly view your server's punishments. Some features meant for administration use of the server should be added in future updates so stay tuned.</li>
 </ul>
+<h2 id="reverse-proxy">Reverse Proxy</h2>
+<p>After you setup Libertybans Web, you will probably want it to be available to https, on a domain. A reverse proxy allows you to run infinite web servers on the same port by proxying the requests.</p>
+<p>The following are the requirements for doing so:</p>
+<ol>
+<li>A VPS/Dedicated Server.</li>
+<li>Basic knowledge with linux.</li>
+<li>A (sub)domain.</li>
+<li>You are not able to do that on any hosting with a simple panel like pterodactyl. </li>
+<li>Run LibertyWeb on a port that is not 443 or 80, as they will be used by the reverse proxy.</li>
+<li>Running LibertyWeb on the same machine (very recommended, but not required).</li>
+</ol>
+<h3 id="installing-nginx">Installing NGINX</h3>
+<p>Note: You do not need to install it if you are running pterodactyl for example.</p>
+<p>The following is how to install Nginx on Debian-Based linux distributions. </p>
+<pre><code class="language-sh">sudo apt update
+sudo apt-get install nginx
+sudo systemctl enable --now nginx
+sudo systemctl start nginx
+</code></pre>
+<p>Run the following to check if Nginx was installed &amp; running properly:</p>
+<pre><code class="language-sh">curl 127.0.0.1:80
+</code></pre>
+<p>If it prints an HTML, then it's working properly.</p>
+<h3 id="installing-certbot">Installing certbot</h3>
+<p>The following is how to install certbot on Debian-Based linux distributions.</p>
+<pre><code class="language-sh">sudo apt update
+sudo apt install -y certbot
+sudo apt install -y python3-certbot-nginx
+</code></pre>
+<h3 id="creating-a-certificate">Creating a Certificate</h3>
+<p>For HTTPS to be secure, a certificate is required. You need to do the following before proceeding.</p>
+<ol>
+<li>Set the domain you want to use to A record, and set the IP to your VPS/Dedicated Server IP. If you're using CloudFlare, disable proxy mode (the cloud icon) unless you know what you're doing.</li>
+<li>Make sure the port 443 and 80 are allowed through your firewall (443 is required for the web server to stay working.)</li>
+</ol>
+<p>Run the following command to create the certificate:</p>
+<pre><code class="language-sh">certbot certonly --nginx -d &lt;DOMAIN&gt;
+</code></pre>
+<ul>
+<li>Replace <DOMAIN> with your domain or subdomain.</li>
+</ul>
+<h3 id="creating-the-nginx-configuration-file">Creating the NGINX configuration file.</h3>
+<p>SFTP into your machine. Go to this directory <code>/etc/nginx/sites-available</code> and create a new file and call it <code>libertyweb.conf</code></p>
+<p>Open the file and set the file content to this, replace <DOMAIN> with your domain, and <PORT> with the port running LibertyWeb.</p>
+<pre><code class="language-nginxconf">server {
+    listen 443 ssl;
+    server_name &lt;DOMAIN&gt;;
+
+    ssl_certificate /etc/letsencrypt/live/&lt;DOMAIN&gt;/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/&lt;DOMAIN&gt;/privkey.pem;
+
+    location / {
+        proxy_pass http://&lt;HOST&gt;:&lt;PORT&gt;;
+        proxy_set_header Host $host;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection &quot;upgrade&quot;;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+</code></pre>
+<ul>
+<li>If LibertyWeb is not on the same machine, replace <code>127.0.0.1</code> with the IP required to reach it.</li>
+</ul>
+<h4 id="enabling-configuration">Enabling Configuration</h4>
+<p>The final step is to enable your NGINX configuration and restart it.</p>
+<pre><code class="language-sh">sudo ln -s /etc/nginx/sites-available/libertyweb.conf /etc/nginx/sites-enabled/libertyweb.conf
+sudo systemctl restart nginx
+</code></pre>
+<h3 id="done">Done!</h3>
+<p>It should be accessible from your domain now, with https!</p>
 
   <br>
     
@@ -193,5 +267,5 @@ caffeine:
 </html>
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2023-11-25 16:53:10.567897+00:00
+Build Date UTC : 2023-12-01 22:47:08.973712+00:00
 -->

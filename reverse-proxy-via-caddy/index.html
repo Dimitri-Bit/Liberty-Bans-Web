@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Reverse Proxy setup with Caddy - LibertyWeb Docs</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Reverse Proxy setup with Caddy", url: "#_top", children: [
+              {title: "Caddy installation", url: "#caddy-installation" },
+              {title: "Web server setup", url: "#web-server-setup" },
+              {title: "Adding the configuration", url: "#adding-the-configuration" },
+              {title: "Setting up DNS records", url: "#setting-up-dns-records" },
+              {title: "Setting up firewall rules", url: "#setting-up-firewall-rules" },
+              {title: "Bonus: Setting up TLS and Cloudflare\u0027s proxy for security", url: "#bonus-setting-up-tls-and-cloudflares-proxy-for-security" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav">
+      <a href="../endpoints/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../endpoints/" class="btn btn-xs btn-link">
+        Endpoints
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="reverse-proxy-setup-with-caddy">Reverse Proxy setup with Caddy</h1>
+<p>This page explains how to set up the web interface with a reverse proxy like <a href="https://caddyserver.com/">Caddy</a>, for
+TLS and security.</p>
+<p>You'll need:
+- A domain to use with the web interface.
+- A server running a newer version of Linux. In this guide we'll use the <code>apt</code> package manager, but you are free to use your own.
+- A running instance of the LibertyBans-Web interface. Do note, that in order for this to work, you'll have to have the reverse proxy
+access the running instance in a way or another. Double-check your network setup if this is possible. For help, consider joining the official discord support <a href="https://discord.gg/qgQbJMkcQw">here</a>.</p>
+<p>In this guide we'll cover an installation that is behind <a href="https://www.cloudflare.com/">Cloudflare</a>'s DDoS protection system. If you do not use Cloudflare, or do not want to,
+you are free to skip certain steps. In the guide, it will be noted where these steps are.</p>
+<h2 id="caddy-installation">Caddy installation</h2>
+<p>First, please install Caddy, a secure web server with automatic TLS prevision. You can find help for this <a href="https://caddyserver.com/docs/install">here</a>.</p>
+<h2 id="web-server-setup">Web server setup</h2>
+<p>Now if you've got Caddy installed, consider checking their official documentation before proceeding with this tutorial. It explains a lot regarding the inner workings
+of the webserver, and is useful knowledge in general. Also, knowing how to resolve issues will be very helpful in the long term. The documentation can be found <a href="https://caddyserver.com/docs/">here</a>.</p>
+<p>To start the actual setup process, please open the caddy configuration file. There are several ways to configure caddy, in this tutorial we'll use the <code>Caddyfile</code>. The command to open the configuration file is
+<code>sudo nano /etc/caddy/Caddyfile</code>. Of course, you are free to use your own editor if <code>nano</code> isn't your preference.</p>
+<p>In this file, you'll find sections. These sections, blocks resemble certain domains, or subdomains, and essentially a working website. By default, there is will be a block with <code>:80</code>. This is the default caddy page, which listens on port 80. Consider removing everything from the file, so it's empty.</p>
+<p>Tip: Clicking <code>Ctrl</code> + <code>k</code> in <code>nano</code> will delete the current line. This is very useful when removing large amounts of text.</p>
+<h2 id="adding-the-configuration">Adding the configuration</h2>
+<p>Now, we'll add the relevant config option to make Caddy reverse proxy to our LibertyBans-Web instance.</p>
+<p>Feel free to copy the following:</p>
+<pre><code class="language-yml">bans.minecraft.server {
+        reverse_proxy 0.0.0.0:8080;
+}
+</code></pre>
+<p>TIp: In <code>nano</code> to paste something use the <code>right mause button</code> on your mouse.</p>
+<p>After copying, do <code>Ctrl</code> + <code>x</code>, and answer <code>y</code> to save the current modified buffer.</p>
+<p>Then, re-start the <code>caddy</code> system service to apply your changes. Depending on your system, you can do this with <code>sudo systemctl restart caddy</code>.</p>
+<h2 id="setting-up-dns-records">Setting up DNS records</h2>
+<p>Now that you have a web-server running, it's time to set up a DNS record. We'll use the <code>bans</code> subdomain in this example, but you are free to use your root domain, or even your minecraft subdomain. Just be careful with the records.</p>
+<p>Navigate to your registrars site, in this example we'll use Cloudflare. Log in, click on your Domain, and select DNS on the left.</p>
+<p><img alt="DNS Example Image" src="img/image_3.png" /></p>
+<p>On the DNS page, click "Add record" on the right.</p>
+<p><img alt="DNS Example Image" src="img/image_4.png" /></p>
+<p>The record should look like the following:</p>
+<p><img alt="DNS Example Image" src="img/image_5.png" /></p>
+<p>Where, <code>bans</code> is your custom subdomain, and <code>10.10.10.10</code> is the public IP of your server. If you do not have a static IP, there are workarounds you can do, but that is out of the scope of this tutorial. 
+For support, consider joining the official discord <a href="https://discord.gg/qgQbJMkcQw">here</a>.</p>
+<p>Warning: Hosting a service without proper DDoS protection may be an issue for your infrastructure. In the bonus section of this page we'll cover how to set up Cloudflare's proxy. Consider setting it up since it's a mayor security upgrade.</p>
+<h2 id="setting-up-firewall-rules">Setting up firewall rules</h2>
+<p>So now you've got your LibertyBans-Web, your reverse proxy, and your DNS records set up. However, you still can't view the site. This is because you'll have to set up firewall records first.
+In this tutorial we'll use <code>ufw</code>, but you are free to use your own.</p>
+<p>To enable port <code>80</code>, execute the following command:</p>
+<p><code>sudo ufw enable 80/tcp</code></p>
+<p>Now, navigate to <code>bans.example.server:80</code>, where <code>bans.example.server</code> is your subdomain. Woala, you did it! You should be greeted with the LibertyBans-Web interface gui.</p>
+<p><strong>Warning: At this stage you do not have TLS on your subdomain. This makes it vulnerably to countless attacks. Please consider setting up TLS encryption. In the bonus section we'll set this up with Cloudflare's proxy, but you can set it up without CF's proxy as well.</strong> </p>
+<h2 id="bonus-setting-up-tls-and-cloudflares-proxy-for-security">Bonus: Setting up TLS and Cloudflare's proxy for security</h2>
+<p>Now, to make our interface work with Cloudflare, you'll have to download a package, and get a Cloudflare API key.
+Additionally, we'll set up <code>TLS</code>, since it's mainly why you decided to set the interface up with a reverse proxy, am I right?</p>
+<p>First, get the appropriate package:</p>
+<p><code>sudo caddy add-package github.com/caddy-dns/cloudflare</code></p>
+<p>This will enable us to add Cloudflare as a TLS provider. What this means essentially, is that since we'll be turning the proxy, the DDoS protection, your subdomain won't actually resolve to the IP you set it to in the real world.
+The package enables so using an API key you can generate a certificate, and enable TLS.</p>
+<p>Now, navigate to <a href="https://dash.cloudflare.com/profile/api-tokens">this</a> site to get an API key to use with Cloudflare's DNS. </p>
+<p>There is an amazing guide about TLS that is very useful. Check it out <a href="https://samjmck.com/en/blog/using-caddy-with-cloudflare/#2-using-a-lets-encrypt-certificate">here</a>. You can skip the initial step of installing the package, since we've already done that in a previous step.
+You can also skip adding it to the <code>~bashrc</code> file, and instead directly add it to the config. This should not be a security vulnerability, since the <code>Caddyfile</code> is only readable by <code>root</code> and the <code>caddy</code> user. But, of course you can do whatever you'd like.</p>
+<p>In case, the guide ever fails to resolve, I've documented the steps myself:</p>
+<p>On the left, click "API Token":</p>
+<p><img alt="DNS Example Image" src="img/image_6.png" /></p>
+<p>Click "Create Token":</p>
+<p><img alt="DNS Example Image" src="img/image_7.png" /></p>
+<p>Select the "Edit Zone TLS" template:</p>
+<p><img alt="DNS Example Image" src="img/image_8.png" /></p>
+<p>Select the approporite options:</p>
+<p><img alt="DNS Example Image" src="img/image_9.png" /></p>
+<p>Where it is really important to select both "Edit", and "Read" perms for the previously installed module to work. It is explained <a href="https://github.com/libdns/cloudflare#authenticating">here</a>.
+Also, <code>10.10.10.10</code> should be the public IP of your server, and the <code>example.server</code> is your domain.</p>
+<p>Continue to summary:</p>
+<p><img alt="DNS Example Image" src="img/image_10.png" /></p>
+<p>And "Create Token":</p>
+<p><img alt="DNS Example Image" src="img/image_11.png" /></p>
+<p>Now, here, copy your token, and write it down somewhere. Any file will do. Now, navigate back to <code>/etc/caddy/Caddyfile</code>, and paste in the following:</p>
+<pre><code class="language-yml">bans.example.server {
+       tls {
+                issuer acme {
+                        dns cloudflare your-long-token
+                        resolvers 1.1.1.1 1.0.0.1
+                }
+               client_auth {
+                  mode require_and_verify
+                  trusted_ca_cert_file /etc/ssl/certs/origin-pull-ca.pem
+                }
+                protocols tls1.2 tls1.3
+        }
+        reverse_proxy 0.0.0.0:8080 {
+                trusted_proxies 173.245.48.0/20 103.21.244.0/22 103.22.200.0/22 103.31.4.0/22 141.101.64.0/18 108.162.192.0/18 190.93.240.0/20 188.114.96.0/20 197.234.240.0/22 198.41.128.0/17 162.158.0.0/15 104.16.0.0/13 104.24.0.0/14
+        }
+}
+</code></pre>
+<p>Where <code>bans.example.server</code> is your domain, <code>your-long-token</code> is the token you just created. </p>
+<p>Now, close the file with <code>Crl</code> + <code>x</code>, and select <code>y</code> as an option.</p>
+<p>The other options are for another feature, which is explained in the previously mentioned guide. I've documented the steps in case the guide fails to resolve. Credit can be found <a href="https://samjmck.com/en/blog/using-caddy-with-cloudflare/#authenticated-origin-pull">here</a>.</p>
+<p>Pull the CF cert:</p>
+<p><code>sudo curl -o /etc/ssl/certs/origin-pull-ca.pem https://developers.cloudflare.com/ssl/static/authenticated_origin_pull_ca.pem</code></p>
+<p>Now, as a final step, navigate back to your DNS page, select the record we created previously, and turn the yellow cloud on. </p>
+<p><img alt="DNS Example Image" src="img/image_12.png" /></p>
+<p>And, now, finally, restart your web server:</p>
+<p><code>sudo systemctl restart caddy</code></p>
+<p>And as a very, very last step, open port <code>443</code> and close port <code>80</code> on your firewall. Since only the CF proxies will connect to the port, you only need to allow them.</p>
+<p><code>sudo ufw status numbered</code></p>
+<p>Find the one that enables port 80, and remove it:</p>
+<p><code>sudo ufw delete number</code></p>
+<p>Where <code>number</code> is the number of rule you would like to delete.</p>
+<p>Allow port <code>443</code> from all cloudflare IPv4 addresses:</p>
+<pre><code class="language-bash">for i in `curl https://www.cloudflare.com/ips-v4`; sudo ufw allow from $i proto tcp to any port 443; done`
+</code></pre>
+<p>And if your infrastructure works with IPv6:</p>
+<pre><code class="language-bash">for i in `curl https://www.cloudflare.com/ips-v6`; sudo ufw allow from $i proto tcp to any port 443; done`
+</code></pre>
+<p>In any of the bove, you can replace <code>to any</code> with specific rules regarding which interfaces are allowed to send traffic and where. However, this is out of the scope of this tutorial, consider reading the <code>ufw</code> man page with <code>man ufw</code>.</p>
+<p>And, you are done! Navigating to <code>bans.example.server</code> where <code>bans.example.server</code> is your domain, should show a working instance, with TLS, and DDoS protection. Great job!</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav">
+      <a href="../endpoints/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../endpoints/" class="btn btn-xs btn-link">
+        Endpoints
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
