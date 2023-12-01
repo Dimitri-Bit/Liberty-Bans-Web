@@ -108,11 +108,11 @@ of the webserver, and is useful knowledge in general. Also, knowing how to resol
 <h2 id="setting-up-dns-records">Setting up DNS records</h2>
 <p>Now that you have a web-server running, it's time to set up a DNS record. We'll use the <code>bans</code> subdomain in this example, but you are free to use your root domain, or even your minecraft subdomain. Just be careful with the records.</p>
 <p>Navigate to your registrars site, in this example we'll use Cloudflare. Log in, click on your Domain, and select DNS on the left.</p>
-<p><img alt="DNS Example Image" src="img/image_3.png" /></p>
+<p><img alt="DNS Example Image" src="../img/image_3.png" /></p>
 <p>On the DNS page, click "Add record" on the right.</p>
-<p><img alt="DNS Example Image" src="img/image_4.png" /></p>
+<p><img alt="DNS Example Image" src="../img/image_4.png" /></p>
 <p>The record should look like the following:</p>
-<p><img alt="DNS Example Image" src="img/image_5.png" /></p>
+<p><img alt="DNS Example Image" src="../img/image_5.png" /></p>
 <p>Where, <code>bans</code> is your custom subdomain, and <code>10.10.10.10</code> is the public IP of your server. If you do not have a static IP, there are workarounds you can do, but that is out of the scope of this tutorial. 
 For support, consider joining the official discord <a href="https://discord.gg/qgQbJMkcQw">here</a>.</p>
 <p>Warning: Hosting a service without proper DDoS protection may be an issue for your infrastructure. In the bonus section of this page we'll cover how to set up Cloudflare's proxy. Consider setting it up since it's a mayor security upgrade.</p>
@@ -135,19 +135,19 @@ The package enables so using an API key you can generate a certificate, and enab
 You can also skip adding it to the <code>~bashrc</code> file, and instead directly add it to the config. This should not be a security vulnerability, since the <code>Caddyfile</code> is only readable by <code>root</code> and the <code>caddy</code> user. But, of course you can do whatever you'd like.</p>
 <p>In case, the guide ever fails to resolve, I've documented the steps myself:</p>
 <p>On the left, click "API Token":</p>
-<p><img alt="DNS Example Image" src="img/image_6.png" /></p>
+<p><img alt="DNS Example Image" src="../img/image_6.png" /></p>
 <p>Click "Create Token":</p>
-<p><img alt="DNS Example Image" src="img/image_7.png" /></p>
+<p><img alt="DNS Example Image" src="../img/image_7.png" /></p>
 <p>Select the "Edit Zone TLS" template:</p>
-<p><img alt="DNS Example Image" src="img/image_8.png" /></p>
+<p><img alt="DNS Example Image" src="../img/image_8.png" /></p>
 <p>Select the approporite options:</p>
-<p><img alt="DNS Example Image" src="img/image_9.png" /></p>
+<p><img alt="DNS Example Image" src="../img/image_9.png" /></p>
 <p>Where it is really important to select both "Edit", and "Read" perms for the previously installed module to work. It is explained <a href="https://github.com/libdns/cloudflare#authenticating">here</a>.
 Also, <code>10.10.10.10</code> should be the public IP of your server, and the <code>example.server</code> is your domain.</p>
 <p>Continue to summary:</p>
-<p><img alt="DNS Example Image" src="img/image_10.png" /></p>
+<p><img alt="DNS Example Image" src="../img/image_10.png" /></p>
 <p>And "Create Token":</p>
-<p><img alt="DNS Example Image" src="img/image_11.png" /></p>
+<p><img alt="DNS Example Image" src="../img/image_11.png" /></p>
 <p>Now, here, copy your token, and write it down somewhere. Any file will do. Now, navigate back to <code>/etc/caddy/Caddyfile</code>, and paste in the following:</p>
 <pre><code class="language-yml">bans.example.server {
        tls {
@@ -172,7 +172,7 @@ Also, <code>10.10.10.10</code> should be the public IP of your server, and the <
 <p>Pull the CF cert:</p>
 <p><code>sudo curl -o /etc/ssl/certs/origin-pull-ca.pem https://developers.cloudflare.com/ssl/static/authenticated_origin_pull_ca.pem</code></p>
 <p>Now, as a final step, navigate back to your DNS page, select the record we created previously, and turn the yellow cloud on. </p>
-<p><img alt="DNS Example Image" src="img/image_12.png" /></p>
+<p><img alt="DNS Example Image" src="../img/image_12.png" /></p>
 <p>And, now, finally, restart your web server:</p>
 <p><code>sudo systemctl restart caddy</code></p>
 <p>And as a very, very last step, open port <code>443</code> and close port <code>80</code> on your firewall. Since only the CF proxies will connect to the port, you only need to allow them.</p>
