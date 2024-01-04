@@ -21,6 +21,8 @@ public class Application {
             log.info(" Frontend files for the website have been created, if you wish to edit");
             log.info(" the look of your website you can do so in the \"frontend\" folder located");
             log.info(" in the same directory as your application jar file.");
+            log.info(" It is recommended to create a new user that has read-only access to your punishments");
+            log.info(" database, this will improve overall security and make logging database connections easier.");
         }
         System.setProperty("micronaut.config.files", "config.yml");
         Micronaut.build(args).banner(false).start();
