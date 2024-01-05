@@ -6,6 +6,9 @@ import space.arim.libertybans.api.PlayerOperator;
 import space.arim.libertybans.api.PlayerVictim;
 import space.arim.libertybans.api.punish.Punishment;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -13,6 +16,7 @@ import java.util.UUID;
 public class ObjectMapper {
 
     private static final UUID CONSOLE_UUID = new UUID(0, 0);
+    private static final SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
     public static void mapPunishments(List<WebPunishment> webPunishments, List<Punishment> punishments, LibertyWeb libertyWeb) {
         for (Punishment punishment : punishments) {
@@ -29,9 +33,10 @@ public class ObjectMapper {
             }
 
             webPunishment.setLabel(getLabel(punishment));
-            webPunishment.setStart(punishment.getStartDateSeconds());
-            webPunishment.setEnd(punishment.getEndDateSeconds());
             webPunishment.setReason(punishment.getReason());
+            webPunishment.setPunishmentLength(getPunishmentLength(punishment));
+            webPunishment.setStartDate(getDate(punishment.getStartDate(), punishment.getStartDateSeconds()));
+            webPunishment.setEndDate(getDate(punishment.getEndDate(), punishment.getEndDateSeconds()));
             webPunishments.add(webPunishment);
         }
     }
@@ -52,5 +57,33 @@ public class ObjectMapper {
             return "Permanent";
         }
         return "Unknown";
+    }
+
+    private static String getPunishmentLength(Punishment punishment) {
+        long punishmentStart = punishment.getStartDateSeconds();
+        long punishmentEnd = punishment.getEndDateSeconds();
+
+        if (punishmentStart > punishmentEnd) return "Forever";
+
+        return differenceToTime(punishmentEnd - punishmentStart);
+    }
+
+    private static String differenceToTime(long difference) {
+        if (difference < 60) {
+            return difference + " seconds";
+        }
+        if (difference < 3600) {
+            return (int)(difference / 60) + " minutes";
+        }
+        if (difference < 86400) {
+            return (int)(difference / 3600) + " hours";
+        }
+        return (int)(difference / 86400) + " days";
+    }
+
+    private static String getDate(Instant instant, long seconds) {
+        if (seconds == 0) return "Never";
+        Date date = Date.from(instant);
+        return formatter.format(date);
     }
 }

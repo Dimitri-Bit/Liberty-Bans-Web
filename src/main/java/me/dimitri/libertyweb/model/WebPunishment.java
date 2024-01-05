@@ -5,9 +5,9 @@ import io.micronaut.serde.annotation.Serdeable;
 @Serdeable.Serializable
 public class WebPunishment {
 
-    private String victimUuid, victimUsername, operatorUuid, operatorUsername, reason, label;
+    private String victimUuid, victimUsername,
+            operatorUuid, operatorUsername, reason, label, punishmentLength, startDate, endDate;
     private boolean active;
-    private long start,end;
 
     public WebPunishment() {
         super();
@@ -61,27 +61,35 @@ public class WebPunishment {
         this.active = active;
     }
 
-    public long getStart() {
-        return start;
-    }
-
-    public void setStart(long start) {
-        this.start = start;
-    }
-
-    public long getEnd() {
-        return end;
-    }
-
-    public void setEnd(long end) {
-        this.end = end;
-    }
-
     public String getLabel() {
         return label;
     }
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public String getPunishmentLength() {
+        return punishmentLength;
+    }
+
+    public void setPunishmentLength(String punishmentLength) {
+        this.punishmentLength = punishmentLength;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 }
