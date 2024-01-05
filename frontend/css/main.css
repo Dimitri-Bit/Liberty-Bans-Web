@@ -19,6 +19,7 @@ body {
   --black-primary: #1f1f20;
   --black-secondary: #0e0f11;
   --black-tertiary: #1e2025;
+  --black-row: #111113;
   --gray-primary: #dedfd6;
   --gray-secondary: #6d6d6e;
   --gray-tertiary: #a7a7a8;
@@ -181,9 +182,9 @@ input[type=number] {
 }
 
 .punishment-row {
-  background-color: #1d1d1e;
+  background-color: var(--black-row);
   color: var(--gray-primary);
-  border-radius: 5px;
+  /* border-radius: 5px; */
 }
 
 .category-text {
@@ -192,7 +193,17 @@ input[type=number] {
   /* border-bottom: solid 5px var(--gray-primary); */
 }
 
+.punishment-info {
+  background-color: var(--black-row);
+}
+
 /* Navigation Modal */
 .dark-modal-header {
   background-color: var(--black-primary);
 }
+
+/* .test {
+  color: blue;
+  background-color: red;
+  min-width: 100%;
+} */

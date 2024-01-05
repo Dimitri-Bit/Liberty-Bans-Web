@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liberty Bans | Home</title>
+
+    <!-- Imports -->
+    <!-- Font Awesome -->
+    <script src="/js/vendor/fontawesome.min.js"></script>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/css/vendor/bootstrap.min.css" />
+    <script src="/js/vendor/bootstrap.bundle.min.js"></script>
+    <!-- JQuery -->
+    <script src="/js/vendor/jquery.js"></script>
+
+    <!-- Local -->
+    <link rel="stylesheet" href="css/main.css">
+    <!-- <script src="js/app.js"></script> -->
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-darker py-2 sticky-top">
+      <div class="container-fluid mx-4">
+        <span class="navbar-brand">
+          <small>LibertyBans</small>
+        </span>
+        
+        <button class="navbar-toggle-btn-mobile d-lg-none" id="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-sliders-h"></i>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item navbar-active pe-1">
+              <a href="javascript:;" class="nav-link" id="banType">Ban</a>
+            </li>
+            <li class="nav-item pe-1">
+              <a href="javascript:;" class="nav-link" id="kickType">Kick</a>
+            </li>
+            <li class="nav-item pe-1">
+              <a href="javascript:;" class="nav-link" id="muteType">Mute</a>
+            </li>
+            <li class="nav-item pe-3">
+              <a href="javascript:;" class="nav-link" id="warnType">Warn</a>
+            </li>
+          </ul>
+          <!-- <button class="version-btn ps-4"><i class="fab fa-github fs-4"></i></button> -->
+        </div>
+      </div>
+    </nav>
+
+    <!-- Punishments -->
+    <section class=" text-light my-5 p-lg-0 pt-lg-5 text-center text-sm-start section-darker">
+      <div class="container">
+        <!-- Bootstrap Spinner -->
+        <!-- <div class="d-flex justify-content-center spinner">
+          <div id="punishments-spinner" class="spinner-border m-5" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div> -->
+        <!-- Info Text -->
+        <div class="d-flex justify-content-start">
+          <h1 class="fs-2 category-text pb-1" id="type-stats"></h1>
+        </div>
+        <!-- Punishment List -->
+        <div id="punishments">
+
+          <div class="row align-items-center p-3 flex-nowrap punishment-row">
+            <div class="col-auto permanent-line"></div>
+            <div class="col-auto">
+              <img src="https://visage.surgeplay.com/face/55/98015c8810d941d3b87bef1efe964c1c">
+            </div>
+            <div class="col">
+              <p class="fs-5 mb-0">Offender</p>
+              <p>Broar</p>
+            </div>
+            <div class="col-auto">
+              <img src="https://visage.surgeplay.com/face/55/98015c8810d941d3b87bef1efe964c1c">
+            </div>
+            <div class="col">
+              <p class="fs-5 mb-0">Staff</p>
+              <p>RedditMod</p>
+            </div>
+            <div class="col">
+              <div class="fs-5 mb-0">Reason</div>
+              <p>Hacking & Spamming</p>
+            </div>
+            <div class="col">
+              <span class="permanent fw-medium">Permanent</span>
+            </div>
+            <div class="col-auto permanent-line"></div>
+          </div>
+          <div class="row align-items-center flex-nowrap punishment-row">
+            <div class="test collapse" id="collapseExample">
+              <div class="p-2"><p>Additional Info...</p></div>
+            </div>
+          </div>
+          
+  
+        </div>
+        <div class="d-flex justify-content-center p-3">
+          <button class="previous-btn p-2 mx-1" id="prevBtn">Previous</button>
+          <input class="page-count text-center" type="number" id="pageCount" name="page-count" min="1" max="999" size="4">
+          <button class="next-btn p-2 mx-1" id="nextBtn">Next</button>
+          <div id="view-punishments"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <p>
+        <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+          Link with href
+        </a>
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+          Button with data-bs-target
+        </button>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-3">
+        <div class="container d-flex justify-content-center align-items-center">
+          <p class="m-0 footer-text">Made with <i class="fas fa-heart heart-icon mx-1"></i></p>
+        </div>
+    </footer>
+    
+</body>
+</html>
