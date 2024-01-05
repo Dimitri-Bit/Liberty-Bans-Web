@@ -1,6 +1,8 @@
 package me.dimitri.libertyweb;
 
 import io.micronaut.runtime.Micronaut;
+import jakarta.inject.Inject;
+import me.dimitri.libertyweb.api.LibertyWeb;
 import me.dimitri.libertyweb.utils.StartupFiles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

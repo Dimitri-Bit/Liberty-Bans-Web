@@ -1,6 +1,7 @@
 package me.dimitri.libertyweb.utils;
 
 import io.micronaut.runtime.server.event.ServerShutdownEvent;
+import io.micronaut.runtime.server.event.ServerStartupEvent;
 import jakarta.inject.Inject;
 import me.dimitri.libertyweb.api.LibertyWeb;
 
@@ -19,4 +20,9 @@ public class EventListener {
     }
 
 
+    @io.micronaut.runtime.event.annotation.EventListener
+    @SuppressWarnings("unused")
+    public void onServerStartupEvent(ServerStartupEvent event) {
+        libertyWeb.getBase().startup();
+    }
 }
