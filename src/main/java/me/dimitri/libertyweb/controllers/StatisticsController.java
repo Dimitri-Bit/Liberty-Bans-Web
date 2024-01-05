@@ -6,6 +6,7 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Produces;
+import jakarta.inject.Inject;
 import me.dimitri.libertyweb.model.response.StatisticsResponse;
 import me.dimitri.libertyweb.service.StatisticsService;
 
@@ -14,6 +15,7 @@ public class StatisticsController {
 
     private final StatisticsService statisticsService;
 
+    @Inject
     public StatisticsController(StatisticsService statisticsService) {
         this.statisticsService = statisticsService;
     }

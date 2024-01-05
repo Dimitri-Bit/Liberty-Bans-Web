@@ -1,5 +1,6 @@
 package me.dimitri.libertyweb.utils;
 
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ public class HttpRequestUtil {
 
     private final HttpClient client;
 
+    @Inject
     public HttpRequestUtil() {
         client = HttpClient.newHttpClient();
     }

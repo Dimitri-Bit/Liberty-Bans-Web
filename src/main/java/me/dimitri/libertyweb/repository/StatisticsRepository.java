@@ -1,5 +1,6 @@
 package me.dimitri.libertyweb.repository;
 
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import me.dimitri.libertyweb.api.LibertyWeb;
 import me.dimitri.libertyweb.model.response.StatisticsResponse;
@@ -13,6 +14,7 @@ public class StatisticsRepository {
 
     private final LibertyWeb libertyWeb;
 
+    @Inject
     public StatisticsRepository(LibertyWeb libertyWeb) {
         this.libertyWeb = libertyWeb;
     }

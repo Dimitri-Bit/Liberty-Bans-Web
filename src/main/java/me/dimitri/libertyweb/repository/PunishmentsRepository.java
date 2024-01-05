@@ -1,5 +1,6 @@
 package me.dimitri.libertyweb.repository;
 
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import me.dimitri.libertyweb.api.LibertyWeb;
 import me.dimitri.libertyweb.model.WebPunishment;
@@ -21,6 +22,7 @@ public class PunishmentsRepository {
 
     private final LibertyWeb libertyWeb;
 
+    @Inject
     public PunishmentsRepository(LibertyWeb libertyWeb) {
         this.libertyWeb = libertyWeb;
     }
