@@ -2,6 +2,16 @@ server:
   # On what port the server will run
   port: 8080
   host: "0.0.0.0"
+  # Only enable this if you are generating a self-signed certificate.
+  ssl-enabled: true
+  # Should LiberyWeb generate a self-signed certificate?
+  self-signed-ssl-certificate: true
+  # On what port should we listen for https connections
+  ssl-port: 8433
+  # Should we listen on both http and https?
+  dual-protocol: false
+  # Should LibertyWeb redirect http connections to the https port? Only enable this if you have ssl enabled.
+  http-to-https-redirect: false
 
 # Cache configuration
 caffeine:

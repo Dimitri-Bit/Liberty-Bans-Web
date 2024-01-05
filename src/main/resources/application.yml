@@ -2,6 +2,11 @@ micronaut:
   server:
     port: ${server.port}
     host: ${server.host}
+    ssl:
+      enabled: ${server.ssl-enabled}
+      buildSelfSigned: ${server.self-signed-ssl-certificate}
+      dual-protocol: ${server.dual-protocol}
+      http-to-https-redirect: ${server.http-to-https-redirect}
   router:
     static-resources:
       default:
