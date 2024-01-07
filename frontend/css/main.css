@@ -201,9 +201,3 @@ input[type=number] {
 .dark-modal-header {
   background-color: var(--black-primary);
 }
-
-/* .test {
-  color: blue;
-  background-color: red;
-  min-width: 100%;
-} */
