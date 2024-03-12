@@ -3,6 +3,7 @@ package me.dimitri.libertyweb.api;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.micronaut.cache.annotation.Cacheable;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import me.dimitri.libertyweb.utils.HttpRequestUtil;
 
@@ -16,6 +17,7 @@ public class UsernameAPI {
     private final String MOJANG_URL = "https://api.mojang.com/user/profile/";
     private final String CRAFTHEAD_URL = "https://crafthead.net/profile/";
 
+    @Inject
     public UsernameAPI(HttpRequestUtil requestUtil) {
         this.requestUtil = requestUtil;
         objectMapper = new ObjectMapper();

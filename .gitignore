@@ -20,3 +20,5 @@ mvnw.bat
 config.yml
 LibertyBans
 frontend/trash
+DummyGenerator/DummyGenerator-1.0-SNAPSHOT-all.jar
+DummyGenerator
