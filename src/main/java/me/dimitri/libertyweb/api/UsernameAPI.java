@@ -27,7 +27,7 @@ public class UsernameAPI {
     @Cacheable("mojang-cache")
     public String usernameLookup(String uuid) {
         String json;
-
+        
         try {
             json = requestUtil.get(MOJANG_URL + uuid);
 
@@ -35,14 +35,14 @@ public class UsernameAPI {
                 json = requestUtil.get(CRAFTHEAD_URL + uuid);
             }
 
+            if (json != null) {
+                JsonNode jsonNode = parseJson(json);
+                return getUsername(jsonNode);
+            }
         } catch (HttpErrorException e) {
-            json = null;
+            return "Unknown";
         }
 
-        if (json != null) {
-            JsonNode jsonNode = parseJson(json);
-            return getUsername(jsonNode);
-        }
         return "Unknown";
     }
 
