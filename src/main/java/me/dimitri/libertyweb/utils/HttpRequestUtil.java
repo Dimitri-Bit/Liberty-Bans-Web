@@ -2,6 +2,7 @@ package me.dimitri.libertyweb.utils;
 
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import me.dimitri.libertyweb.utils.exception.HttpErrorException;
 
 import java.io.IOException;
 import java.net.URI;
@@ -19,7 +20,7 @@ public class HttpRequestUtil {
         client = HttpClient.newHttpClient();
     }
 
-    public String get(String url) {
+    public String get(String url) throws HttpErrorException {
         try {
             URI uri = URI.create(url);
             HttpRequest request = HttpRequest.newBuilder().uri(uri).GET().build();
@@ -28,7 +29,7 @@ public class HttpRequestUtil {
                 return response.body();
             }
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+            throw new HttpErrorException("Unable to get request from " + url, e);
         }
         return null;
     }

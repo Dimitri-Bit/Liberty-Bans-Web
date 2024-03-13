@@ -6,6 +6,7 @@ import io.micronaut.cache.annotation.Cacheable;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import me.dimitri.libertyweb.utils.HttpRequestUtil;
+import me.dimitri.libertyweb.utils.exception.HttpErrorException;
 
 import java.io.IOException;
 
@@ -25,11 +26,19 @@ public class UsernameAPI {
 
     @Cacheable("mojang-cache")
     public String usernameLookup(String uuid) {
-        String json = requestUtil.get(MOJANG_URL + uuid);
+        String json;
 
-        if (json == null) {
-            json = requestUtil.get(CRAFTHEAD_URL + uuid);
+        try {
+            json = requestUtil.get(MOJANG_URL + uuid);
+
+            if (json == null) {
+                json = requestUtil.get(CRAFTHEAD_URL + uuid);
+            }
+
+        } catch (HttpErrorException e) {
+            json = null;
         }
+
         if (json != null) {
             JsonNode jsonNode = parseJson(json);
             return getUsername(jsonNode);
