@@ -1,7 +1,6 @@
 package me.dimitri.libertyweb.service;
 
 import io.micronaut.cache.annotation.CacheConfig;
-import io.micronaut.cache.annotation.CachePut;
 import io.micronaut.cache.annotation.Cacheable;
 import jakarta.inject.Singleton;
 import me.dimitri.libertyweb.api.UsernameAPI;
