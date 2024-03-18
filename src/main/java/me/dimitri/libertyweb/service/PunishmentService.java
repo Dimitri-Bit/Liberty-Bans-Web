@@ -26,7 +26,7 @@ public class PunishmentService {
         this.usernameAPI = usernameAPI;
     }
 
-    @CachePut(parameters = {"type"})
+    @Cacheable
     public WebPunishmentResponse getPunishments(String type, String page) {
         int pageNum;
         try { pageNum = Integer.parseInt(page); } catch (NumberFormatException ignored) { return null; }
