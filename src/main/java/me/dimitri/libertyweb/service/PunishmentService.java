@@ -1,5 +1,8 @@
 package me.dimitri.libertyweb.service;
 
+import io.micronaut.cache.annotation.CacheConfig;
+import io.micronaut.cache.annotation.CachePut;
+import io.micronaut.cache.annotation.Cacheable;
 import jakarta.inject.Singleton;
 import me.dimitri.libertyweb.api.UsernameAPI;
 import me.dimitri.libertyweb.model.WebPunishment;
@@ -12,6 +15,7 @@ import java.util.List;
 import static me.dimitri.libertyweb.utils.TypeConverter.getType;
 
 @Singleton
+@CacheConfig("requests")
 public class PunishmentService {
     private final PunishmentsRepository punishmentsRepository;
     private final UsernameAPI usernameAPI;
@@ -22,6 +26,7 @@ public class PunishmentService {
         this.usernameAPI = usernameAPI;
     }
 
+    @CachePut(parameters = {"type"})
     public WebPunishmentResponse getPunishments(String type, String page) {
         int pageNum;
         try { pageNum = Integer.parseInt(page); } catch (NumberFormatException ignored) { return null; }

@@ -10,13 +10,16 @@ micronaut:
         paths: "file:frontend"
   application:
     name: liberty_Web
-  cache:
+  caches:
     caffeine:
       enabled: true
       specs:
         mojang-cache:
           maximum-size: ${caffeine.mojang.maxSize}
           expires-after-write: ${caffeine.mojang.expiration}
+        requests:
+          maximum-size: ${caffeine.requests.maxSize}
+          expires-after-write: ${caffeine.requests.expiration}
 netty:
   default:
     allocator:
