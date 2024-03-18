@@ -21,6 +21,8 @@
     <micronaut.aot.enabled>false</micronaut.aot.enabled>
     <micronaut.aot.packageName>me.dimitri.libertyweb.aot.generated</micronaut.aot.packageName>
     <exec.mainClass>me.dimitri.libertyweb.Application</exec.mainClass>
+    <shadedArtifactAttached>true</shadedArtifactAttached>
+    <shadedClassifierName>jar-with-dependencies</shadedClassifierName>
   </properties>
 
   <repositories>
