@@ -115,6 +115,10 @@ $(document).ready(function () {
                 return false;
             }
 
+            if (pageCountValue > 999) {
+                return false;
+            }
+
             if (!morePages && pageCountValue > currentPage) {
                 return false;
             }
