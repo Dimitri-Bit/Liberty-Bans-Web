@@ -14,6 +14,6 @@ caffeine:
     expiration: "10m"
   requests:
     # To avoid re-querying the database for each request, we can cache some.
-    maxSize: 36
+    maxSize: 260
     # After what time the cached requests should expire.
-    expiration: "5m"
+    expiration: "10m"
