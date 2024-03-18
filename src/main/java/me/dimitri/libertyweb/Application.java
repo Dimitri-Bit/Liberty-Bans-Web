@@ -1,8 +1,6 @@
 package me.dimitri.libertyweb;
 
 import io.micronaut.runtime.Micronaut;
-import jakarta.inject.Inject;
-import me.dimitri.libertyweb.api.LibertyWeb;
 import me.dimitri.libertyweb.utils.StartupFiles;
 import me.dimitri.libertyweb.utils.exception.FileWorkerException;
 import org.slf4j.Logger;
@@ -29,7 +27,9 @@ public class Application {
                 log.info(" database, this will improve overall security and make logging database connections easier.");
             }
         } catch (FileWorkerException e) {
-            log.error(e.toString());
+            log.error(e.getMessage());
+            System.exit(0);
+            return;
         }
         System.setProperty("micronaut.config.files", "config.yml");
         Micronaut.build(args).banner(false).start();

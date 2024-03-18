@@ -28,7 +28,7 @@ public class StartupFiles {
                 return true;
             }
         } catch (IOException e) {
-            throw new FileWorkerException("Unable to create frontend config: ", e.getCause());
+            throw new FileWorkerException("Unable to create config: ", e.getCause());
         }
         return false;
     }
@@ -46,7 +46,7 @@ public class StartupFiles {
                 return true;
             }
         } catch (Exception e) {
-            throw new FileWorkerException("Unable to create frontend files: ", e.getCause());
+            throw new FileWorkerException("Unable to create frontend files: ", e);
         }
         return false;
     }
@@ -57,7 +57,7 @@ public class StartupFiles {
             zipFile.extractAll(getFilePath());
             file.delete();
         } catch (ZipException | URISyntaxException e) {
-            throw new FileWorkerException("Unable to unzip " + file, e.getCause());
+            throw new FileWorkerException("Unable to unzip " + file, e);
         }
     }
 

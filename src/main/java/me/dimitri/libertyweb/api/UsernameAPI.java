@@ -34,14 +34,14 @@ public class UsernameAPI {
         try {
             json = requestUtil.get(MOJANG_URL + uuid);
         } catch (HttpErrorException e) {
-            log.error(e.toString());
+            log.error(e.getMessage());
         }
 
         if (json == null) {
             try {
                 json = requestUtil.get(CRAFTHEAD_URL + uuid);
             } catch (HttpErrorException e) {
-                log.error(e.toString());
+                log.error(e.getMessage());
             }
         }
 
@@ -56,7 +56,7 @@ public class UsernameAPI {
         try {
             return objectMapper.readTree(json);
         } catch (IOException e) {
-            log.error(e.toString());
+            log.error(e.getMessage());
         }
         return null;
     }

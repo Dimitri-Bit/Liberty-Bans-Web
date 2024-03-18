@@ -29,7 +29,7 @@ public class HttpRequestUtil {
                 return response.body();
             }
         } catch (IOException | InterruptedException e) {
-            throw new HttpErrorException("Unable to get request from " + url, e.getCause());
+            throw new HttpErrorException("Unable to get request from " + url, e);
         }
         return null;
     }
