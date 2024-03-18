@@ -14,7 +14,6 @@ caffeine:
     expiration: "10m"
   requests:
     # To avoid re-querying the database for each request, we can cache some.
-    # Maximum amount of usernames to cache
     maxSize: 36
-    # After what time cache record will expire
+    # After what time the cached requests should expire.
     expiration: "5m"
