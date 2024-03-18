@@ -5,14 +5,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.micronaut.cache.annotation.Cacheable;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import me.dimitri.libertyweb.Application;
 import me.dimitri.libertyweb.utils.HttpRequestUtil;
 import me.dimitri.libertyweb.utils.exception.HttpErrorException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 @Singleton
 public class UsernameAPI {
 
+    private static final Logger log = LoggerFactory.getLogger(UsernameAPI.class);
     private final HttpRequestUtil requestUtil;
     private final ObjectMapper objectMapper;
     private final String MOJANG_URL = "https://api.mojang.com/user/profile/";
@@ -26,29 +30,35 @@ public class UsernameAPI {
 
     @Cacheable("mojang-cache")
     public String usernameLookup(String uuid) {
+        String json = null;
         try {
-            String json = requestUtil.get(MOJANG_URL + uuid);
-
-            if (json == null) {
-                json = requestUtil.get(CRAFTHEAD_URL + uuid);
-            }
-
-            if (json != null) {
-                JsonNode jsonNode = parseJson(json);
-                return getUsername(jsonNode);
-            }
+            json = requestUtil.get(MOJANG_URL + uuid);
         } catch (HttpErrorException e) {
-            return "Unknown";
+            log.error(e.toString());
+        }
+
+        if (json == null) {
+            try {
+                json = requestUtil.get(CRAFTHEAD_URL + uuid);
+            } catch (HttpErrorException e) {
+                log.error(e.toString());
+            }
+        }
+
+        if (json != null) {
+            JsonNode jsonNode = parseJson(json);
+            return getUsername(jsonNode);
         }
         return "Unknown";
     }
 
-    private JsonNode parseJson(String json) {
+    private JsonNode parseJson(String json){
         try {
             return objectMapper.readTree(json);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            log.error(e.toString());
         }
+        return null;
     }
 
     private String getUsername(JsonNode jsonNode) {

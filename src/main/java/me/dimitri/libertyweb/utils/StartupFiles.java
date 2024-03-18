@@ -1,5 +1,6 @@
 package me.dimitri.libertyweb.utils;
 
+import me.dimitri.libertyweb.utils.exception.FileWorkerException;
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 
@@ -18,7 +19,7 @@ public class StartupFiles {
         this(null);
     }
 
-    public boolean createConfig() {
+    public boolean createConfig() throws FileWorkerException {
         try {
             File config = new File(rootPath, "config.yml");
             if (config.createNewFile()) {
@@ -27,12 +28,12 @@ public class StartupFiles {
                 return true;
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FileWorkerException("Unable to create frontend config: ", e.getCause());
         }
         return false;
     }
 
-    public boolean createFrontend() {
+    public boolean createFrontend() throws FileWorkerException {
         try {
             File frontend = new File(rootPath, "frontend");
             if (!frontend.isDirectory()) {
@@ -45,18 +46,18 @@ public class StartupFiles {
                 return true;
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new FileWorkerException("Unable to create frontend files: ", e.getCause());
         }
         return false;
     }
 
-    private void unzip(File file) {
+    private void unzip(File file) throws FileWorkerException {
         try {
             ZipFile zipFile = new ZipFile(file);
             zipFile.extractAll(getFilePath());
             file.delete();
         } catch (ZipException | URISyntaxException e) {
-            throw new RuntimeException(e);
+            throw new FileWorkerException("Unable to unzip " + file, e.getCause());
         }
     }
 

@@ -4,6 +4,7 @@ import io.micronaut.runtime.Micronaut;
 import jakarta.inject.Inject;
 import me.dimitri.libertyweb.api.LibertyWeb;
 import me.dimitri.libertyweb.utils.StartupFiles;
+import me.dimitri.libertyweb.utils.exception.FileWorkerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,18 +14,22 @@ public class Application {
 
     public static void main(String[] args) {
         StartupFiles startupFiles = new StartupFiles();
-        if (startupFiles.createConfig()) {
-            log.info(" config.yml created, please configure your Liberty Web application there");
-            log.info(" Make sure to copy your LibertyBans plugin folder to the same directory as Liberty Web");
-            System.exit(0);
-            return;
-        }
-        if (startupFiles.createFrontend()) {
-            log.info(" Frontend files for the website have been created, if you wish to edit");
-            log.info(" the look of your website you can do so in the \"frontend\" folder located");
-            log.info(" in the same directory as your application jar file.");
-            log.info(" It is recommended to create a new user that has read-only access to your punishments");
-            log.info(" database, this will improve overall security and make logging database connections easier.");
+        try {
+            if (startupFiles.createConfig()) {
+                log.info(" config.yml created, please configure your Liberty Web application there");
+                log.info(" Make sure to copy your LibertyBans plugin folder to the same directory as Liberty Web");
+                System.exit(0);
+                return;
+            }
+            if (startupFiles.createFrontend()) {
+                log.info(" Frontend files for the website have been created, if you wish to edit");
+                log.info(" the look of your website you can do so in the \"frontend\" folder located");
+                log.info(" in the same directory as your application jar file.");
+                log.info(" It is recommended to create a new user that has read-only access to your punishments");
+                log.info(" database, this will improve overall security and make logging database connections easier.");
+            }
+        } catch (FileWorkerException e) {
+            log.error(e.toString());
         }
         System.setProperty("micronaut.config.files", "config.yml");
         Micronaut.build(args).banner(false).start();

@@ -1,7 +1,7 @@
 package me.dimitri.libertyweb.utils.exception;
 
-public class HttpErrorException extends RuntimeException {
-    public HttpErrorException(String exceptionMsg, Throwable throwable) {
-        super(exceptionMsg, throwable);
+public class HttpErrorException extends Exception {
+    public HttpErrorException(String msg, Throwable throwable) {
+        super(msg, throwable);
     }
 }
