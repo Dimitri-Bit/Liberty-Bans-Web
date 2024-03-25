@@ -12,3 +12,8 @@ caffeine:
     maxSize: 150
     # After what time cache record will expire
     expiration: "10m"
+  requests:
+    # To avoid re-querying the database for each request, we can cache some.
+    maxSize: 260
+    # After what time the cached requests should expire.
+    expiration: "10m"
