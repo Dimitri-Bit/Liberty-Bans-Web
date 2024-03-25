@@ -30,7 +30,7 @@ $(document).ready(function () {
                         break;
                 }
 
-                typeStats.html(`${typeText} <span class="fs-2">(${response.stats})</span>`);
+                $('#type-stats-text').text(`${typeText} (${response.text})`);
 
             },
             error: function() {
@@ -127,6 +127,7 @@ $(document).ready(function () {
             beforeSend: function() {
                 spinner.show();
                 punishments.hide();
+                $(`#nothing-to-show`).hide();
             },
             success: function(response) {
                 fetchTypeStats(type);
@@ -137,57 +138,42 @@ $(document).ready(function () {
                 if (response.punishments != null) {
                     morePages = response.morePages;
 
+                    let rowCount = 0;
                     response.punishments.forEach(function(punishment) {
-                        let statusBadge;
-                        let line;
+
                         let operatorUuid = punishment.operatorUuid;
                         if (punishment.label == "Permanent") {
-                            line = '<div class="col-auto permanent-line"></div>';
-                            statusBadge = '<span class="permanent fw-medium">Permanent</span>';
+                            $(`#line-upper-${rowCount}`).addClass('permanent-line');
+                            $(`#status-badge-${rowCount}`).addClass('permanent');
+                            $(`#line-below-${rowCount}`).addClass('permanent-line');
                         } else if (punishment.label == "Active") {
-                            line = '<div class="col-auto active-line"></div>';
-                            statusBadge = '<span class="active fw-medium">Active</span>';
+                            $(`#line-upper-${rowCount}`).addClass('active-line');
+                            $(`#status-badge-${rowCount}`).addClass('active');
+                            $(`#line-below-${rowCount}`).addClass('active-line');
                         } else {
-                            line = '<div class="col-auto expired-line"></div>';
-                            statusBadge = '<span class="expired fw-medium">Expired</span>';
+                            $(`#line-upper-${rowCount}`).addClass('expired-line');
+                            $(`#status-badge-${rowCount}`).addClass('expired');
+                            $(`#line-below-${rowCount}`).addClass('expired-line');
                         }
 
                         if (operatorUuid == '00000000-0000-0000-0000-000000000000') {
                             operatorUuid = "console";
                         }
 
-                        const html = `
-                        <div class="row align-items-center p-3 flex-nowrap">
-                        ${line}
-                        <div class="col-auto">
-                        <img src="https://visage.surgeplay.com/face/55/${punishment.victimUuid}">
-                        </div>
-                        <div class="col">
-                        <p class="fs-5 mb-0">Offender</p>
-                        <p>${punishment.victimUsername}</p>
-                        </div>
-                        <div class="col-auto">
-                        <img src="https://visage.surgeplay.com/face/55/${operatorUuid}">
-                        </div>
-                        <div class="col">
-                        <p class="fs-5 mb-0">Staff</p>
-                        <p>${punishment.operatorUsername}</p>
-                        </div>
-                        <div class="col">
-                        <div class="fs-5 mb-0">Reason</div>
-                        <p>${punishment.reason}</p>
-                        </div>
-                        <div class="col">
-                        ${statusBadge}
-                        </div>
-                        ${line}
-                        </div>
-                        `;
-                        punishments.append(html);
+                        $(`#first-uuid-${rowCount}`).attr('src', `https://visage.surgeplay.com/face/55/${punishment.victimUuid}`);
+                        $(`#offender-${rowCount}`).text(`${punishment.victimUsername}`);
+                        $(`#second-uuid-${rowCount}`).attr('src', `https://visage.surgeplay.com/face/55/${operatorUuid}`);
+                        $(`#operator-${rowCount}`).text(`${punishment.operatorUsername}`);
+                        $(`#reason-${rowCount}`).text(`${punishment.reason}`);
+
+                        rowCount++;
                     });
                 } else {
-                    const html = `<div class="text-center p-5"> <p class="fw-medium fs-5 mb-0">Nothing to show for now</p></div>`;
-                    punishments.append(html);
+                    for (let i = 0; i < 6; i++) {
+                        $(`#punishments-${i}`).hide();
+                    }
+                    punishments.hide();
+                    $(`#nothing-to-show`).show();
                 }
                 if (!morePages) {
                     $('#nextBtn').prop('disabled', true);
