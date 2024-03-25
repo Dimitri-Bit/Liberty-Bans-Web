@@ -127,6 +127,7 @@ $(document).ready(function () {
             method: "GET",
             beforeSend: function() {
                 spinner.show();
+                // Hide all the rows before populating with values.
                 for (let i = 0; i < 6; i++) {
                     $(`#punishments-${i}`).hide();
                 }
