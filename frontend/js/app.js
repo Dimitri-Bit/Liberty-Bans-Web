@@ -30,8 +30,7 @@ $(document).ready(function () {
                 }
 
 
-                let responseText = response.text.toString();
-                $('#type-stats-text').text(`${typeText} (${responseText})`);
+                $('#type-stats-text').text(`${typeText} (${response.stats})`);
 
             },
             error: function() {
@@ -127,21 +126,20 @@ $(document).ready(function () {
             method: "GET",
             beforeSend: function() {
                 spinner.show();
-                punishments.hide();
+                for (let i = 0; i < 6; i++) {
+                    $(`#punishments-${i}`).hide();
+                }
                 $(`#nothing-to-show`).hide();
             },
             success: function(response) {
                 fetchTypeStats(type);
                 updatePageCount();
 
-                // punishments.empty();
-
                 if (response.punishments != null) {
                     morePages = response.morePages;
 
                     let rowCount = 0;
                     response.punishments.forEach(function(punishment) {
-                        console.log(rowCount);
 
                         let operatorUuid = punishment.operatorUuid;
                         if (punishment.label == "Permanent") {
@@ -174,7 +172,6 @@ $(document).ready(function () {
                     for (let i = 0; i < 6; i++) {
                         $(`#punishments-${i}`).hide();
                     }
-                    punishments.hide();
                     $(`#nothing-to-show`).show();
                 }
                 if (!morePages) {
@@ -195,10 +192,14 @@ $(document).ready(function () {
             },
             error: function() {
                 console.log("Error retrieving punishment history");
+                $(`#nothing-to-show`).show();
+
             },
             complete: function() {
                 spinner.hide();
-                punishments.show();
+                for (let i = 0; i < 6; i++) {
+                    $(`#punishments-${i}`).show();
+                }
             }
         });
     }
