@@ -59,7 +59,9 @@ $(document).ready(function () {
     });
 
     $('#prevBtn').click(function() {
-        currentPage--;
+        if (currentPage > 1) {
+            currentPage--;
+        }
         fetchPunishments(currentType, currentPage);
     });
 
@@ -97,9 +99,23 @@ $(document).ready(function () {
 
     $('#pageCount').keypress(function(e) {
         if (e.which == 13) {
-            let pageCountValue = $("#pageCount").val() * 1; // Weird way of turning a string into a number, don't ask me why. I'm tired.
+            let pageCountValue = Number($("#pageCount"));
 
+            if (isNaN(pageCountValue)) {
+                return false;
+            }
+
+            // The previous call should ensure that the pageCountValue variable is a number
+            // but leaving this here for safety.
             if (typeof pageCountValue != 'number') {
+                return false;
+            }
+
+            if (pageCountValue < 1) {
+                return false;
+            }
+
+            if (pageCountValue > 999) {
                 return false;
             }
 
