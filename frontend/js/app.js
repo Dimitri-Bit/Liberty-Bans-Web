@@ -4,7 +4,6 @@ $(document).ready(function () {
     let morePages = true;
 
     function fetchTypeStats(type) {
-        const typeStats = $("#type-stats");
         let typeText = "Bans";
 
         $.ajax({
@@ -30,7 +29,9 @@ $(document).ready(function () {
                         break;
                 }
 
-                $('#type-stats-text').text(`${typeText} (${response.text})`);
+
+                let responseText = response.text.toString();
+                $('#type-stats-text').text(`${typeText} (${responseText})`);
 
             },
             error: function() {
@@ -133,13 +134,14 @@ $(document).ready(function () {
                 fetchTypeStats(type);
                 updatePageCount();
 
-                punishments.empty();
+                // punishments.empty();
 
                 if (response.punishments != null) {
                     morePages = response.morePages;
 
                     let rowCount = 0;
                     response.punishments.forEach(function(punishment) {
+                        console.log(rowCount);
 
                         let operatorUuid = punishment.operatorUuid;
                         if (punishment.label == "Permanent") {
