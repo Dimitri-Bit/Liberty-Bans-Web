@@ -16,34 +16,40 @@ $(document).ready(function () {
         return json;
     }
 
+    function setTypeText(type) {
+        let typeText;
+
+        switch (type) {
+            case "ban":
+                typeText = "Bans";
+                break;
+
+            case "mute":
+                typeTexts = "Mutes";
+                break;
+
+            case "kick":
+                typeText = "Kicks";
+                break;
+
+            case "warn":
+                typeText = "Warns";
+                break;
+        }
+
+        return typeText;
+    }
+
     function fetchTypeStats(type) {
-        let typeText = "Punishment type";
-        let dataStats = "0";
+        let typeText;
+
+        typeText = setTypeText(type);
 
         getWithAsyncFetch(`/stats/${type}`).then(data => {
-            switch (data.type) {
-                case "ban":
-                    typeText = "Bans";
-                    break;
-
-                    case "mute":
-                        typeText = "Mutes";
-                        break;
-
-                    case "kick":
-                        typeText = "Kicks";
-                        break;
-
-                    case "warn":
-                        typeText = "Warns";
-                        break;
-                }
-                dataStats = data.stats;
+            $('#type-stats-text').text(`${typeText} (${data.stats})`);
         }).catch(e => {
             console.log(e)
         });
-
-        $('#type-stats-text').text(`${typeText} (${dataStats})`);
     }
 
     function updatePageCount() {
