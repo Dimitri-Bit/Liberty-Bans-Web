@@ -3,40 +3,44 @@ $(document).ready(function () {
     let currentType = 'ban';
     let morePages = true;
 
+    async function getWithAsyncFetch(url) {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return await response.json();
+    }
+
     function fetchTypeStats(type) {
-        let typeText = "Bans";
+        let typeText = "Punishment type";
+        let dataStats = "0";
 
-        $.ajax({
-            url: `/stats/${type}`,
-            method: "GET",
-            success: function(response) {
+        const data = getWithAsyncFetch(`/stats/${type}`);
 
-                switch (type) {
-                    case "ban":
-                        typeText = "Bans";
-                        break;
+        if (data != null) {
+            switch (data.type) {
+                case "ban":
+                    typeText = "Bans";
+                    break;
 
-                    case "mute":
-                        typeText = "Mutes";
-                        break;
+                case "mute":
+                    typeText = "Mutes";
+                    break;
 
-                    case "kick":
-                        typeText = "Kicks";
-                        break;
+                case "kick":
+                    typeText = "Kicks";
+                    break;
 
-                    case "warn":
-                        typeText = "Warns";
-                        break;
-                }
-
-
-                $('#type-stats-text').text(`${typeText} (${response.stats})`);
-
-            },
-            error: function() {
-                console.error("Error retrieving type stats");
+                case "warn":
+                    typeText = "Warns";
+                    break;
             }
-        })
+            dataStats = data.stats;
+        }
+
+        $('#type-stats-text').text(`${typeText} (${dataStats})`);
     }
 
     function updatePageCount() {
@@ -133,97 +137,96 @@ $(document).ready(function () {
         }
     });
 
+    function setPunishmentStyle(length, row) {
+        if (length === "Permanent") {
+            $(`#line-upper-${rowCount}`).addClass('permanent-line');
+            $(`#status-badge-${rowCount}`).addClass('permanent');
+            $(`#line-below-${rowCount}`).addClass('permanent-line');
+        } else if (length === "Active") {
+            $(`#line-upper-${rowCount}`).addClass('active-line');
+            $(`#status-badge-${rowCount}`).addClass('active');
+            $(`#line-below-${rowCount}`).addClass('active-line');
+        } else {
+            $(`#line-upper-${rowCount}`).addClass('expired-line');
+            $(`#status-badge-${rowCount}`).addClass('expired');
+            $(`#line-below-${rowCount}`).addClass('expired-line');
+        }
+    }
+
+    function setRowData(victimUUID, victimUsername, operatorUUID, operatorUsername, reason, row) {
+        $(`#first-uuid-${row}`).attr('src', `https://visage.surgeplay.com/face/55/${victimUUID}`);
+        $(`#offender-${row}`).text(`${victimUsername}`);
+        $(`#second-uuid-${row}`).attr('src', `https://visage.surgeplay.com/face/55/${operatorUUID}`);
+        $(`#operator-${row}`).text(`${operatorUsername}`);
+        $(`#reason-${row}`).text(`${reason}`);
+    }
+
+    function setMorePages(morePages) {
+        if (!morePages) {
+            $('#nextBtn').prop('disabled', true);
+            $('#nextBtn').addClass('disabled-btn');
+        } else {
+            $('#nextBtn').prop('disabled', false);
+            $('#nextBtn').removeClass('disabled-btn');
+        }
+
+        if (currentPage <= 1) {
+            $('#prevBtn').prop('disabled', true);
+            $('#prevBtn').addClass('disabled-btn');
+        } else {
+            $('#prevBtn').prop('disabled', false);
+            $('#prevBtn').removeClass('disabled-btn');
+        }
+    }
+
     function fetchPunishments(type, page) {
         const spinner = $("#punishments-spinner");
         const punishments = $("#punishments");
-        let rowCount = 0;
 
-        $.ajax({
-            url: "/punishments/" + type + "/" + page,
-            method: "GET",
-            beforeSend: function() {
-                spinner.show();
-                // Hide all the rows before populating with values.
-                for (let i = 0; i < 6; i++) {
-                    $(`#punishments-${i}`).hide();
-                }
-                $(`#nothing-to-show`).hide();
-            },
-            success: function(response) {
-                fetchTypeStats(type);
-                updatePageCount();
+        // First we hide everything.
+        spinner.show();
+        $(`#nothing-to-show`).hide()
 
-                if (response.punishments != null) {
-                    morePages = response.morePages;
+        // Since we have 6 pre-defined html well objects, we need to hide them all.
+        for (let i = 0; i < 6; i++) {
+            $(`#punishments-${i}`).hide();
+        }
 
-                    response.punishments.forEach(function(punishment) {
+        updatePageCount();
 
-                        let operatorUuid = punishment.operatorUuid;
-                        if (punishment.label == "Permanent") {
-                            $(`#line-upper-${rowCount}`).addClass('permanent-line');
-                            $(`#status-badge-${rowCount}`).addClass('permanent');
-                            $(`#line-below-${rowCount}`).addClass('permanent-line');
-                        } else if (punishment.label == "Active") {
-                            $(`#line-upper-${rowCount}`).addClass('active-line');
-                            $(`#status-badge-${rowCount}`).addClass('active');
-                            $(`#line-below-${rowCount}`).addClass('active-line');
-                        } else {
-                            $(`#line-upper-${rowCount}`).addClass('expired-line');
-                            $(`#status-badge-${rowCount}`).addClass('expired');
-                            $(`#line-below-${rowCount}`).addClass('expired-line');
-                        }
+        // Update the punishment type and stats variables
+        fetchTypeStats(type);
 
-                        if (operatorUuid == '00000000-0000-0000-0000-000000000000') {
-                            operatorUuid = "console";
-                        }
+        // We get the data.
+        const data = getWithAsyncFetch(`/punishments/" + ${type} + "/" + ${page}`);
 
-                        $(`#first-uuid-${rowCount}`).attr('src', `https://visage.surgeplay.com/face/55/${punishment.victimUuid}`);
-                        $(`#offender-${rowCount}`).text(`${punishment.victimUsername}`);
-                        $(`#second-uuid-${rowCount}`).attr('src', `https://visage.surgeplay.com/face/55/${operatorUuid}`);
-                        $(`#operator-${rowCount}`).text(`${punishment.operatorUsername}`);
-                        $(`#reason-${rowCount}`).text(`${punishment.reason}`);
+        // We actually got data!
+        if (data.punishments != null) {
 
-                        rowCount++;
-                    });
-                } else {
-                    for (let i = 0; i < 6; i++) {
-                        $(`#punishments-${i}`).hide();
-                    }
-                    $(`#nothing-to-show`).show();
-                }
-                if (!morePages) {
-                    $('#nextBtn').prop('disabled', true);
-                    $('#nextBtn').addClass('disabled-btn');
-                } else {
-                    $('#nextBtn').prop('disabled', false);
-                    $('#nextBtn').removeClass('disabled-btn');
+            let rowCount = 0;
+            for (const key in data.punishments) {
+                setPunishmentStyle(data.punishments[key].label, rowCount);
+
+                let operatorUUID = data.punishments[key].operatorUuid;
+                if (operatorUUID === '00000000-0000-0000-0000-000000000000') {
+                    operatorUUID = "console";
                 }
 
-                if (currentPage <= 1) {
-                    $('#prevBtn').prop('disabled', true);
-                    $('#prevBtn').addClass('disabled-btn');
-                } else {
-                    $('#prevBtn').prop('disabled', false);
-                    $('#prevBtn').removeClass('disabled-btn');
-                }
-            },
-            error: function() {
-                console.log("Error retrieving punishment history");
-                $(`#nothing-to-show`).show();
-
-            },
-            complete: function() {
-                spinner.hide();
-                // Since there are cases where we won't load 6 punishments exactly
-                // we have to hide some in order to get a correct page.
-                // the rowCount variable holds the number of rows we stopped at.
-                // therefore we need to hide the remaining.
-                for (let i = 0; i < rowCount; i++) {
-                    $(`#punishments-${i}`).show();
-                }
+                setRowData(data.punishments[key].victimUuid, data.punishments[key].victimUsername, operatorUUID, data.punishments[key].operatorUsername, data.punishments[key].reason, rowCount);
+                rowCount++;
             }
-        });
-        rowCount = 0;
-    }
 
+            setMorePages(data.punishments.morePages);
+
+            // Finished populating values, let's show the data.
+            spinner.hide();
+            for (let i = 0; i < rowCount; i++) {
+                $(`#punishments-${i}`).show();
+            }
+
+        } else {
+            // We didn't get any data.
+            $(`#nothing-to-show`).show();
+        }
+    }
 });
