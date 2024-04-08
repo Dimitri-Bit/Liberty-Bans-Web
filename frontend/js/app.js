@@ -139,17 +139,17 @@ $(document).ready(function () {
 
     function setPunishmentStyle(length, row) {
         if (length === "Permanent") {
-            $(`#line-upper-${rowCount}`).addClass('permanent-line');
-            $(`#status-badge-${rowCount}`).addClass('permanent');
-            $(`#line-below-${rowCount}`).addClass('permanent-line');
+            $(`#line-upper-${row}`).addClass('permanent-line');
+            $(`#status-badge-${row}`).addClass('permanent');
+            $(`#line-below-${row}`).addClass('permanent-line');
         } else if (length === "Active") {
-            $(`#line-upper-${rowCount}`).addClass('active-line');
-            $(`#status-badge-${rowCount}`).addClass('active');
-            $(`#line-below-${rowCount}`).addClass('active-line');
+            $(`#line-upper-${row}`).addClass('active-line');
+            $(`#status-badge-${row}`).addClass('active');
+            $(`#line-below-${row}`).addClass('active-line');
         } else {
-            $(`#line-upper-${rowCount}`).addClass('expired-line');
-            $(`#status-badge-${rowCount}`).addClass('expired');
-            $(`#line-below-${rowCount}`).addClass('expired-line');
+            $(`#line-upper-${row}`).addClass('expired-line');
+            $(`#status-badge-${row}`).addClass('expired');
+            $(`#line-below-${row}`).addClass('expired-line');
         }
     }
 
