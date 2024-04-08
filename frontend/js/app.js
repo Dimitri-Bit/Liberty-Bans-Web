@@ -4,41 +4,44 @@ $(document).ready(function () {
     let morePages = true;
 
     async function getWithAsyncFetch(url) {
-        const response = await fetch(url);
+        let json;
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        try {
+            const response = await fetch(url);
+            json = await response.json();
+        } catch (e) {
+            console.log(e);
         }
 
-        return await response.json();
+        return json;
     }
 
     function fetchTypeStats(type) {
         let typeText = "Punishment type";
         let dataStats = "0";
 
-        const data = getWithAsyncFetch(`/stats/${type}`);
-
-        if (data != null) {
+        getWithAsyncFetch(`/stats/${type}`).then(data => {
             switch (data.type) {
                 case "ban":
                     typeText = "Bans";
                     break;
 
-                case "mute":
-                    typeText = "Mutes";
-                    break;
+                    case "mute":
+                        typeText = "Mutes";
+                        break;
 
-                case "kick":
-                    typeText = "Kicks";
-                    break;
+                    case "kick":
+                        typeText = "Kicks";
+                        break;
 
-                case "warn":
-                    typeText = "Warns";
-                    break;
-            }
-            dataStats = data.stats;
-        }
+                    case "warn":
+                        typeText = "Warns";
+                        break;
+                }
+                dataStats = data.stats;
+        }).catch(e => {
+            console.log(e)
+        });
 
         $('#type-stats-text').text(`${typeText} (${dataStats})`);
     }
@@ -181,11 +184,13 @@ $(document).ready(function () {
 
     function fetchPunishments(type, page) {
         const spinner = $("#punishments-spinner");
-        const punishments = $("#punishments");
+        const typeStats = $("#type-stats");
+        const nothingToShow = $("#nothing-to-show");
 
         // First we hide everything.
         spinner.show();
-        $(`#nothing-to-show`).hide()
+        typeStats.hide();
+        nothingToShow.hide();
 
         // Since we have 6 pre-defined html well objects, we need to hide them all.
         for (let i = 0; i < 6; i++) {
@@ -197,12 +202,8 @@ $(document).ready(function () {
         // Update the punishment type and stats variables
         fetchTypeStats(type);
 
-        // We get the data.
-        const data = getWithAsyncFetch(`/punishments/" + ${type} + "/" + ${page}`);
-
         // We actually got data!
-        if (data.punishments != null) {
-
+        getWithAsyncFetch(`/punishments/${type}/${page}`).then(data => {
             let rowCount = 0;
             for (const key in data.punishments) {
                 setPunishmentStyle(data.punishments[key].label, rowCount);
@@ -216,17 +217,20 @@ $(document).ready(function () {
                 rowCount++;
             }
 
-            setMorePages(data.punishments.morePages);
+            setMorePages(data.morePages);
 
             // Finished populating values, let's show the data.
             spinner.hide();
+            typeStats.show();
             for (let i = 0; i < rowCount; i++) {
                 $(`#punishments-${i}`).show();
             }
-
-        } else {
+        }).catch(e => {
+            console.log(e);
             // We didn't get any data.
-            $(`#nothing-to-show`).show();
-        }
+            spinner.hide();
+            typeStats.hide();
+            nothingToShow.show();
+        });
     }
 });
