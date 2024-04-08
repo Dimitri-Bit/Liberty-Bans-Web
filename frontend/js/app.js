@@ -25,7 +25,7 @@ $(document).ready(function () {
                 break;
 
             case "mute":
-                typeTexts = "Mutes";
+                typeText = "Mutes";
                 break;
 
             case "kick":
