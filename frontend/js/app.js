@@ -136,12 +136,14 @@ $(document).ready(function () {
     function fetchPunishments(type, page) {
         const spinner = $("#punishments-spinner");
         const punishments = $("#punishments");
+        let rowCount = 0;
 
         $.ajax({
             url: "/punishments/" + type + "/" + page,
             method: "GET",
             beforeSend: function() {
                 spinner.show();
+                // Hide all the rows before populating with values.
                 for (let i = 0; i < 6; i++) {
                     $(`#punishments-${i}`).hide();
                 }
@@ -154,7 +156,6 @@ $(document).ready(function () {
                 if (response.punishments != null) {
                     morePages = response.morePages;
 
-                    let rowCount = 0;
                     response.punishments.forEach(function(punishment) {
 
                         let operatorUuid = punishment.operatorUuid;
@@ -213,11 +214,16 @@ $(document).ready(function () {
             },
             complete: function() {
                 spinner.hide();
-                for (let i = 0; i < 6; i++) {
+                // Since there are cases where we won't load 6 punishments exactly
+                // we have to hide some in order to get a correct page.
+                // the rowCount variable holds the number of rows we stopped at.
+                // therefore we need to hide the remaining.
+                for (let i = 0; i < rowCount; i++) {
                     $(`#punishments-${i}`).show();
                 }
             }
         });
+        rowCount = 0;
     }
 
 });
