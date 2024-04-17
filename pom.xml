@@ -74,11 +74,6 @@
     </dependency>
 
     <dependency>
-      <groupId>net.lingala.zip4j</groupId>
-      <artifactId>zip4j</artifactId>
-      <version>2.11.5</version>
-    </dependency>
-    <dependency>
       <groupId>space.arim.libertybans</groupId>
       <artifactId>bans-env-standalone</artifactId>
       <version>1.1.0-SNAPSHOT</version>
@@ -137,25 +132,12 @@
           </compilerArgs>
         </configuration>
       </plugin>
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.7.0</version>
-        <configuration>
-          <descriptors>
-            <descriptor>src/assembly/frontend.xml</descriptor>
-          </descriptors>
-        </configuration>
-        <executions>
-          <execution>
-            <id>make-assembly</id> <!-- this is used for inheritance merges -->
-            <phase>package</phase> <!-- bind to the packaging phase -->
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
+      <resources>
+        <resource>
+          <directory>frontend</directory>
+        </resource>
+      </resources>
   </build>
 
 </project>
