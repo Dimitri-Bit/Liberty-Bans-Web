@@ -44,7 +44,7 @@ public class Application {
                 // If it's not present, an exception will be shallower, and the return value will be an empty string.
                 if (startupFiles.checkFrontendVersion().isEmpty()) {
                     RuntimeConstants.setFrontendVersion("2.0.0"); // 2.0.0 was the last version before the frontend wasn't versioned.
-                    if (!upgradeFrontend.equals("false") || !upgradeFrontend.equals("true")) {
+                    if (upgradeFrontend.isEmpty()) {
                         log.info(" The frontend version needs to be updated. The current backend version is {}, the frontend is {}.", RuntimeConstants.getBackendVersion(), RuntimeConstants.getFrontendVersion());
                         log.info(" You can update the frontend by adding the -Dupgrade_frontend=true parameter to your startup parameters.");
                         log.info(" If you have a custom frontend, add the version.json file to the root of the frontend folder, with the current backend version");
@@ -56,7 +56,7 @@ public class Application {
                     RuntimeConstants.setFrontendVersion(startupFiles.checkFrontendVersion());
                     // The two versions don't match, which likely means that the frontend is out of date.
                     if (!RuntimeConstants.getFrontendVersion().equals(RuntimeConstants.getBackendVersion())) {
-                        if (!upgradeFrontend.equals("false") || !upgradeFrontend.equals("true")) {
+                        if (upgradeFrontend.isEmpty()) {
                             log.info(" The frontend version needs to be updated. The current backend version is {}, the frontend is {}.", RuntimeConstants.getBackendVersion(), RuntimeConstants.getFrontendVersion());
                             log.info(" You can update the frontend by adding the -Dupgrade_frontend=true parameter to your startup parameters.");
                             log.info(" If you have a custom frontend, add the version.json file to the root of the frontend folder, with the current backend version");
