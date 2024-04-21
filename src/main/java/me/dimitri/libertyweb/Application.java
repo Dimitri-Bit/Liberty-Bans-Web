@@ -57,11 +57,13 @@ public class Application {
                 }
             }
 
-            if (System.getProperty("upgrade_frontend").equals("true")) {
-                if (startupFiles.createFrontend(true)) {
-                    log.info(" Your frontend files have successfully been updated. Please re-start the application to allow Micronaut to pick up the new files.");
-                    System.exit(0);
-                    return;
+            if (System.getProperty("upgrade_frontend") != null) {
+                if (System.getProperty("upgrade_frontend").equals("true")) {
+                    if (startupFiles.createFrontend(true)) {
+                        log.info(" Your frontend files have successfully been updated. Please re-start the application to allow Micronaut to pick up the new files.");
+                        System.exit(0);
+                        return;
+                    }
                 }
             }
 
