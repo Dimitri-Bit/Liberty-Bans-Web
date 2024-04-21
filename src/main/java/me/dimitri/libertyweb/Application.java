@@ -21,6 +21,11 @@ public class Application {
             log.error(e.getMessage());
         }
 
+        String upgradeFrontend = "";
+        if (System.getProperty("upgrade_frontend") != null) {
+            upgradeFrontend = System.getProperty("upgrade_frontend");
+        }
+
         try {
             if (startupFiles.createConfig()) {
                 log.info(" config.yml created, please configure your Liberty Web application there");
@@ -39,31 +44,34 @@ public class Application {
                 // If it's not present, an exception will be shallower, and the return value will be an empty string.
                 if (startupFiles.checkFrontendVersion().isEmpty()) {
                     RuntimeConstants.setFrontendVersion("2.0.0"); // 2.0.0 was the last version before the frontend wasn't versioned.
-                    log.info(" Your frontend version needs to be updated. The current version is {}.", RuntimeConstants.getBackendVersion());
-                    log.info(" yours is >=2.0.0. Consider updating your frontend code with the -Dupgrade_frontend=true parameter.");
-                    log.info(" or, delete the frontend folder.");
-                    log.info(" If you have a custom frontend, add the version.json file to the root of the frontend folder, with the current backend version");
-                    log.info(" which is always the value of the application version in pom.xml (<version>{}</version>)", RuntimeConstants.getBackendVersion());
+                    if (upgradeFrontend.isEmpty()) {
+                        log.info(" Your frontend version needs to be updated. The current version is {}, yours is {}.", RuntimeConstants.getBackendVersion(), RuntimeConstants.getFrontendVersion());
+                        log.info(" You can update the frontend by adding the -Dupgrade_frontend=true parameter to your startup command.");
+                        log.info(" If you have a custom frontend, add the version.json file to the root of the frontend folder, with the current backend version");
+                        log.info(" which is always the value of the application version in pom.xml (<version>{}</version>).", RuntimeConstants.getBackendVersion());
+                        log.info(" Alternatively, if you would like to supress this message, add the -Dupgrade_frontend=false parameter.");
+                    }
                 } else {
                     // The response value isn't empty, meaning we have something to compare.
                     RuntimeConstants.setFrontendVersion(startupFiles.checkFrontendVersion());
                     // The two versions don't match, which likely means that the frontend is out of date.
                     if (!RuntimeConstants.getFrontendVersion().equals(RuntimeConstants.getBackendVersion())) {
-                        log.info(" Your frontend version is outdated. The current version is {}.", RuntimeConstants.getBackendVersion());
-                        log.info(" yours is {}. Consider updating your frontend code with the -Dupgrade_frontend=true parameter.", RuntimeConstants.getFrontendVersion());
-                        log.info(" if you have a custom frontend, add the version.json file to the root of the frontend folder, with the current backend version");
-                        log.info(" which is always the value of the application version in pom.xml (<version>{}</version>)", RuntimeConstants.getBackendVersion());
+                        if (upgradeFrontend.isEmpty()) {
+                            log.info(" Your frontend version needs to be updated. The current version is {}, yours is {}.", RuntimeConstants.getBackendVersion(), RuntimeConstants.getFrontendVersion());
+                            log.info(" Consider updating your frontend code with the -Dupgrade_frontend=true parameter.");
+                            log.info(" If you have a custom frontend, add the version.json file to the root of the frontend folder, with the current backend version");
+                            log.info(" which is always the value of the application version in pom.xml (<version>{}</version>).", RuntimeConstants.getBackendVersion());
+                            log.info(" Alternatively, if you would like to supress this message, add the -Dupgrade_frontend=false parameter.");
+                        }
                     }
                 }
             }
 
-            if (System.getProperty("upgrade_frontend") != null) {
-                if (System.getProperty("upgrade_frontend").equals("true")) {
-                    if (startupFiles.createFrontend(true)) {
-                        log.info(" Your frontend files have successfully been updated. Please re-start the application to allow Micronaut to pick up the new files.");
-                        System.exit(0);
-                        return;
-                    }
+            if (upgradeFrontend.equals("true")) {
+                if (startupFiles.createFrontend(true)) {
+                    log.info(" Your frontend files have successfully been updated. Please re-start the application to allow Micronaut to pick up the new files.");
+                    System.exit(0);
+                    return;
                 }
             }
 
