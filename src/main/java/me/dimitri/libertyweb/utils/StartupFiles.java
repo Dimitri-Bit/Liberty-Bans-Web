@@ -1,6 +1,9 @@
 package me.dimitri.libertyweb.utils;
 
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import me.dimitri.libertyweb.utils.exception.FileWorkerException;
+import me.dimitri.libertyweb.utils.exception.PropertyLoaderException;
 
 import java.io.*;
 import java.net.URI;
@@ -8,6 +11,7 @@ import java.net.URISyntaxException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Collections;
+import java.util.Properties;
 
 public class StartupFiles {
     private final File rootPath;
@@ -35,10 +39,13 @@ public class StartupFiles {
         return false;
     }
 
-    public boolean createFrontend() throws FileWorkerException {
+
+    // isOverwrite enables us to over-write the currently existing frontend directories with our current one.
+    // at some point we really need to add javadoc to these functions.
+    public boolean createFrontend(boolean isOverwrite) throws FileWorkerException {
         try {
             File frontend = new File(rootPath, "frontend");
-            if (!frontend.exists()) {
+            if (!frontend.exists() || isOverwrite) {
                 Files.createDirectories(frontend.toPath());
                 copyFromJar("/frontend-src", Paths.get(frontend.toURI()));
                 return true;
@@ -72,6 +79,32 @@ public class StartupFiles {
                 }
             });
         }
+    }
+
+    public String checkFrontendVersion()  {
+        File fileVersion = new File(rootPath, "frontend/version.json");
+        Gson gson = new Gson();
+        JsonReader reader;
+        String version = "";
+
+        try {
+            reader = new JsonReader(new FileReader(fileVersion));
+            JsonData data = gson.fromJson(reader, JsonData.class);
+            version = data.getVersion();
+            return version;
+        } catch (FileNotFoundException ignored) { }
+
+        return version;
+    }
+
+    public void setRuntimeConstants() throws PropertyLoaderException {
+        final Properties properties = new Properties();
+        try {
+            properties.load(getClass().getClassLoader().getResourceAsStream("backend_version.properties"));
+        } catch (IOException e) {
+            throw new PropertyLoaderException("Unable to load properties: ", e.getCause());
+        }
+        RuntimeConstants.setBackendVersion(properties.getProperty("backend_version"));
     }
 
     private InputStream getResource(String name) {
