@@ -44,7 +44,7 @@ public class Application {
                 // If it's not present, an exception will be shallower, and the return value will be an empty string.
                 if (startupFiles.checkFrontendVersion().isEmpty()) {
                     RuntimeConstants.setFrontendVersion("2.0.0"); // 2.0.0 was the last version before the frontend wasn't versioned.
-                    if (upgradeFrontend.isEmpty()) {
+                    if (!(upgradeFrontend.equals("true") || upgradeFrontend.equals("false"))) {
                         versionLogs();
                     }
                 } else {
@@ -52,7 +52,7 @@ public class Application {
                     RuntimeConstants.setFrontendVersion(startupFiles.checkFrontendVersion());
                     // The two versions don't match, which likely means that the frontend is out of date.
                     if (!RuntimeConstants.getFrontendVersion().equals(RuntimeConstants.getBackendVersion())) {
-                        if (upgradeFrontend.isEmpty()) {
+                        if (!(upgradeFrontend.equals("true") || upgradeFrontend.equals("false"))) {
                             versionLogs();
                         }
                     }
