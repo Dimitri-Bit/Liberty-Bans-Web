@@ -34,7 +34,7 @@ public class StartupFiles {
                 return true;
             }
         } catch (IOException e) {
-            throw new FileWorkerException("Unable to create config: ", e.getCause());
+            throw new FileWorkerException("Unable to create config: ", e);
         }
         return false;
     }
@@ -50,8 +50,8 @@ public class StartupFiles {
                 copyFromJar("/frontend-src", Paths.get(frontend.toURI()));
                 return true;
             }
-        } catch (Exception e) {
-            throw new FileWorkerException("Unable to create frontend files: ", e.getCause());
+        } catch (IOException | URISyntaxException e) {
+            throw new FileWorkerException("Unable to create frontend files: ", e);
         }
         return false;
     }
@@ -84,15 +84,15 @@ public class StartupFiles {
     public String checkFrontendVersion()  {
         File fileVersion = new File(rootPath, "frontend/version.json");
         Gson gson = new Gson();
-        JsonReader reader;
         String version = "";
 
         try {
-            reader = new JsonReader(new FileReader(fileVersion));
-            JsonData data = gson.fromJson(reader, JsonData.class);
-            version = data.getVersion();
+            try (JsonReader reader1 = new JsonReader(new FileReader(fileVersion))) {
+                JsonData data = gson.fromJson(reader1, JsonData.class);
+                version = data.getVersion();
+            }
             return version;
-        } catch (FileNotFoundException ignored) { }
+        } catch (IOException ignored) { }
 
         return version;
     }
