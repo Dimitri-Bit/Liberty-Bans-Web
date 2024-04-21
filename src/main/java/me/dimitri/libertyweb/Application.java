@@ -44,9 +44,9 @@ public class Application {
                 // If it's not present, an exception will be shallower, and the return value will be an empty string.
                 if (startupFiles.checkFrontendVersion().isEmpty()) {
                     RuntimeConstants.setFrontendVersion("2.0.0"); // 2.0.0 was the last version before the frontend wasn't versioned.
-                    if (upgradeFrontend.isEmpty()) {
-                        log.info(" Your frontend version needs to be updated. The current version is {}, yours is {}.", RuntimeConstants.getBackendVersion(), RuntimeConstants.getFrontendVersion());
-                        log.info(" You can update the frontend by adding the -Dupgrade_frontend=true parameter to your startup command.");
+                    if (!upgradeFrontend.equals("false") || !upgradeFrontend.equals("true")) {
+                        log.info(" The frontend version needs to be updated. The current backend version is {}, the frontend is {}.", RuntimeConstants.getBackendVersion(), RuntimeConstants.getFrontendVersion());
+                        log.info(" You can update the frontend by adding the -Dupgrade_frontend=true parameter to your startup parameters.");
                         log.info(" If you have a custom frontend, add the version.json file to the root of the frontend folder, with the current backend version");
                         log.info(" which is always the value of the application version in pom.xml (<version>{}</version>).", RuntimeConstants.getBackendVersion());
                         log.info(" Alternatively, if you would like to supress this message, add the -Dupgrade_frontend=false parameter.");
@@ -56,9 +56,9 @@ public class Application {
                     RuntimeConstants.setFrontendVersion(startupFiles.checkFrontendVersion());
                     // The two versions don't match, which likely means that the frontend is out of date.
                     if (!RuntimeConstants.getFrontendVersion().equals(RuntimeConstants.getBackendVersion())) {
-                        if (upgradeFrontend.isEmpty()) {
-                            log.info(" Your frontend version needs to be updated. The current version is {}, yours is {}.", RuntimeConstants.getBackendVersion(), RuntimeConstants.getFrontendVersion());
-                            log.info(" Consider updating your frontend code with the -Dupgrade_frontend=true parameter.");
+                        if (!upgradeFrontend.equals("false") || !upgradeFrontend.equals("true")) {
+                            log.info(" The frontend version needs to be updated. The current backend version is {}, the frontend is {}.", RuntimeConstants.getBackendVersion(), RuntimeConstants.getFrontendVersion());
+                            log.info(" You can update the frontend by adding the -Dupgrade_frontend=true parameter to your startup parameters.");
                             log.info(" If you have a custom frontend, add the version.json file to the root of the frontend folder, with the current backend version");
                             log.info(" which is always the value of the application version in pom.xml (<version>{}</version>).", RuntimeConstants.getBackendVersion());
                             log.info(" Alternatively, if you would like to supress this message, add the -Dupgrade_frontend=false parameter.");
