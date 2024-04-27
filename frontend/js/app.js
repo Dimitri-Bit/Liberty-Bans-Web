@@ -162,7 +162,7 @@ $(document).ready(function () {
         }
     }
 
-    function setRowData(victimUUID, victimUsername, operatorUUID, operatorUsername, reason, row, startDate, expirationDate) {
+    function setRowData(victimUUID, victimUsername, operatorUUID, operatorUsername, reason, row, startDate, expirationDate, timeUntilExpiration) {
         $(`#first-uuid-${row}`).attr('src', `https://visage.surgeplay.com/face/55/${victimUUID}`);
         $(`#offender-${row}`).text(`${victimUsername}`);
         $(`#second-uuid-${row}`).attr('src', `https://visage.surgeplay.com/face/55/${operatorUUID}`);
@@ -171,6 +171,7 @@ $(document).ready(function () {
 
         $(`#punishment-start-date-${row}`).text(`${startDate}`);
         $(`#punishment-end-date-${row}`).text(`${expirationDate}`);
+        $(`#punishment-expire-date-${row}`).text(`${timeUntilExpiration}`);
     }
 
     function setMorePages(morePages) {
@@ -189,6 +190,27 @@ $(document).ready(function () {
             $('#prevBtn').prop('disabled', false);
             $('#prevBtn').removeClass('disabled-btn');
         }
+    }
+
+    function calculateExpirationDate(date) {
+        // The api provides dates in the dd/mm/yyyy format.
+        const dateParts = date.split("/");
+        // month is 0-based, that's why we need dataParts[1] - 1
+        let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+        let dateToday = new Date();
+
+        const _MS_PER_DAY = 1000 * 60 * 60 * 24
+        // We need to normalize due to time-zone differences as per https://stackoverflow.com/a/15289883
+        const utc1 = Date.UTC(dateObject.getFullYear(), dateObject.getMonth(), dateObject.getDate());
+        const utc2 = Date.UTC(dateToday.getFullYear(), dateToday.getMonth(), dateToday.getDate());
+
+        const differenceDays = Math.floor(utc2 - utc1);
+
+        let diffDays = Math.floor(differenceDays / _MS_PER_DAY); // days
+        let diffHrs = Math.floor((differenceDays % _MS_PER_DAY) / _MS_PER_DAY); // hours
+        let diffMins = Math.round(((differenceDays % _MS_PER_DAY) % 3600000) / 60000); // minutes
+
+        return diffDays + " days " + diffHrs + " hours " + diffMins + " minutes";
     }
 
     function fetchPunishments(type, page) {
@@ -223,12 +245,15 @@ $(document).ready(function () {
                     operatorUUID = "console";
                 }
 
-                let punishmentExpirationDate = data.punishments[key].end;
-                if (punishmentExpirationDate === 0) {
-                    punishmentExpirationDate = "Never";
+                let expirationDate = data.punishments[key].endDate;
+                let timeUntilExpiration;
+                if (expirationDate === "Never") {
+                    timeUntilExpiration = "Never";
+                } else {
+                    timeUntilExpiration = calculateExpirationDate(expirationDate);
                 }
 
-                setRowData(data.punishments[key].victimUuid, data.punishments[key].victimUsername, operatorUUID, data.punishments[key].operatorUsername, data.punishments[key].reason, rowCount, data.punishments[key].start, punishmentExpirationDate);
+                setRowData(data.punishments[key].victimUuid, data.punishments[key].victimUsername, operatorUUID, data.punishments[key].operatorUsername, data.punishments[key].reason, rowCount, data.punishments[key].startDate, data.punishments[key].endDate, timeUntilExpiration);
                 rowCount++;
             }
 
