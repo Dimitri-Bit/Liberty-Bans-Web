@@ -162,17 +162,18 @@ $(document).ready(function () {
         }
     }
 
-    function setRowData(victimUUID, victimUsername, operatorUUID, operatorUsername, reason, row, startDate, expirationDate, timeUntilExpirationDate, length) {
+    function setRowData(victimUUID, victimUsername, operatorUUID, operatorUsername, reason, row, startDate, expirationDate, timeUntilExpirationDate, length, label) {
         $(`#first-uuid-${row}`).attr('src', `https://visage.surgeplay.com/face/55/${victimUUID}`);
         $(`#offender-${row}`).text(`${victimUsername}`);
         $(`#second-uuid-${row}`).attr('src', `https://visage.surgeplay.com/face/55/${operatorUUID}`);
         $(`#operator-${row}`).text(`${operatorUsername}`);
         $(`#reason-${row}`).text(`${reason}`);
+        $(`#status-badge-${row}`).text(`${label}`);
 
         $(`#punishment-start-date-${row}`).text(`${startDate}`);
         $(`#punishment-end-date-${row}`).text(`${expirationDate}`);
         $(`#punishment-length-${row}`).text(`${timeUntilExpirationDate}`);
-        $(`#punishment-expire-date-${row}`).text(`${timeUntilExpirationDate}`);
+        $(`#punishment-expire-date-${row}`).text(`${length}`);
     }
 
     function setMorePages(morePages) {
@@ -257,7 +258,7 @@ $(document).ready(function () {
                     timeUntilExpiration = calculateExpirationDate(expirationDate);
                 }
 
-                setRowData(data.punishments[key].victimUuid, data.punishments[key].victimUsername, operatorUUID, data.punishments[key].operatorUsername, data.punishments[key].reason, rowCount, data.punishments[key].startDate, data.punishments[key].endDate, timeUntilExpiration, data.punishments[key].punishmentLength);
+                setRowData(data.punishments[key].victimUuid, data.punishments[key].victimUsername, operatorUUID, data.punishments[key].operatorUsername, data.punishments[key].reason, rowCount, data.punishments[key].startDate, data.punishments[key].endDate, timeUntilExpiration, data.punishments[key].punishmentLength, data.punishments[key].label);
                 rowCount++;
             }
 
