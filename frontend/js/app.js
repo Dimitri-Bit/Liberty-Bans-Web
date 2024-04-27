@@ -148,17 +148,17 @@ $(document).ready(function () {
 
     function setPunishmentStyle(length, row) {
         if (length === "Permanent") {
-            $(`#line-upper-${row}`).addClass('permanent-line');
+            $(`#line-upper-${row}`).addClass('permanent-line-left');
             $(`#status-badge-${row}`).addClass('permanent');
-            $(`#line-below-${row}`).addClass('permanent-line');
+            $(`#line-below-${row}`).addClass('permanent-line-right');
         } else if (length === "Active") {
-            $(`#line-upper-${row}`).addClass('active-line');
+            $(`#line-upper-${row}`).addClass('active-line-left');
             $(`#status-badge-${row}`).addClass('active');
-            $(`#line-below-${row}`).addClass('active-line');
+            $(`#line-below-${row}`).addClass('active-line-right');
         } else {
-            $(`#line-upper-${row}`).addClass('expired-line');
+            $(`#line-upper-${row}`).addClass('expired-line-left');
             $(`#status-badge-${row}`).addClass('expired');
-            $(`#line-below-${row}`).addClass('expired-line');
+            $(`#line-below-${row}`).addClass('expired-line-right');
         }
     }
 
@@ -204,6 +204,7 @@ $(document).ready(function () {
         // Since we have 6 pre-defined html well objects, we need to hide them all.
         for (let i = 0; i < 6; i++) {
             $(`#punishments-${i}`).hide();
+            $(`#punishments-info-${i}`).hide();
         }
 
         updatePageCount();
@@ -238,6 +239,7 @@ $(document).ready(function () {
             typeStats.show();
             for (let i = 0; i < rowCount; i++) {
                 $(`#punishments-${i}`).show();
+                $(`#punishments-info-${i}`).show();
             }
         }).catch(e => {
             console.log(e);

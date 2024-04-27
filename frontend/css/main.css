@@ -139,7 +139,7 @@ input[type=number] {
   background-color: var(--gray-secondary);
 }
 
-.permanent-line {
+.permanent-line-left {
   border-left: 7px solid var(--red);
   height: 8vh;
   padding: 1vh;
@@ -151,7 +151,7 @@ input[type=number] {
   padding: 1vh;
 }
 
-.active-line {
+.active-line.left {
   border-left: 7px solid var(--yellow);
   height: 8vh;
   padding: 1vh;
@@ -163,7 +163,7 @@ input[type=number] {
   padding: 1vh;
 }
 
-.expired-line {
+.expired-line-left {
   border-left: 7px solid var(--green);
   height: 8vh;
   padding: 1vh;
