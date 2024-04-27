@@ -162,7 +162,7 @@ $(document).ready(function () {
         }
     }
 
-    function setRowData(victimUUID, victimUsername, operatorUUID, operatorUsername, reason, row, startDate, expirationDate, timeUntilExpiration) {
+    function setRowData(victimUUID, victimUsername, operatorUUID, operatorUsername, reason, row, startDate, expirationDate, timeUntilExpirationDate, length) {
         $(`#first-uuid-${row}`).attr('src', `https://visage.surgeplay.com/face/55/${victimUUID}`);
         $(`#offender-${row}`).text(`${victimUsername}`);
         $(`#second-uuid-${row}`).attr('src', `https://visage.surgeplay.com/face/55/${operatorUUID}`);
@@ -171,7 +171,8 @@ $(document).ready(function () {
 
         $(`#punishment-start-date-${row}`).text(`${startDate}`);
         $(`#punishment-end-date-${row}`).text(`${expirationDate}`);
-        $(`#punishment-expire-date-${row}`).text(`${timeUntilExpiration}`);
+        $(`#punishment-length-${row}`).text(`${timeUntilExpirationDate}`);
+        $(`#punishment-expire-date-${row}`).text(`${timeUntilExpirationDate}`);
     }
 
     function setMorePages(morePages) {
@@ -246,14 +247,17 @@ $(document).ready(function () {
                 }
 
                 let expirationDate = data.punishments[key].endDate;
+                let isActive = data.punishments[key].active;
                 let timeUntilExpiration;
                 if (expirationDate === "Never") {
                     timeUntilExpiration = "Never";
+                } else if (isActive === false) {
+                    timeUntilExpiration = "Expired/Revoked";
                 } else {
                     timeUntilExpiration = calculateExpirationDate(expirationDate);
                 }
 
-                setRowData(data.punishments[key].victimUuid, data.punishments[key].victimUsername, operatorUUID, data.punishments[key].operatorUsername, data.punishments[key].reason, rowCount, data.punishments[key].startDate, data.punishments[key].endDate, timeUntilExpiration);
+                setRowData(data.punishments[key].victimUuid, data.punishments[key].victimUsername, operatorUUID, data.punishments[key].operatorUsername, data.punishments[key].reason, rowCount, data.punishments[key].startDate, data.punishments[key].endDate, timeUntilExpiration, data.punishments[key].punishmentLength);
                 rowCount++;
             }
 
