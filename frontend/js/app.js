@@ -3,40 +3,53 @@ $(document).ready(function () {
     let currentType = 'ban';
     let morePages = true;
 
+    async function getWithAsyncFetch(url) {
+        let json;
+
+        try {
+            const response = await fetch(url);
+            json = await response.json();
+        } catch (e) {
+            console.log(e);
+        }
+
+        return json;
+    }
+
+    function setTypeText(type) {
+        let typeText;
+
+        switch (type) {
+            case "ban":
+                typeText = "Bans";
+                break;
+
+            case "mute":
+                typeText = "Mutes";
+                break;
+
+            case "kick":
+                typeText = "Kicks";
+                break;
+
+            case "warn":
+                typeText = "Warns";
+                break;
+        }
+
+        return typeText;
+    }
+
     function fetchTypeStats(type) {
-        let typeText = "Bans";
+        let typeText;
 
-        $.ajax({
-            url: `/stats/${type}`,
-            method: "GET",
-            success: function(response) {
+        typeText = setTypeText(type);
 
-                switch (type) {
-                    case "ban":
-                        typeText = "Bans";
-                        break;
-
-                    case "mute":
-                        typeText = "Mutes";
-                        break;
-
-                    case "kick":
-                        typeText = "Kicks";
-                        break;
-
-                    case "warn":
-                        typeText = "Warns";
-                        break;
-                }
-
-
-                $('#type-stats-text').text(`${typeText} (${response.stats})`);
-
-            },
-            error: function() {
-                console.error("Error retrieving type stats");
-            }
-        })
+        getWithAsyncFetch(`/stats/${type}`).then(data => {
+            $('#type-stats-text').text(`${typeText} (${data.stats})`);
+        }).catch(e => {
+            console.log(e)
+        });
     }
 
     function updatePageCount() {
@@ -133,97 +146,97 @@ $(document).ready(function () {
         }
     });
 
-    function fetchPunishments(type, page) {
-        const spinner = $("#punishments-spinner");
-        const punishments = $("#punishments");
-        let rowCount = 0;
-
-        $.ajax({
-            url: "/punishments/" + type + "/" + page,
-            method: "GET",
-            beforeSend: function() {
-                spinner.show();
-                // Hide all the rows before populating with values.
-                for (let i = 0; i < 6; i++) {
-                    $(`#punishments-${i}`).hide();
-                }
-                $(`#nothing-to-show`).hide();
-            },
-            success: function(response) {
-                fetchTypeStats(type);
-                updatePageCount();
-
-                if (response.punishments != null) {
-                    morePages = response.morePages;
-
-                    response.punishments.forEach(function(punishment) {
-
-                        let operatorUuid = punishment.operatorUuid;
-                        if (punishment.label == "Permanent") {
-                            $(`#line-upper-${rowCount}`).addClass('permanent-line');
-                            $(`#status-badge-${rowCount}`).addClass('permanent');
-                            $(`#line-below-${rowCount}`).addClass('permanent-line');
-                        } else if (punishment.label == "Active") {
-                            $(`#line-upper-${rowCount}`).addClass('active-line');
-                            $(`#status-badge-${rowCount}`).addClass('active');
-                            $(`#line-below-${rowCount}`).addClass('active-line');
-                        } else {
-                            $(`#line-upper-${rowCount}`).addClass('expired-line');
-                            $(`#status-badge-${rowCount}`).addClass('expired');
-                            $(`#line-below-${rowCount}`).addClass('expired-line');
-                        }
-
-                        if (operatorUuid == '00000000-0000-0000-0000-000000000000') {
-                            operatorUuid = "console";
-                        }
-
-                        $(`#first-uuid-${rowCount}`).attr('src', `https://visage.surgeplay.com/face/55/${punishment.victimUuid}`);
-                        $(`#offender-${rowCount}`).text(`${punishment.victimUsername}`);
-                        $(`#second-uuid-${rowCount}`).attr('src', `https://visage.surgeplay.com/face/55/${operatorUuid}`);
-                        $(`#operator-${rowCount}`).text(`${punishment.operatorUsername}`);
-                        $(`#reason-${rowCount}`).text(`${punishment.reason}`);
-
-                        rowCount++;
-                    });
-                } else {
-                    for (let i = 0; i < 6; i++) {
-                        $(`#punishments-${i}`).hide();
-                    }
-                    $(`#nothing-to-show`).show();
-                }
-                if (!morePages) {
-                    $('#nextBtn').prop('disabled', true);
-                    $('#nextBtn').addClass('disabled-btn');
-                } else {
-                    $('#nextBtn').prop('disabled', false);
-                    $('#nextBtn').removeClass('disabled-btn');
-                }
-
-                if (currentPage <= 1) {
-                    $('#prevBtn').prop('disabled', true);
-                    $('#prevBtn').addClass('disabled-btn');
-                } else {
-                    $('#prevBtn').prop('disabled', false);
-                    $('#prevBtn').removeClass('disabled-btn');
-                }
-            },
-            error: function() {
-                console.log("Error retrieving punishment history");
-                $(`#nothing-to-show`).show();
-
-            },
-            complete: function() {
-                spinner.hide();
-                // Since there are cases where we won't load 6 punishments exactly
-                // we have to hide some in order to get a correct page.
-                // the rowCount variable holds the number of rows we stopped at.
-                // therefore we need to hide the remaining.
-                for (let i = 0; i < rowCount; i++) {
-                    $(`#punishments-${i}`).show();
-                }
-            }
-        });
-        rowCount = 0;
+    function setPunishmentStyle(length, row) {
+        if (length === "Permanent") {
+            $(`#line-upper-${row}`).addClass('permanent-line');
+            $(`#status-badge-${row}`).addClass('permanent');
+            $(`#line-below-${row}`).addClass('permanent-line');
+        } else if (length === "Active") {
+            $(`#line-upper-${row}`).addClass('active-line');
+            $(`#status-badge-${row}`).addClass('active');
+            $(`#line-below-${row}`).addClass('active-line');
+        } else {
+            $(`#line-upper-${row}`).addClass('expired-line');
+            $(`#status-badge-${row}`).addClass('expired');
+            $(`#line-below-${row}`).addClass('expired-line');
+        }
     }
 
+    function setRowData(victimUUID, victimUsername, operatorUUID, operatorUsername, reason, row) {
+        $(`#first-uuid-${row}`).attr('src', `https://visage.surgeplay.com/face/55/${victimUUID}`);
+        $(`#offender-${row}`).text(`${victimUsername}`);
+        $(`#second-uuid-${row}`).attr('src', `https://visage.surgeplay.com/face/55/${operatorUUID}`);
+        $(`#operator-${row}`).text(`${operatorUsername}`);
+        $(`#reason-${row}`).text(`${reason}`);
+    }
+
+    function setMorePages(morePages) {
+        if (!morePages) {
+            $('#nextBtn').prop('disabled', true);
+            $('#nextBtn').addClass('disabled-btn');
+        } else {
+            $('#nextBtn').prop('disabled', false);
+            $('#nextBtn').removeClass('disabled-btn');
+        }
+
+        if (currentPage <= 1) {
+            $('#prevBtn').prop('disabled', true);
+            $('#prevBtn').addClass('disabled-btn');
+        } else {
+            $('#prevBtn').prop('disabled', false);
+            $('#prevBtn').removeClass('disabled-btn');
+        }
+    }
+
+    function fetchPunishments(type, page) {
+        const spinner = $("#punishments-spinner");
+        const typeStats = $("#type-stats");
+        const nothingToShow = $("#nothing-to-show");
+
+        // First we hide everything.
+        spinner.show();
+        typeStats.hide();
+        nothingToShow.hide();
+
+        // Since we have 6 pre-defined html well objects, we need to hide them all.
+        for (let i = 0; i < 6; i++) {
+            $(`#punishments-${i}`).hide();
+        }
+
+        updatePageCount();
+
+        // Update the punishment type and stats variables
+        fetchTypeStats(type);
+
+        // We actually got data!
+        getWithAsyncFetch(`/punishments/${type}/${page}`).then(data => {
+            let rowCount = 0;
+            for (const key in data.punishments) {
+                setPunishmentStyle(data.punishments[key].label, rowCount);
+
+                let operatorUUID = data.punishments[key].operatorUuid;
+                if (operatorUUID === '00000000-0000-0000-0000-000000000000') {
+                    operatorUUID = "console";
+                }
+
+                setRowData(data.punishments[key].victimUuid, data.punishments[key].victimUsername, operatorUUID, data.punishments[key].operatorUsername, data.punishments[key].reason, rowCount);
+                rowCount++;
+            }
+
+            setMorePages(data.morePages);
+
+            // Finished populating values, let's show the data.
+            spinner.hide();
+            typeStats.show();
+            for (let i = 0; i < rowCount; i++) {
+                $(`#punishments-${i}`).show();
+            }
+        }).catch(e => {
+            console.log(e);
+            // We didn't get any data.
+            spinner.hide();
+            typeStats.hide();
+            nothingToShow.show();
+        });
+    }
 });
