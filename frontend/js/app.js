@@ -168,6 +168,8 @@ $(document).ready(function () {
         $(`#second-uuid-${row}`).attr('src', `https://visage.surgeplay.com/face/55/${operatorUUID}`);
         $(`#operator-${row}`).text(`${operatorUsername}`);
         $(`#reason-${row}`).text(`${reason}`);
+
+        $(`#punishment-start-date-${row}`).text()
     }
 
     function setMorePages(morePages) {

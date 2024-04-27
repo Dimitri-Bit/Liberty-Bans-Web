@@ -88,16 +88,51 @@
               <div class="fs-5 mb-0">Reason</div>
               <p>Hacking & Spamming</p>
             </div>
-            <div class="col">
+            <div class="col-auto">
               <span class="permanent fw-medium">Permanent</span>
             </div>
-            <div class="col-auto permanent-line"></div>
+            <div class="col-auto permanent-line-right"></div>
           </div>
-          <div class="row align-items-center flex-nowrap punishment-row">
-            <div class="test collapse" id="collapseExample">
-              <div class="p-2 d-flex justify-content-center"><p>Additional Info...</p></div>
+
+            <div class="row punishment-info flex-nowrap">
+                <div class="col">
+                    <div class="collapse multi-collapse" id="multiCollapseExample1">
+                        <div class="card text-bg-dark mb-3 text-center">
+                            <h5 class="card-header fs-5 mb-0">Punishment start date:</h5>
+                            <div class="card-body">
+                                <p id="punishment-start-date-0">2025.04.27</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                        <div class="collapse multi-collapse" id="multiCollapseExample2">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Punishment start date:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-end-date-0">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="collapse multi-collapse" id="multiCollapseExample3">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Punishment start date:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-expire-date-0">2025.04.27</p>
+                                </div>
+                            </div>
+                    </div>
+                    </div>
             </div>
-          </div>
+            <div class="row align-items-center p-3 flex-nowrap punishment-row">
+                <div class="d-flex justify-content-center">
+                    <button class="btn btn-primary punishment-button" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2 multiCollapseExample3">
+                        <i class="fa fa-info-circle fa-w-16"></i>
+                    </button>
+                </div>
+            </div>
           
   
         </div>
