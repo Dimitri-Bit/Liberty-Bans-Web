@@ -162,14 +162,15 @@ $(document).ready(function () {
         }
     }
 
-    function setRowData(victimUUID, victimUsername, operatorUUID, operatorUsername, reason, row) {
+    function setRowData(victimUUID, victimUsername, operatorUUID, operatorUsername, reason, row, startDate, expirationDate) {
         $(`#first-uuid-${row}`).attr('src', `https://visage.surgeplay.com/face/55/${victimUUID}`);
         $(`#offender-${row}`).text(`${victimUsername}`);
         $(`#second-uuid-${row}`).attr('src', `https://visage.surgeplay.com/face/55/${operatorUUID}`);
         $(`#operator-${row}`).text(`${operatorUsername}`);
         $(`#reason-${row}`).text(`${reason}`);
 
-        $(`#punishment-start-date-${row}`).text()
+        $(`#punishment-start-date-${row}`).text(`${startDate}`);
+        $(`#punishment-end-date-${row}`).text(`${expirationDate}`);
     }
 
     function setMorePages(morePages) {
@@ -221,7 +222,12 @@ $(document).ready(function () {
                     operatorUUID = "console";
                 }
 
-                setRowData(data.punishments[key].victimUuid, data.punishments[key].victimUsername, operatorUUID, data.punishments[key].operatorUsername, data.punishments[key].reason, rowCount);
+                let punishmentExpirationDate = data.punishments[key].end;
+                if (punishmentExpirationDate === 0) {
+                    punishmentExpirationDate = "Never";
+                }
+
+                setRowData(data.punishments[key].victimUuid, data.punishments[key].victimUsername, operatorUUID, data.punishments[key].operatorUsername, data.punishments[key].reason, rowCount, data.punishments[key].start, punishmentExpirationDate);
                 rowCount++;
             }
 
