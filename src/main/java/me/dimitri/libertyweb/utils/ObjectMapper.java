@@ -2,6 +2,7 @@ package me.dimitri.libertyweb.utils;
 
 import me.dimitri.libertyweb.api.LibertyWeb;
 import me.dimitri.libertyweb.model.WebPunishment;
+import space.arim.libertybans.api.AddressVictim;
 import space.arim.libertybans.api.PlayerOperator;
 import space.arim.libertybans.api.PlayerVictim;
 import space.arim.libertybans.api.punish.Punishment;
@@ -32,6 +33,7 @@ public class ObjectMapper {
                 webPunishment.setOperatorUsername("Console");
             }
 
+            webPunishment.setActive(getActiveSate(punishment));
             webPunishment.setLabel(getLabel(punishment));
             webPunishment.setReason(punishment.getReason());
             webPunishment.setPunishmentLength(getPunishmentLength(punishment));
@@ -57,6 +59,10 @@ public class ObjectMapper {
             return "Permanent";
         }
         return "Unknown";
+    }
+
+    private static boolean getActiveSate(Punishment punishment) {
+        return punishment.isExpired();
     }
 
     private static String getPunishmentLength(Punishment punishment) {
