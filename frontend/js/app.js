@@ -148,26 +148,58 @@ $(document).ready(function () {
 
     function setPunishmentStyle(length, row) {
         if (length === "Permanent") {
-            $(`#line-upper-${row}`).addClass('permanent-line');
+            $(`#line-upper-${row}`).addClass('permanent-line-left');
             $(`#status-badge-${row}`).addClass('permanent');
-            $(`#line-below-${row}`).addClass('permanent-line');
+            $(`#line-below-${row}`).addClass('permanent-line-right');
         } else if (length === "Active") {
-            $(`#line-upper-${row}`).addClass('active-line');
+            $(`#line-upper-${row}`).addClass('active-line-left');
             $(`#status-badge-${row}`).addClass('active');
-            $(`#line-below-${row}`).addClass('active-line');
+            $(`#line-below-${row}`).addClass('active-line-right');
         } else {
-            $(`#line-upper-${row}`).addClass('expired-line');
+            $(`#line-upper-${row}`).addClass('expired-line-left');
             $(`#status-badge-${row}`).addClass('expired');
-            $(`#line-below-${row}`).addClass('expired-line');
+            $(`#line-below-${row}`).addClass('expired-line-right');
         }
     }
 
-    function setRowData(victimUUID, victimUsername, operatorUUID, operatorUsername, reason, row) {
+    // Look this isn't the cleanest, but we do however have to remove the previous state.
+    function removePreviousClasses(length, row) {
+        if (length === "Permanent") {
+            $(`#line-upper-${row}`).removeClass('active-line-left');
+            $(`#line-upper-${row}`).removeClass('expired-line-left');
+            $(`#status-badge-${row}`).removeClass('active');
+            $(`#status-badge-${row}`).removeClass('expired');
+            $(`#line-below-${row}`).removeClass('active-line-right');
+            $(`#line-below-${row}`).removeClass('expired-line-right');
+        } else if (length === "Active") {
+            $(`#line-upper-${row}`).removeClass('permanent-line-left');
+            $(`#line-upper-${row}`).removeClass('expired-line-left');
+            $(`#status-badge-${row}`).removeClass('permanent');
+            $(`#status-badge-${row}`).removeClass('expired');
+            $(`#line-below-${row}`).removeClass('permanent-line-right');
+            $(`#line-below-${row}`).removeClass('expired-line-right');
+        } else {
+            $(`#line-upper-${row}`).removeClass('permanent-line-left');
+            $(`#line-upper-${row}`).removeClass('active-line-left');
+            $(`#status-badge-${row}`).removeClass('permanent');
+            $(`#status-badge-${row}`).removeClass('active');
+            $(`#line-below-${row}`).removeClass('permanent-line-right');
+            $(`#line-below-${row}`).removeClass('active-line-right');
+        }
+    }
+
+    function setRowData(victimUUID, victimUsername, operatorUUID, operatorUsername, reason, startDate, expirationDate, timeUntilExpirationDate, length, label, row) {
         $(`#first-uuid-${row}`).attr('src', `https://visage.surgeplay.com/face/55/${victimUUID}`);
         $(`#offender-${row}`).text(`${victimUsername}`);
         $(`#second-uuid-${row}`).attr('src', `https://visage.surgeplay.com/face/55/${operatorUUID}`);
         $(`#operator-${row}`).text(`${operatorUsername}`);
         $(`#reason-${row}`).text(`${reason}`);
+
+        $(`#punishment-start-date-${row}`).text(`${startDate}`);
+        $(`#punishment-end-date-${row}`).text(`${expirationDate}`);
+        $(`#punishment-length-${row}`).text(`${length}`);
+        $(`#punishment-expire-date-${row}`).text(`${timeUntilExpirationDate}`);
+        $(`#status-badge-${row}`).text(`${label}`);
     }
 
     function setMorePages(morePages) {
@@ -188,6 +220,27 @@ $(document).ready(function () {
         }
     }
 
+    function calculateExpirationDate(date) {
+        // The api provides dates in the dd/mm/yyyy format.
+        const dateParts = date.split("/");
+        // month is 0-based, that's why we need dataParts[1] - 1
+        let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+        let dateToday = new Date();
+
+        const _MS_PER_DAY = 1000 * 60 * 60 * 24
+        // We need to normalize due to time-zone differences as per https://stackoverflow.com/a/15289883
+        const utc1 = Date.UTC(dateObject.getFullYear(), dateObject.getMonth(), dateObject.getDate());
+        const utc2 = Date.UTC(dateToday.getFullYear(), dateToday.getMonth(), dateToday.getDate());
+
+        const differenceDays = Math.floor(utc1 - utc2);
+
+        let diffDays = Math.floor(differenceDays / _MS_PER_DAY); // days
+        let diffHrs = Math.floor((differenceDays % _MS_PER_DAY) / _MS_PER_DAY); // hours
+        let diffMins = Math.round(((differenceDays % _MS_PER_DAY) % 3600000) / 60000); // minutes
+
+        return diffDays + " days " + diffHrs + " hours " + diffMins + " minutes";
+    }
+
     function fetchPunishments(type, page) {
         const spinner = $("#punishments-spinner");
         const typeStats = $("#type-stats");
@@ -201,6 +254,7 @@ $(document).ready(function () {
         // Since we have 6 pre-defined html well objects, we need to hide them all.
         for (let i = 0; i < 6; i++) {
             $(`#punishments-${i}`).hide();
+            $(`#punishments-info-${i}`).hide();
         }
 
         updatePageCount();
@@ -211,7 +265,8 @@ $(document).ready(function () {
         // We actually got data!
         getWithAsyncFetch(`/punishments/${type}/${page}`).then(data => {
             let rowCount = 0;
-            for (const key in data.punishments) {
+            for (let key in data.punishments) {
+                removePreviousClasses(data.punishments[key].label, rowCount);
                 setPunishmentStyle(data.punishments[key].label, rowCount);
 
                 let operatorUUID = data.punishments[key].operatorUuid;
@@ -219,7 +274,18 @@ $(document).ready(function () {
                     operatorUUID = "console";
                 }
 
-                setRowData(data.punishments[key].victimUuid, data.punishments[key].victimUsername, operatorUUID, data.punishments[key].operatorUsername, data.punishments[key].reason, rowCount);
+                let expirationDate = data.punishments[key].endDate;
+                let isActive = data.punishments[key].active;
+                let timeUntilExpiration;
+                if (expirationDate === "Never") {
+                    timeUntilExpiration = "Never";
+                } else if (isActive === false) {
+                    timeUntilExpiration = "Expired/Revoked";
+                } else {
+                    timeUntilExpiration = calculateExpirationDate(expirationDate);
+                }
+
+                setRowData(data.punishments[key].victimUuid, data.punishments[key].victimUsername, operatorUUID, data.punishments[key].operatorUsername, data.punishments[key].reason, data.punishments[key].startDate, data.punishments[key].endDate, timeUntilExpiration, data.punishments[key].punishmentLength, data.punishments[key].label, rowCount);
                 rowCount++;
             }
 
@@ -230,6 +296,7 @@ $(document).ready(function () {
             typeStats.show();
             for (let i = 0; i < rowCount; i++) {
                 $(`#punishments-${i}`).show();
+                $(`#punishments-info-${i}`).show();
             }
         }).catch(e => {
             console.log(e);

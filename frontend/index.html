@@ -10,7 +10,7 @@
     <!-- Font Awesome -->
     <script src="/js/vendor/fontawesome.min.js"></script>
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="/css/vendor/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/vendor/bootstrap.min.css"/>
     <script src="/js/vendor/bootstrap.bundle.min.js"></script>
     <!-- JQuery -->
     <script src="/js/vendor/jquery.js"></script>
@@ -21,55 +21,57 @@
 </head>
 <body>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-darker py-2 sticky-top">
-      <div class="container-fluid mx-4">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark navbar-darker py-2 sticky-top">
+    <div class="container-fluid mx-4">
         <span class="navbar-brand">
           <small>LibertyBans</small>
         </span>
-        
-        <button class="navbar-toggle-btn-mobile d-lg-none" id="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <i class="fas fa-sliders-h"></i>
-        </button>
-        
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li class="nav-item navbar-active pe-1">
-              <a href="javascript:;" class="nav-link" id="banType">Ban</a>
-            </li>
-            <li class="nav-item pe-1">
-              <a href="javascript:;" class="nav-link" id="kickType">Kick</a>
-            </li>
-            <li class="nav-item pe-1">
-              <a href="javascript:;" class="nav-link" id="muteType">Mute</a>
-            </li>
-            <li class="nav-item pe-3">
-              <a href="javascript:;" class="nav-link" id="warnType">Warn</a>
-            </li>
-          </ul>
-          <!-- <button class="version-btn ps-4"><i class="fab fa-github fs-4"></i></button> -->
-        </div>
-      </div>
-    </nav>
 
-    <!-- Punishments -->
-    <section class=" text-light my-5 p-lg-0 pt-lg-5 text-center text-sm-start section-darker">
-      <div class="container">
+        <button class="navbar-toggle-btn-mobile d-lg-none" id="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <i class="fas fa-sliders-h"></i>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item navbar-active pe-1">
+                    <a href="javascript:;" class="nav-link" id="banType">Ban</a>
+                </li>
+                <li class="nav-item pe-1">
+                    <a href="javascript:;" class="nav-link" id="kickType">Kick</a>
+                </li>
+                <li class="nav-item pe-1">
+                    <a href="javascript:;" class="nav-link" id="muteType">Mute</a>
+                </li>
+                <li class="nav-item pe-3">
+                    <a href="javascript:;" class="nav-link" id="warnType">Warn</a>
+                </li>
+            </ul>
+            <!-- <button class="version-btn ps-4"><i class="fab fa-github fs-4"></i></button> -->
+        </div>
+    </div>
+</nav>
+
+<!-- Punishments -->
+<section class=" text-light my-5 p-lg-0 pt-lg-5 text-center text-sm-start section-darker">
+    <div class="container">
         <!-- Info Text -->
         <div class="d-flex justify-content-start">
-          <h1 class="fs-2 category-text pb-1" id="type-stats">
-              <p id="type-stats-text">Bans</p>
-          </h1>
+            <h1 class="fs-2 category-text pb-1" id="type-stats">
+                <p id="type-stats-text">Bans</p>
+            </h1>
         </div>
-          <!-- Bootstrap Spinner -->
-          <div class="d-flex justify-content-center spinner">
-              <div id="punishments-spinner" class="spinner-border m-5" role="status">
-                  <span class="sr-only">Loading...</span>
-              </div>
-          </div>
+        <!-- Bootstrap Spinner -->
+        <div class="d-flex justify-content-center spinner">
+            <div id="punishments-spinner" class="spinner-border m-5" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
         <!-- Punishment List -->
         <div id="punishments">
-          <!-- -->
+            <!-- -->
             <!-- 0 -->
             <div id="punishments-0">
                 <div class="row align-items-center p-3 flex-nowrap">
@@ -96,6 +98,60 @@
                         <span id="status-badge-0" class="fw-medium">Length</span>
                     </div>
                     <div id="line-below-0" class="col-auto"></div>
+                </div>
+            </div>
+            <div id="punishments-info-0">
+                <div class="row punishment-info flex-nowrap">
+                    <div class="col">
+                        <div class="collapse" id="punishment-0-collapse-0">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Start date:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-start-date-0">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="collapse" id="punishment-0-collapse-1">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Expiration date:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-end-date-0">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class=collapse id="punishment-0-collapse-2">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Length:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-length-0">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="collapse" id="punishment-0-collapse-3">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Expires in:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-expire-date-0">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center p-3 flex-nowrap button-row">
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-primary punishment-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#punishment-0-collapse-0, #punishment-0-collapse-1, #punishment-0-collapse-2, #punishment-0-collapse-3"
+                                aria-expanded="false"
+                                aria-controls="punishment-0-collapse-0, punishment-0-collapse-1, punishment-0-collapse-2">
+                            <i class="fa fa-info-circle fa-w-16"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
             <div id="punishments-1">
@@ -125,6 +181,60 @@
                     <div id="line-below-1" class="col-auto"></div>
                 </div>
             </div>
+            <div id="punishments-info-1">
+                <div class="row punishment-info flex-nowrap">
+                    <div class="col">
+                        <div class=collapse id="punishment-1-collapse-0">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Start date:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-start-date-1">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class=collapse id="punishment-1-collapse-1">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Expiration date:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-end-date-1">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class=collapse id="punishment-1-collapse-2">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Length:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-length-1">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="collapse collaps" id="punishment-1-collapse-3">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Expires in:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-expire-date-1">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center p-3 flex-nowrap button-row">
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-primary punishment-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#punishment-1-collapse-0, #punishment-1-collapse-1, #punishment-1-collapse-2, #punishment-1-collapse-3"
+                                aria-expanded="false"
+                                aria-controls="punishment-1-collapse-0, punishment-1-collapse-1, punishment-1-collapse-2">
+                            <i class="fa fa-info-circle fa-w-16"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
             <div id="punishments-2">
                 <div class="row align-items-center p-3 flex-nowrap">
                     <div id="line-upper-2" class="col-auto"></div>
@@ -150,6 +260,60 @@
                         <span id="status-badge-2" class="fw-medium">Length</span>
                     </div>
                     <div id="line-below-2" class="col-auto"></div>
+                </div>
+            </div>
+            <div id="punishments-info-2">
+                <div class="row punishment-info flex-nowrap">
+                    <div class="col">
+                        <div class=collapse id="punishment-2-collapse-0">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Start date:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-start-date-2">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class=collapse id="punishment-2-collapse-1">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Expiration date:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-end-date-2">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class=collapse id="punishment-2-collapse-2">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Length:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-length-2">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="collapse" id="punishment-2-collapse-3">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Expires in:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-expire-date-2">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center p-3 flex-nowrap button-row">
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-primary punishment-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#punishment-2-collapse-0, #punishment-2-collapse-1, #punishment-2-collapse-2, #punishment-2-collapse-3"
+                                aria-expanded="false"
+                                aria-controls="punishment-2-collapse-0, punishment-2-collapse-1, punishment-2-collapse-2">
+                            <i class="fa fa-info-circle fa-w-16"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
             <div id="punishments-3">
@@ -179,6 +343,60 @@
                     <div id="line-below-3" class="col-auto"></div>
                 </div>
             </div>
+            <div id="punishments-info-3">
+                <div class="row punishment-info flex-nowrap">
+                    <div class="col">
+                        <div class=collapse id="punishment-3-collapse-0">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Start date:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-start-date-3">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class=collapse id="punishment-3-collapse-1">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Expiration date:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-end-date-3">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class=collapse id="punishment-3-collapse-2">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Length:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-length-3">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="collapse collaps" id="punishment-3-collapse-3">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Expires in:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-expire-date-3">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center p-3 flex-nowrap button-row">
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-primary punishment-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#punishment-3-collapse-0, #punishment-3-collapse-1, #punishment-3-collapse-2, #punishment-3-collapse-3"
+                                aria-expanded="false"
+                                aria-controls="punishment-3-collapse-0, punishment-3-collapse-1, punishment-3-collapse-2">
+                            <i class="fa fa-info-circle fa-w-16"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
             <div id="punishments-4">
                 <div class="row align-items-center p-3 flex-nowrap">
                     <div id="line-upper-4" class="col-auto"></div>
@@ -206,55 +424,165 @@
                     <div id="line-below-4" class="col-auto"></div>
                 </div>
             </div>
+            <div id="punishments-info-4">
+                <div class="row punishment-info flex-nowrap">
+                    <div class="col">
+                        <div class=collapse id="punishment-4-collapse-0">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Start date:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-start-date-4">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class=collapse id="punishment-4-collapse-1">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Expiration date:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-end-date-4">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class=collapse id="punishment-4-collapse-2">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Length:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-length-4">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="collapse collaps" id="punishment-4-collapse-3">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Expires in:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-expire-date-4">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center p-3 flex-nowrap button-row">
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-primary punishment-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#punishment-4-collapse-0, #punishment-4-collapse-1, #punishment-4-collapse-2, #punishment-4-collapse-3"
+                                aria-expanded="false"
+                                aria-controls="punishment-4-collapse-0, punishment-4-collapse-1, punishment-4-collapse-2">
+                            <i class="fa fa-info-circle fa-w-16"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="punishments-5">
+                <div class="row align-items-center p-3 flex-nowrap">
+                    <div id="line-upper-5" class="col-auto"></div>
+                    <div class="col-auto">
+                        <img id="first-uuid-5" src="./images/Tw8t.png">
+                    </div>
+                    <div class="col">
+                        <p class="fs-5 mb-0">Offender</p>
+                        <p id="offender-5">Offender-0</p>
+                    </div>
+                    <div class="col-auto">
+                        <img id="second-uuid-5" src="./images/Dorpw.png">
+                    </div>
+                    <div class="col">
+                        <p class="fs-5 mb-0">Staff</p>
+                        <p id="operator-5">Operator-0</p>
+                    </div>
+                    <div class="col">
+                        <div class="fs-5 mb-0">Reason</div>
+                        <p id="reason-5">Cheating</p>
+                    </div>
+                    <div class="col">
+                        <span id="status-badge-5" class="fw-medium">Length</span>
+                    </div>
+                    <div id="line-below-5" class="col-auto"></div>
+                </div>
+            </div>
+            <div id="punishments-info-5">
+                <div class="row punishment-info flex-nowrap">
+                    <div class="col">
+                        <div class=collapse id="punishment-5-collapse-0">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Start date:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-start-date-5">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class=collapse id="punishment-5-collapse-1">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Expiration date:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-end-date-5">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class=collapse id="punishment-5-collapse-2">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Length:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-length-5">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="collapse collaps" id="punishment-5-collapse-3">
+                            <div class="card text-bg-dark mb-3 text-center">
+                                <h5 class="card-header fs-5 mb-0">Expires in:</h5>
+                                <div class="card-body">
+                                    <p id="punishment-expire-date-5">2025.04.27</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center p-3 flex-nowrap button-row">
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-primary punishment-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#punishment-5-collapse-0, #punishment-5-collapse-1, #punishment-5-collapse-2, #punishment-5-collapse-3"
+                                aria-expanded="false"
+                                aria-controls="punishment-5-collapse-0, punishment-5-collapse-1, punishment-5-collapse-2">
+                            <i class="fa fa-info-circle fa-w-16"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-          <div id="punishments-5">
-              <div class="row align-items-center p-3 flex-nowrap">
-                  <div id="line-upper-5" class="col-auto"></div>
-                  <div class="col-auto">
-                      <img id="first-uuid-5" src="./images/Tw8t.png">
-                  </div>
-                  <div class="col">
-                      <p class="fs-5 mb-0">Offender</p>
-                      <p id="offender-5">Offender-0</p>
-                  </div>
-                  <div class="col-auto">
-                      <img id="second-uuid-5" src="./images/Dorpw.png">
-                  </div>
-                  <div class="col">
-                      <p class="fs-5 mb-0">Staff</p>
-                      <p id="operator-5">Operator-0</p>
-                  </div>
-                  <div class="col">
-                      <div class="fs-5 mb-0">Reason</div>
-                      <p id="reason-5">Cheating</p>
-                  </div>
-                  <div class="col">
-                      <span id="status-badge-5" class="fw-medium">Length</span>
-                  </div>
-                  <div id="line-below-5" class="col-auto"></div>
-              </div>
-          </div>
-      </div>
-        <div id="nothing-to-show" class="text-center p-5">
-            <p class="fw-medium fs-5 mb-0">Nothing to show for now</p>
+        <div>
+            <div id="nothing-to-show" class="text-center p-5">
+                <p class="fw-medium fs-5 mb-0">Nothing to show for now</p>
+            </div>
         </div>
+        <div>
+            <div class="d-flex justify-content-center">
+                <button class="previous-btn p-2 mx-1" id="prevBtn">Previous</button>
+                <input class="page-count text-center" type="number" id="pageCount" name="page-count" min="1" max="999" size="4">
+                <button class="next-btn p-2 mx-1" id="nextBtn">Next</button>
+                <div id="view-punishments"></div>
+            </div>
         </div>
-        <div class="d-flex justify-content-center">
-          <button class="previous-btn p-2 mx-1" id="prevBtn">Previous</button>
-          <input class="page-count text-center" type="number" id="pageCount" name="page-count" min="1" max="999" size="4">
-          <button class="next-btn p-2 mx-1" id="nextBtn">Next</button>
-          <div id="view-punishments"></div>
-        </div>
-      </div>
-    </section>
-    
+    </div>
+</section>
 
-    <!-- Footer -->
-    <footer class="footer py-3">
-        <div class="container d-flex justify-content-center align-items-center">
-          <p class="m-0 footer-text">Made with <i class="fas fa-heart heart-icon mx-1"></i></p>
-        </div>
-    </footer>
-    
+
+<!-- Footer -->
+<footer class="footer py-3">
+    <div class="container d-flex justify-content-center align-items-center">
+        <p class="m-0 footer-text">Made with <i class="fas fa-heart heart-icon mx-1"></i></p>
+    </div>
+</footer>
+
 </body>
 </html>

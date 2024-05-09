@@ -136,23 +136,41 @@ input[type=number] {
 }
 
 .light-row {
-  background-color: var(--dark-gray);
+  background-color: var(--gray-secondary);
 }
 
-.permanent-line {
+.permanent-line-left {
   border-left: 7px solid var(--red);
   height: 8vh;
   padding: 1vh;
 }
 
-.active-line {
+.permanent-line-right {
+  border-right: 7px solid var(--red);
+  height: 8vh;
+  padding: 1vh;
+}
+
+.active-line.left {
   border-left: 7px solid var(--yellow);
   height: 8vh;
   padding: 1vh;
 }
 
-.expired-line {
+.active-line-right {
+  border-right: 7px solid var(--yellow);
+  height: 8vh;
+  padding: 1vh;
+}
+
+.expired-line-left {
   border-left: 7px solid var(--green);
+  height: 8vh;
+  padding: 1vh;
+}
+
+.expired-line-right {
+  border-right: 7px solid var(--green);
   height: 8vh;
   padding: 1vh;
 }
@@ -194,7 +212,19 @@ input[type=number] {
 }
 
 .punishment-info {
-  background-color: var(--black-row);
+  color: var(--gray-primary);
+  .card { background-color: var(--other); }
+  .card p { margin: 0; }
+  .card-header { border-bottom: 1px solid var(--gray-primary); }
+}
+
+.button-row {
+  .fa-info-circle { color: var(--gray-primary)}
+  .fa-info-circle { background-color: var(--black-primary)}
+  .punishment-button { background-color: var(--black-primary)}
+  .punishment-button { border-color: var(--bs-white)}
+  .punishment-button { box-shadow: none }
+  .punishment-button:focus { box-shadow: none }
 }
 
 /* Navigation Modal */
