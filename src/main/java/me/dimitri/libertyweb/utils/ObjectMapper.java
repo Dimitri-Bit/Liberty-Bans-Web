@@ -22,8 +22,8 @@ public class ObjectMapper {
             WebPunishment webPunishment = new WebPunishment();
 
             if (punishment.getVictim().getType() == Victim.VictimType.COMPOSITE) {
-                webPunishment.setVictimUuid(((PlayerVictim) punishment.getVictim()).getUUID().toString());
-                webPunishment.setVictimAddress(obfuscatePlayerAddress(((AddressVictim) punishment.getVictim()).getAddress()));
+                webPunishment.setVictimUuid(((CompositeVictim) punishment.getVictim()).getUUID().toString());
+                webPunishment.setVictimAddress(obfuscatePlayerAddress(((CompositeVictim) punishment.getVictim()).getAddress()));
                 webPunishment.setVictimUsername(lookupUsername(webPunishment.getVictimUuid(), libertyWeb));
             } else if (punishment.getVictim().getType() == Victim.VictimType.ADDRESS) {
                 webPunishment.setVictimUuid("None");
