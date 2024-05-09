@@ -61,7 +61,7 @@ public class ObjectMapper {
     }
 
     private static boolean getActiveSate(Punishment punishment) {
-        return punishment.isExpired();
+        return !punishment.isExpired();
     }
 
     private static String getPunishmentLength(Punishment punishment) {
