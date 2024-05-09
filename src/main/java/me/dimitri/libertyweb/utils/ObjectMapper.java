@@ -2,7 +2,6 @@ package me.dimitri.libertyweb.utils;
 
 import me.dimitri.libertyweb.api.LibertyWeb;
 import me.dimitri.libertyweb.model.WebPunishment;
-import space.arim.libertybans.api.AddressVictim;
 import space.arim.libertybans.api.PlayerOperator;
 import space.arim.libertybans.api.PlayerVictim;
 import space.arim.libertybans.api.punish.Punishment;
