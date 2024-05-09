@@ -5,8 +5,8 @@ import io.micronaut.serde.annotation.Serdeable;
 @Serdeable.Serializable
 public class WebPunishment {
 
-    private String victimUuid, victimUsername,
-            operatorUuid, operatorUsername, reason, label, punishmentLength, startDate, endDate;
+    private String victimUuid, victimAddress, victimUsername,
+            operatorUuid, operatorUsername, reason, type, label, punishmentLength, startDate, endDate;
     private boolean active;
 
     public WebPunishment() {
@@ -20,6 +20,10 @@ public class WebPunishment {
     public void setVictimUuid(String victimUuid) {
         this.victimUuid = victimUuid;
     }
+
+    public String getVictimAddress() { return victimAddress; }
+
+    public void setVictimAddress(String victimAddress) { this.victimAddress = victimAddress; }
 
     public String getVictimUsername() {
         return victimUsername;
@@ -52,6 +56,10 @@ public class WebPunishment {
     public void setReason(String reason) {
         this.reason = reason;
     }
+
+    public String getType() { return type; }
+
+    public void setType(String type) { this.type = type; }
 
     public boolean isActive() {
         return active;
