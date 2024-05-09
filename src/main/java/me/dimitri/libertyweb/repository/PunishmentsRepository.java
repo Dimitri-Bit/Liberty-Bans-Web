@@ -34,7 +34,6 @@ public class PunishmentsRepository {
                 .selectionBuilder()
                 .selectAll()
                 .type(punishmentType)
-                .victimType(Victim.VictimType.PLAYER)
                 .skipFirstRetrieved(offset)
                 .limitToRetrieve(6)
                 .build()
