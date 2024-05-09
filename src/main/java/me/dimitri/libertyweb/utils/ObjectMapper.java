@@ -32,6 +32,7 @@ public class ObjectMapper {
                 webPunishment.setOperatorUsername("Console");
             }
 
+            webPunishment.setActive(getActiveSate(punishment));
             webPunishment.setLabel(getLabel(punishment));
             webPunishment.setReason(punishment.getReason());
             webPunishment.setPunishmentLength(getPunishmentLength(punishment));
@@ -57,6 +58,10 @@ public class ObjectMapper {
             return "Permanent";
         }
         return "Unknown";
+    }
+
+    private static boolean getActiveSate(Punishment punishment) {
+        return !punishment.isExpired();
     }
 
     private static String getPunishmentLength(Punishment punishment) {
