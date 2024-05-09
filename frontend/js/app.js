@@ -162,6 +162,32 @@ $(document).ready(function () {
         }
     }
 
+    // Look this isn't the cleanest, but we do however have to remove the previous state.
+    function removePreviousClasses(length, row) {
+        if (length === "Permanent") {
+            $(`#line-upper-${row}`).removeClass('active-line-left');
+            $(`#line-upper-${row}`).removeClass('expired-line-left');
+            $(`#status-badge-${row}`).removeClass('active');
+            $(`#status-badge-${row}`).removeClass('expired');
+            $(`#line-below-${row}`).removeClass('active-line-right');
+            $(`#line-below-${row}`).removeClass('expired-line-right');
+        } else if (length === "Active") {
+            $(`#line-upper-${row}`).removeClass('permanent-line-left');
+            $(`#line-upper-${row}`).removeClass('expired-line-left');
+            $(`#status-badge-${row}`).removeClass('permanent');
+            $(`#status-badge-${row}`).removeClass('expired');
+            $(`#line-below-${row}`).removeClass('permanent-line-right');
+            $(`#line-below-${row}`).removeClass('expired-line-right');
+        } else {
+            $(`#line-upper-${row}`).removeClass('permanent-line-left');
+            $(`#line-upper-${row}`).removeClass('active-line-left');
+            $(`#status-badge-${row}`).removeClass('permanent');
+            $(`#status-badge-${row}`).removeClass('active');
+            $(`#line-below-${row}`).removeClass('permanent-line-right');
+            $(`#line-below-${row}`).removeClass('active-line-right');
+        }
+    }
+
     function setRowData(victimUUID, victimUsername, operatorUUID, operatorUsername, reason, startDate, expirationDate, timeUntilExpirationDate, length, label, row) {
         $(`#first-uuid-${row}`).attr('src', `https://visage.surgeplay.com/face/55/${victimUUID}`);
         $(`#offender-${row}`).text(`${victimUsername}`);
@@ -206,7 +232,7 @@ $(document).ready(function () {
         const utc1 = Date.UTC(dateObject.getFullYear(), dateObject.getMonth(), dateObject.getDate());
         const utc2 = Date.UTC(dateToday.getFullYear(), dateToday.getMonth(), dateToday.getDate());
 
-        const differenceDays = Math.floor(utc2 - utc1);
+        const differenceDays = Math.floor(utc1 - utc2);
 
         let diffDays = Math.floor(differenceDays / _MS_PER_DAY); // days
         let diffHrs = Math.floor((differenceDays % _MS_PER_DAY) / _MS_PER_DAY); // hours
@@ -240,6 +266,7 @@ $(document).ready(function () {
         getWithAsyncFetch(`/punishments/${type}/${page}`).then(data => {
             let rowCount = 0;
             for (let key in data.punishments) {
+                removePreviousClasses(data.punishments[key].label, rowCount);
                 setPunishmentStyle(data.punishments[key].label, rowCount);
 
                 let operatorUUID = data.punishments[key].operatorUuid;
