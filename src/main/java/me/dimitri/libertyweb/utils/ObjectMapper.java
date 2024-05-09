@@ -101,7 +101,9 @@ public class ObjectMapper {
         digest.digest(networkAddress.getRawAddress());
 
         String str = Base64.getEncoder().encodeToString(digest.digest(networkAddress.getRawAddress()));
-        return str + fakeTLD;
+
+        // Since this can be reversed, we hold on for this.
+        return "Unknown";
     }
 
     private static String getPunishmentLength(Punishment punishment) {
