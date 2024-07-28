@@ -88,8 +88,7 @@
     </dependency>
     <dependency>
       <groupId>org.flywaydb</groupId>
-      <artifactId>flyway-mysql</artifactId>
-      <version>10.16.0</version>
+      <artifactId>flyway-database-postgresql</artifactId>
     </dependency>
     <dependency>
       <groupId>space.arim.libertybans</groupId>
