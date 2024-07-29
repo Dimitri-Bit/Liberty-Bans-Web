@@ -17,7 +17,6 @@ import space.arim.libertybans.env.standalone.StandaloneLauncher;
 import space.arim.omnibus.DefaultOmnibus;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.nio.file.Path;
 
 @Primary
@@ -32,6 +31,7 @@ public class LBansServiceImpl implements LBansService {
     private LibertyBans libertyBans;
     private BaseFoundation baseFoundation;
 
+    @Override
     public boolean setup() {
         Path folderPath = Path.of(FOLDER_PATH);
         if (!folderPath.toFile().exists()) {

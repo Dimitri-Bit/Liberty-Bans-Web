@@ -14,9 +14,9 @@ micronaut:
     caffeine:
       enabled: true
       specs:
-        mojang-cache:
-          maximum-size: ${caffeine.mojang.maxSize}
-          expires-after-write: ${caffeine.mojang.expiration}
+        username-cache:
+          maximum-size: ${caffeine.username.maxSize}
+          expires-after-write: ${caffeine.username.expiration}
         requests:
           maximum-size: ${caffeine.requests.maxSize}
           expires-after-write: ${caffeine.requests.expiration}
